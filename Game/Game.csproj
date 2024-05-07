@@ -47,22 +47,23 @@
     <Reference Include="System.Windows.Forms.DataVisualization.Design" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DeltaTime.cs" />
-    <Compile Include="Game.cs">
+    <Compile Include="Scripts\Buttons.cs" />
+    <Compile Include="Scripts\Collision.cs" />
+    <Compile Include="Scripts\Utilities\DeltaTime.cs" />
+    <Compile Include="Scripts\Game.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="PickUps.cs" />
-    <Compile Include="Program.cs">
+    <Compile Include="Scripts\Managers\GameManager.cs" />
+    <Compile Include="Scripts\PickUps.cs" />
+    <Compile Include="Scripts\Program.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Snack.cs" />
-    <Compile Include="Start.cs" />
+    <Compile Include="Scripts\Utilities\Propertis.cs" />
+    <Compile Include="Scripts\Snack.cs" />
+    <Compile Include="Scripts\Start.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Engine.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ship.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Sprites\apple.png">
@@ -80,7 +81,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
-    <Folder Include="Scripts\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
