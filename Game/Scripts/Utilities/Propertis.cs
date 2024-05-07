@@ -10,14 +10,40 @@ namespace Game
     public struct Vector2
     {
         public int x, y;
-        public Vector2 (int x, int y) {
+        public Vector2(int x, int y) {
             this.x = x;
             this.y = y;
         }
         public static Vector2 cero()
         {
-            return new Vector2 (0, 0);
+            return new Vector2(0, 0);
         }
+        public override int GetHashCode()// porque nesesito esto
+        {
+            return 0;
+        }
+        public override bool Equals(object o)//porque nesestio esto
+        {
+            return true;
+        }
+        public static Vector2 operator + (Vector2 a, Vector2 b)
+        {
+            return new Vector2(a.x + b.x , a.y + b.y);
+        }
+        public static Vector2 operator - (Vector2 a, Vector2 b)
+        {
+            return new Vector2(a.x - b.x, a.y - b.y);
+        }
+        public static bool operator == (Vector2 left, Vector2 right)
+        {
+            return(left.x==right.x && left.y==right.y);
+        }
+        public static bool operator !=(Vector2 left, Vector2 right)
+        {
+            return (left.x == right.x && left.y == right.y);
+        }
+        //public static Vector2 oprator +
+        //AGREGAR OPERADOR
     }
     public struct Transform
     {

@@ -15,12 +15,12 @@ namespace Game
         public bool state = true;
         private string _texture = "Sprites/apple.png";
         
-        //public PickUP(int x, int y, int scale)
-        //{
-        //    transform.positon.x = x;
-        //    transform.positon.y=y;
-        //    transform.scale.x = scale;
-        //}
+        public PickUP(int x, int y, int scale)
+        {
+            transform.positon.x = x;
+            transform.positon.y=y;
+            transform.scale.x = scale;
+        }
         public void effect()
         {
 
@@ -45,11 +45,11 @@ namespace Game
     }
     public class Fruit : PickUP
     {
-        public Fruit(int x, int y, int scale)
+        public Fruit(int x, int y, int scale):base(x,y,scale)
         {
-            transform.positon.x = x;
-            transform.positon.y = y;
-            transform.scale.x = scale;
+            //transform.positon.x = x;
+            //transform.positon.y = y;
+            //transform.scale.x = scale;
         }
 
     }
