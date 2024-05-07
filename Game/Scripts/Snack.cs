@@ -31,6 +31,14 @@ namespace Game
                 snakePart.Draw();
             }
         }
+        public void Start()
+        {
+
+        }
+        public void Update()
+        {
+
+        }
         public void Movement(float deltaTime)
         {
             if (Engine.GetKey(Keys.A))
