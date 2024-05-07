@@ -21,8 +21,8 @@ namespace Game.Scripts
         {
             for (int i = 0;i< Text.Count(); i++)
             {
-                Transform tran = new Transform(transform.positon.x + i * 15, transform.positon.y);
-                GameManager.Instance.sprites.Add(new Sprite("Sprites/apple.png", tran, Vector2.cero(), 10));
+                Transform tran = new Transform(transform.positon.x + i * 50, transform.positon.y);
+                GameManager.Instance.sprites.Add(new Sprite($"Sprites/"+Text[i].ToString()+".png", tran, Vector2.cero(), 10));
                // Engine.Draw("Sprites/green.png",
                //             transform.positon.x + i * 5, transform.positon.y);
             }
