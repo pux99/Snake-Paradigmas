@@ -12,7 +12,7 @@ namespace Game
 
     public class Program
     {
-        public static Snake mySnake = new Snake(25,0);
+        public static Snake mySnake = new Snake(25,5);
         public static MyDeltaTimer delta =new MyDeltaTimer();
         public static int[,] grid =new int[50,50];
         public static List<PickUP> fruits = new List<PickUP>();
@@ -72,6 +72,7 @@ namespace Game
         }
         static void Update()
         {
+
             Movement();
             Colicions();
         }
