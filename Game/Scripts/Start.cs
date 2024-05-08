@@ -11,7 +11,7 @@ namespace Game
     internal class Start
     {
         public Start() { }
-        public static Buttons Play = new Buttons(new Transform(30,30,0,20,20), "Play", "start the game");
+        public static Buttons Play = new Buttons(new Transform(30,30,0,20,20), "dddd", "start the game");
         public static void start(Snake snake,List<PickUP> fruits)
         {
             Play.draw();
