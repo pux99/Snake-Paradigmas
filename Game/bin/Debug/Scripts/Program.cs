@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualBasic;
+﻿using Game.Scripts;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.IO.Ports;
@@ -12,14 +13,17 @@ namespace Game
 
     public class Program
     {
-        public static Snake mySnake = new Snake(25,5);
-        public static MyDeltaTimer delta =new MyDeltaTimer();
+        public static Snake mySnake = new Snake(50,5);
+       // public static MyDeltaTimer delta =new MyDeltaTimer();
         public static int[,] grid =new int[50,50];
         public static List<PickUP> fruits = new List<PickUP>();
+        public static Level1 level1 = new Level1();
         static void Main(string[] args)
         {
             Engine.Initialize("Snake",500,500);
+            //level1.Start();
             Start.start(mySnake,fruits);
+            
            
 
             
@@ -44,17 +48,19 @@ namespace Game
                 {
                     if ((i + j) % 2 == 0)
                     {
+                        //GameManager.Instance.sprites.Add(new Sprite("Sprites/green.png", i * 10, j * 10,0, .625f, .625f,0,0,0));
                         Engine.Draw("Sprites/green.png", i * 10, j * 10, .625f, .625f);
                     }
                     else
                     {
+                        //GameManager.Instance.sprites.Add(new Sprite("Sprites/grey.png", i * 10, j * 10, 0, .625f, .625f, 0, 0, 0));
                         Engine.Draw("Sprites/grey.png", i * 10, j * 10, .625f, .625f);
                     }
                     
                     
                 }
             }
-            GameManager.Instance.sprites = GameManager.Instance.sprites.OrderBy(o=>o.order).ToList();
+            //GameManager.Instance.sprites = GameManager.Instance.sprites.OrderBy(o=>o.order).ToList();
             foreach (Sprite sprite in GameManager.Instance.sprites)
             {
                 Engine.Draw(sprite.path,
@@ -72,13 +78,11 @@ namespace Game
         }
         static void Update()
         {
-
-            Movement();
+            foreach(GameObject gameObject in GameManager.Instance.Update) 
+            {
+                gameObject.Update();
+            }
             Colicions();
-        }
-        static void Movement()
-        {
-            mySnake.Movement(delta.DeltaTime());
         }
         static void Colicions()
         { 
@@ -88,15 +92,34 @@ namespace Game
                 fruits.First().transform.positon.x, fruits.First().transform.positon.y, fruits.First().transform.scale.x))
             {
                 fruits.First().ChangeToRandomPosition();
+                //for (int i = 0;i< mySnake.snake.Count/2; i++)
+                //{
+                //    List<Vector2> buffer = new List<Vector2>();
+                //    buffer = mySnake.snake[i].myPositions;
+                //    mySnake.snake[i].myPositions = mySnake.snake[mySnake.snake.Count - 1 - i].myPositions;
+                //    mySnake.snake[mySnake.snake.Count - 1 - i].myPositions=buffer;
+                //    
+                //}
+                //foreach (SnakePart part in mySnake.snake)
+                //{
+                //   //part.myPositions.Reverse();
+                //   part.myPositions.Clear();
+                //}
+                //mySnake.snake.Reverse();
+                //mySnake.swapDirection();
                 eatFruit();
+                GameManager.Instance.points++;
             }
             for (int i = 1; i < mySnake.snake.Count; i++)
             {
-                if (Collision.RectRect(mySnake.snake.First().transform.positon.x, mySnake.snake.First().transform.positon.y, mySnake.snake.First().transform.scale.x,
+                if (Collision.RectRect(mySnake.snake[0].transform.positon.x, mySnake.snake[0].transform.positon.y, mySnake.snake[0].transform.scale.x,
                 mySnake.snake[i].transform.positon.x, mySnake.snake[i].transform.positon.y, mySnake.snake[i].transform.scale.x))
                 {
+                    GameManager.Instance.lives--;
                     mySnake.snake.Clear();
                     NewSnake();
+                    
+                    
                 }
             }
             if (mySnake.snake.First().transform.positon.x < -10)
@@ -118,9 +141,10 @@ namespace Game
         }
         public static void NewSnake()
         {
-            mySnake.SkankePartDelay = 0;
-            for (int i = 0; i < 6; i++)
-                mySnake.snake.Add(new SnakePart(50, 500, 1,mySnake));
+            mySnake.SkankePartDelay = 2;
+            mySnake.snake.Add(new SnakePart(70, 400, 1, mySnake));
+            for (int i = 1; i < 6; i++)
+                mySnake.snake.Add(new SnakePart(50, 460, 1,mySnake));
         }
        
 

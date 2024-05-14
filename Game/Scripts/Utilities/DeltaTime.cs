@@ -8,20 +8,21 @@ namespace Game
 {
     using System.Diagnostics;
 
-    public class MyDeltaTimer
+    public static class MyDeltaTimer
     {
-        private Stopwatch stopwatch;
-        private float previousElapsedTime;
+        private static Stopwatch stopwatch=new Stopwatch();
+        private static float previousElapsedTime = 0f;
 
-        public MyDeltaTimer()
+        //public  MyDeltaTimer()
+        //{
+        //    stopwatch = new Stopwatch();
+        //    stopwatch.Start();
+        //    previousElapsedTime = 0f;
+        //}
+
+        public static float DeltaTime()//pregunrtar si esta bien?
         {
-            stopwatch = new Stopwatch();
             stopwatch.Start();
-            previousElapsedTime = 0f;
-        }
-
-        public float DeltaTime()
-        {
             float currentTime = (float)stopwatch.Elapsed.TotalSeconds;
             float deltaTime = currentTime - previousElapsedTime;
             previousElapsedTime = currentTime;

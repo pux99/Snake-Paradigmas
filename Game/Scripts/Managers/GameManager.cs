@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Game.Scripts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,8 +15,10 @@ namespace Game
 
 
         public int points = 0;
+        public int lives = 3;
+        public List<Level> levels = new List<Level>();
         public int currentLevel;
         public List<Sprite> sprites = new List<Sprite>();// porque tube que aser todos los structs publics para poeder hacer esto
-
+        public List<GameObject> Update=new List<GameObject>();
     }
 }

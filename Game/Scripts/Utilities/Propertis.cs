@@ -9,8 +9,8 @@ namespace Game
 {
     public struct Vector2
     {
-        public int x, y;
-        public Vector2(int x, int y) {
+        public float x, y;
+        public Vector2(float x, float y) {
             this.x = x;
             this.y = y;
         }
@@ -48,15 +48,16 @@ namespace Game
     public struct Transform
     {
         public Vector2 positon;
-        public int rotation;
+        public float rotation;
         public Vector2 scale;
-        public Transform(Vector2 pos,int ang,Vector2 scale)
+
+        public Transform(Vector2 pos,float ang,Vector2 scale)
         {
             this.positon = pos;
             this.rotation = ang;
             this.scale = scale;
         }
-        public Transform(int x=0, int y=0, int ang=0,int Sx=1,int Sy = 1)
+        public Transform(float x=0, float y=0, float ang=0,float Sx=1,float Sy = 1)
         {
             positon.x = x;
             positon.y = y;
@@ -71,15 +72,15 @@ namespace Game
         public string path;
         public Transform transform;
         public Vector2 offset;
-        public int order;
-        public Sprite(string path,Transform transform,Vector2 offset,int oreder)
+        public float order;
+        public Sprite(string path,Transform transform,Vector2 offset,float oreder)
         {
             this.path = path;
             this.transform = transform;
             this.offset = offset;
             this.order =0;
         }
-        public Sprite(string path,Vector2 posittion,int rotation, Vector2 scale,Vector2 offset,int oreder=0)
+        public Sprite(string path,Vector2 posittion,float rotation, Vector2 scale,Vector2 offset,float oreder=0)
         {
             this.path = path;
             transform.positon = posittion;
@@ -90,11 +91,11 @@ namespace Game
         }
         public Sprite(
             string path,
-            int posX=0, int posY = 0,
-            int rotation = 0,
-            int sclX = 1,int sclY = 1,
-            int offsX = 0,int offsY = 0,
-            int oreder = 0)
+            float posX=0, float posY = 0,
+            float rotation = 0,
+            float sclX = 1,float sclY = 1,
+            float offsX = 0,float offsY = 0,
+            float oreder = 0)
         {
             this.path = path;
             transform.positon.x = posX;

@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualBasic;
+﻿using Game.Scripts;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.IO.Ports;
@@ -8,13 +9,14 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace Game
 {
-	public class Snake
+	public class Snake:GameObject
 	{
         public Action Move;
         public Snake(float Speed, int skankePartDelay)
         {
             speed = 1 / Speed;
             _SkankePartDelay = skankePartDelay;
+            GameManager.Instance.Update.Add(this);
         }
         private int DelayCounter;
         private float timer=0;
@@ -31,13 +33,13 @@ namespace Game
                 snakePart.Draw();
             }
         }
-        public void Start()
+        public override void Start()
         {
 
         }
-        public void Update()
+        public override void Update()
         {
-
+            Movement(MyDeltaTimer.DeltaTime());
         }
         public void Movement(float deltaTime)
         {
@@ -50,33 +52,30 @@ namespace Game
             if (Engine.GetKey(Keys.W))
                 nextDirection = "Up";
             timer -= deltaTime;
-            Console.WriteLine(timer.ToString());
             if (timer <= 0)
             {
-                //snake.First().myPreviousPositionX = snake.First().transform.positon.x;
-                //nake.First().myPreviousPositionY = snake.First().transform.positon.y;
                 switch (nextDirection)
                 {
                     case "Left":
-                        if (snake.First().transform.positon.y % 10 == 0 && direction != "Right")
+                        if ( direction != "Right")
                         {
                             direction = nextDirection;
                         }
                         break;
                     case "Right":
-                        if (snake.First().transform.positon.y % 10 == 0 && direction != "Left")
+                        if ( direction != "Left")
                         {
                             direction = nextDirection;
                         }
                         break;
                     case "Down":
-                        if (snake.First().transform.positon.x % 10 == 0 && direction != "Up")
+                        if ( direction != "Up")
                         {
                             direction = nextDirection;
                         }
                         break;
                     case "Up":
-                        if (snake.First().transform.positon.x % 10 == 0 && direction != "Down")
+                        if ( direction != "Down")
                         {
                             direction = nextDirection;
                         }
@@ -101,19 +100,54 @@ namespace Game
                 SnakePartsMovement();
             }
         }
+        public void swapDirection()
+        {
+            switch (direction)
+            {
+                case "Left":
+                    direction = "Right";
+                    break;
+                case "Right":
+                    direction = "Left";
+                    break;
+                case "Down":
+                    direction = "Up";
+                    break;
+                case "Up":
+                    direction = "Down";
+                    break;
+            }
+            nextDirection = direction;
+        }
         public void SnakePartsMovement()
         {
             DelayCounter++;
+            snake[0].myPositions.Add(snake[0].transform.positon);
+            if (snake[0].myPositions.Count > _SkankePartDelay+1)
+            {
+                snake[0].myPositions.RemoveAt(0);
+            }
             for (int i = 1; i < snake.Count; i++)
             {
-                
-                snake[i].parentPositions.Add(snake[i - 1].transform.positon);
-                if (snake[i].parentPositions.Count > _SkankePartDelay+2) { 
-                    snake[i].parentPositions.RemoveAt(0);
-                    snake[i].transform.positon = snake[i].parentPositions[0];
+                //snake[i].parentPositions.Add(snake[i - 1].transform.positon);
+                //if (snake[i].parentPositions.Count > _SkankePartDelay + 2)
+                //{
+                //    snake[i].parentPositions.RemoveAt(0);
+                //    snake[i].transform.positon = snake[i].parentPositions[0];
+                //}
+
+                snake[i].myPositions.Add(snake[i].transform.positon);
+                if (snake[i].myPositions.Count > _SkankePartDelay)
+                {
+                    snake[i].myPositions.RemoveAt(0);
                 }
+                if (snake[i - 1].myPositions.Count > _SkankePartDelay - 1)
+                {
+                    snake[i].transform.positon = snake[i - 1].myPositions[0];
+                }
+                    
             }
-            if(DelayCounter== _SkankePartDelay)
+            if (DelayCounter== _SkankePartDelay)
             {
                 DelayCounter=0;
             }
@@ -127,17 +161,17 @@ namespace Game
 
         }
     }
-    public class SnakePart
+    public class SnakePart:GameObject
     {
-        public SnakePart(int X, int Y, int Size,Snake body)
+        public SnakePart(float X, float Y, int Size,Snake body)
         {
             transform.positon.x = X; transform.positon.y = Y;
             transform.scale.x = Size; transform.scale.y = Size;
             _moveDelay = body.SkankePartDelay;
-            body.Move += MoveToPatentLastPosition;
+            //body.Move += MoveToPatentLastPosition;
         }
-        public Transform transform;
         private int _moveDelay;
+        private List<Vector2> _myPositions = new List<Vector2>();
         private List<Vector2> _parentPositions = new List<Vector2>();
         private int _size = 10;
         private string _texture = "Sprites/rect4.png";
@@ -146,18 +180,16 @@ namespace Game
         {
             get { return _parentPositions; }set { _parentPositions = value; }
         }
+        public List<Vector2> myPositions
+        {
+            get { return _myPositions; }
+            set { _myPositions = value; }
+        }
         public int size { get { return _size; } set { _size = value; } }
 
-        public void Draw()
+        public override void Draw()
         {
             Engine.Draw(_texture, transform.positon.x, transform.positon.y, transform.scale.x, transform.scale.y);
-        }
-        public void MoveToPatentLastPosition()
-        {
-            parentPositions.Add(transform.positon);
-            //parentPositionsx.Count > 10 ? parentPositionsx.RemoveAt(0) : parentPositionsx.RemoveAt(0);
-            if (parentPositions.Count > 10) { parentPositions.RemoveAt(0); }
-            transform.positon = parentPositions[_moveDelay];
         }
 
     }
