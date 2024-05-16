@@ -6,22 +6,14 @@ using System.Threading.Tasks;
 
 namespace Game.Scripts
 {
-    public class Level :GameObject
+    public class Level : GameObject
     {
         public Level() {
         GameManager.Instance.Update.Add(this);
         }
         public override void Update()
         {
-            Console.WriteLine(GameManager.Instance.lives);
-            if (GameManager.Instance.points >= 20)
-            {
-                Console.WriteLine("Win");
-            }
-            if (GameManager.Instance.lives == 0)
-            {
-                Console.WriteLine("Loss");
-            }
+            
         }
     }
 
@@ -42,5 +34,7 @@ namespace Game.Scripts
             //fruits.Add(new Fruit(250, 300, 10));
         }
     }
+
+
     
 }

@@ -47,10 +47,12 @@
     <Reference Include="System.Windows.Forms.DataVisualization.Design" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Levels.cs" />
     <Compile Include="Scripts\Buttons.cs" />
     <Compile Include="Scripts\Collision.cs" />
     <Compile Include="Scripts\GameObject.cs" />
     <Compile Include="Scripts\Level.cs" />
+    <Compile Include="Scripts\Managers\LevelManager.cs" />
     <Compile Include="Scripts\Utilities\DeltaTime.cs" />
     <Compile Include="Scripts\Game.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
