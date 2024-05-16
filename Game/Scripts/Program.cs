@@ -33,7 +33,7 @@ namespace Game
                 Render();
             }
         }
-
+        // zeki es un capo
         static void Render()
         {
             Engine.Clear();
