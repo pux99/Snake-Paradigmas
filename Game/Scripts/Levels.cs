@@ -60,7 +60,8 @@ namespace Game
 
         public override void Input()
         {
-
+            if (Engine.GetKey(Keys.SPACE))
+                LevelsManager.Instance.SetLevel("Gameplay");
         }
 
         public override void Update()
@@ -81,31 +82,33 @@ namespace Game
         public static Snake mySnake;
         public static int[,] grid;
         public static List<PickUP> fruits;
+        public static List<Wall> walls;
         public Gameplay()
         {
             mySnake = new Snake(50, 5);
             grid = new int[50, 50];
             fruits = new List<PickUP>();
-
-            //Play.draw();
+            walls = new List<Wall>();
 
             mySnake.snake.Add(new SnakePart(10, 200, 1, mySnake));
             for (int i = 1; i < 6; i++)
                 mySnake.snake.Add(new SnakePart(50, 500, 1, mySnake));
-            //GameManager.Instance.sprites.Add(new Sprite("Sprites/rect4.png", 10, 20, 4, 10, 10, 0, 0, 3));
-            //GameManager.Instance.sprites.Add(new Sprite("Sprites/green.png", 10, 20, 4, 10, 10, 0, 0, 1));
             fruits.Add(new Fruit(250, 300, 10));
+
+            for (int i = 0; i < 10; i++)
+            {
+                walls.Add(new Wall(new Transform(20 + i * 10, 100), "Sprites/rect4.png"));
+            }
         }
         public override void Input()
         {
-            if (Engine.GetKey(Keys.SPACE))
-                LevelsManager.Instance.SetLevel("Menu");
+            
         }
         public override void Update()
         {
-            foreach (GameObject gameObject in GameManager.Instance.Update)
+            foreach (Update update in GameManager.Instance.Update)
             {
-                gameObject.Update();
+                update.Update();
             }
 
             Console.WriteLine(GameManager.Instance.lives);
@@ -152,10 +155,27 @@ namespace Game
                 fruit.Draw();
             }
 
+            foreach (Wall wall in walls)
+            {
+                wall.Draw();
+            }
+
         }
 
         static void Collisions()
         {
+            foreach (Wall wall in walls)
+            {
+                if (Collision.RectRect(mySnake.snake[0].transform.positon.x, mySnake.snake[0].transform.positon.y, mySnake.snake[0].transform.scale.x,
+               wall.transform.positon.x, wall.transform.positon.y, wall.transform.scale.x))
+                {
+                    GameManager.Instance.lives--;
+                    mySnake.snake.Clear();
+                    NewSnake();
+                }
+            }
+
+
             VoidEvent eatFruit = null;
             eatFruit += addSnakePiece;
             if (Collision.RectRect(mySnake.snake.First().transform.positon.x, mySnake.snake.First().transform.positon.y, mySnake.snake.First().transform.scale.x * 10,
@@ -200,8 +220,6 @@ namespace Game
                 mySnake.snake.First().transform.positon.y = 500;
             if (mySnake.snake.First().transform.positon.y > 510)
                 mySnake.snake.First().transform.positon.y = 0;
-
-
         }
 
         public static void addSnakePiece()

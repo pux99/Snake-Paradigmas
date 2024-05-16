@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Game.Scripts
 {
-    public class Buttons:GameObject
+    public class Buttons
     {
+        private Transform transform;
         public string Text;
         public string action;
         public Buttons(Transform transform, string text, string action)

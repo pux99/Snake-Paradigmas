@@ -10,14 +10,13 @@ using System.Windows.Forms.DataVisualization.Charting;
 namespace Game
 {
     public delegate void VoidEvent();
-
     public class Program
     {
         static void Main(string[] args)
         {
             Engine.Initialize("Snake",500,500);
 
-            LevelsManager.Instance.SetLevel("Gameplay");
+            LevelsManager.Instance.SetLevel("Menu");
 
             while (true)
             {
@@ -26,7 +25,6 @@ namespace Game
                 Render();
             }
         }
-
         static void Render()
         {
             Engine.Clear();
@@ -41,18 +39,10 @@ namespace Game
         {
             LevelsManager.Instance.CurrentLevel.Update();
         }
-
         static void Input()
         {
             LevelsManager.Instance.CurrentLevel.Input();
         }
-        
-
-       
-
-
-       
-
     }
     
 

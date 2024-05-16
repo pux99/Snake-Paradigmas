@@ -9,9 +9,10 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace Game
 {
-	public class Snake:GameObject
+	public class Snake : Update
 	{
         public Action Move;
+       
         public Snake(float Speed, int skankePartDelay)
         {
             speed = 1 / Speed;
@@ -33,11 +34,8 @@ namespace Game
                 snakePart.Draw();
             }
         }
-        public override void Start()
-        {
 
-        }
-        public override void Update()
+        public void Update()
         {
             Movement(MyDeltaTimer.DeltaTime());
         }
@@ -161,8 +159,9 @@ namespace Game
 
         }
     }
-    public class SnakePart:GameObject
+    public class SnakePart
     {
+        public Transform transform;
         public SnakePart(float X, float Y, int Size,Snake body)
         {
             transform.positon.x = X; transform.positon.y = Y;
@@ -180,6 +179,7 @@ namespace Game
         {
             get { return _parentPositions; }set { _parentPositions = value; }
         }
+
         public List<Vector2> myPositions
         {
             get { return _myPositions; }
@@ -187,7 +187,7 @@ namespace Game
         }
         public int size { get { return _size; } set { _size = value; } }
 
-        public override void Draw()
+        public void Draw()
         {
             Engine.Draw(_texture, transform.positon.x, transform.positon.y, transform.scale.x, transform.scale.y);
         }
