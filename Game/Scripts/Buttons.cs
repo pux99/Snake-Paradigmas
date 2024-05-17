@@ -22,7 +22,7 @@ namespace Game.Scripts
         {
             for (int i = 0;i< _text.Count(); i++)
             {
-                Transform tran = new Transform(transform.positon.x + i * 50, transform.positon.y,0,1,1);
+                Transform tran = new Transform(transform.positon.x + i * 50, transform.positon.y);
                 Engine.Draw("Sprites/Caraters/" +_text[i].ToString()+".png", tran.positon.x,tran.positon.y,tran.scale.x,tran.scale.y);
             }
         }
