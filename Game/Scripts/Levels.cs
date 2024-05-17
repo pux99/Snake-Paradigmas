@@ -28,7 +28,9 @@ namespace Game
     {
 
         private Animation uroboros;
-        
+        private Text snack;
+
+
 
         public Menu()
         {
@@ -38,16 +40,17 @@ namespace Game
         public override void Inizialize()
         {
             uroboros = new Animation("Sprites/Animations/Uroboros/", new Transform(200, 100, 0, .5f, .5f), .2f, 27);
+            snack = new Text(new Transform(30, 50, 0, 1.75f, 1.75f),"start");
             
         }
         public override void Draw()
         {
             //TITULO
-            Engine.Draw("Sprites/Caraters/S.png", 30, 50, 1.75f, 1.75f);
-            Engine.Draw("Sprites/Caraters/n.png", 120, 50, 1.75f, 1.75f);
-            Engine.Draw("Sprites/Caraters/a.png", 210, 50, 1.75f, 1.75f);
-            Engine.Draw("Sprites/Caraters/c.png", 300, 50, 1.75f, 1.75f);
-            Engine.Draw("Sprites/Caraters/k.png", 390, 50, 1.75f, 1.75f);
+            //Engine.Draw("Sprites/Caraters/S.png", 30, 50, 1.75f, 1.75f);
+            //Engine.Draw("Sprites/Caraters/n.png", 120, 50, 1.75f, 1.75f);
+            //Engine.Draw("Sprites/Caraters/a.png", 210, 50, 1.75f, 1.75f);
+            //Engine.Draw("Sprites/Caraters/c.png", 300, 50, 1.75f, 1.75f);
+            //Engine.Draw("Sprites/Caraters/k.png", 390, 50, 1.75f, 1.75f);
 
             //BOTON PLAY
             float ButtonLetterScale = 0.5f;
