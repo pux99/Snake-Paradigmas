@@ -72,15 +72,5 @@ namespace Game
         {
             levels.Add(levelName, level);
         }
-
-        public void AddToCurrentLevelUpdate(Update update)
-        {
-            if (currentLevel!=null)
-                currentLevel?.updates.Add(update);
-        }
-        public void AddToCurrentLevelDraw(Draw draw)
-        {
-            currentLevel?.draws.Add(draw);
-        }
     }
 }

@@ -16,7 +16,7 @@ namespace Game.Scripts
             _timer = timeBetweenFrames;
             _frameCount = frameCount;
             
-            LevelsManager.Instance.CurrentLevel.updates.Add(this);
+            LevelsManager.Instance.CurrentLevel.draws.Add(this);
             LevelsManager.Instance.CurrentLevel.updates.Add(this);
         }
 

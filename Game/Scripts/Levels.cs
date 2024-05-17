@@ -45,6 +45,16 @@ namespace Game
         }
         public override void Draw()
         {
+            //Text titulo = new Text(new Transform(30, 50, 0, 1.75f, 1.75f), "snack");
+            //Text boton_play = new Text(new Transform(190, 254, 0, 0.5f, 0.5f), "play");
+            //Text boton_options = new Text(new Transform(190, 400, 0, 1, 1), "options");
+            //Text boton_quit = new Text(new Transform(0, 400, 0, 1, 1), "quit");
+            //
+            //// Se escriben los textos.
+            //titulo.Draw();
+            //boton_play.Draw();
+            //boton_options.Draw();
+            //boton_quit.Draw();
             //TITULO
             //Engine.Draw("Sprites/Caraters/S.png", 30, 50, 1.75f, 1.75f);
             //Engine.Draw("Sprites/Caraters/n.png", 120, 50, 1.75f, 1.75f);
@@ -73,7 +83,7 @@ namespace Game
             Engine.Draw("Sprites/Caraters/a.png", 250, 254, ButtonLetterScale, ButtonLetterScale);
             Engine.Draw("Sprites/Caraters/y.png", 280, 254, ButtonLetterScale, ButtonLetterScale);
 
-            foreach (Draw draw in LevelsManager.Instance.CurrentLevel.updates)
+            foreach (Draw draw in LevelsManager.Instance.CurrentLevel.draws)
             {
                 draw.Draw();
             }
