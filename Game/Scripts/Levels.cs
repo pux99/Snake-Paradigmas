@@ -8,6 +8,7 @@ using Microsoft.VisualBasic;
 using System.IO.Ports;
 using System.Reflection;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Security.Policy;
 
 namespace Game
 {
@@ -26,36 +27,20 @@ namespace Game
         {
 
         }
-
+        
         public override void Draw()
         {
-            //TITULO
-            Engine.Draw("Sprites/Caraters/S.png", 30, 50, 1.75f, 1.75f);
-            Engine.Draw("Sprites/Caraters/n.png", 120, 50, 1.75f, 1.75f);
-            Engine.Draw("Sprites/Caraters/a.png", 210, 50, 1.75f, 1.75f);
-            Engine.Draw("Sprites/Caraters/c.png", 300, 50, 1.75f, 1.75f);
-            Engine.Draw("Sprites/Caraters/k.png", 390, 50, 1.75f, 1.75f);
+            // Se crean los textos.
+            Text titulo = new Text(new Transform(30, 50, 0, 1.75f, 1.75f), "snack");
+            Text boton_play = new Text(new Transform(190, 254, 0, 0.5f, 0.5f), "play");
+            Text boton_options = new Text(new Transform(190, 400, 0, 1, 1), "options");
+            Text boton_quit = new Text(new Transform(0, 400, 0, 1, 1), "quit");
 
-            //BOTON PLAY
-            float ButtonLetterScale = 0.5f;
-
-            Engine.Draw("Sprites/grey.png", 186, 250, 8, 2.5f);
-            Engine.Draw("Sprites/Caraters/p.png", 190, 254, ButtonLetterScale, ButtonLetterScale);
-            Engine.Draw("Sprites/Caraters/l.png", 220, 254, ButtonLetterScale, ButtonLetterScale);
-            Engine.Draw("Sprites/Caraters/a.png", 250, 254, ButtonLetterScale, ButtonLetterScale);
-            Engine.Draw("Sprites/Caraters/y.png", 280, 254, ButtonLetterScale, ButtonLetterScale);
-            //BOTON OPTIONS
-            Engine.Draw("Sprites/grey.png", 186, 250, 8, 2.5f);
-            Engine.Draw("Sprites/Caraters/p.png", 190, 254, ButtonLetterScale, ButtonLetterScale);
-            Engine.Draw("Sprites/Caraters/l.png", 220, 254, ButtonLetterScale, ButtonLetterScale);
-            Engine.Draw("Sprites/Caraters/a.png", 250, 254, ButtonLetterScale, ButtonLetterScale);
-            Engine.Draw("Sprites/Caraters/y.png", 280, 254, ButtonLetterScale, ButtonLetterScale);
-            //BOTON QUIT
-            Engine.Draw("Sprites/grey.png", 186, 250, 8, 2.5f);
-            Engine.Draw("Sprites/Caraters/p.png", 190, 254, ButtonLetterScale, ButtonLetterScale);
-            Engine.Draw("Sprites/Caraters/l.png", 220, 254, ButtonLetterScale, ButtonLetterScale);
-            Engine.Draw("Sprites/Caraters/a.png", 250, 254, ButtonLetterScale, ButtonLetterScale);
-            Engine.Draw("Sprites/Caraters/y.png", 280, 254, ButtonLetterScale, ButtonLetterScale);
+            // Se escriben los textos.
+            titulo.Draw();
+            boton_play.Draw();
+            boton_options.Draw();
+            boton_quit.Draw();
         }
 
         public override void Input()
