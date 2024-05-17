@@ -8,72 +8,39 @@ using Microsoft.VisualBasic;
 using System.IO.Ports;
 using System.Reflection;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Security.Policy;
 
 namespace Game
 {
     public abstract class Levels
     {
-        public abstract void Inizialize();
         public abstract void Input();
         public abstract void Update();
         public abstract void Draw();
         public abstract void Reset();
-
-        public List<Draw> draws=new List<Draw>();
-        public List<Update> updates=new List<Update>();
-        public List<Inputs> inputs=new List<Inputs>();
     }
 
     public class Menu : Levels
     {
 
-        private Animation uroboros;
-        
-
         public Menu()
         {
-           
-        }
 
-        public override void Inizialize()
-        {
-            uroboros = new Animation("Sprites/Animations/Uroboros/", new Transform(200, 100, 0, .5f, .5f), .2f, 27);
-            
         }
+        
         public override void Draw()
         {
-            //TITULO
-            Engine.Draw("Sprites/Caraters/S.png", 30, 50, 1.75f, 1.75f);
-            Engine.Draw("Sprites/Caraters/n.png", 120, 50, 1.75f, 1.75f);
-            Engine.Draw("Sprites/Caraters/a.png", 210, 50, 1.75f, 1.75f);
-            Engine.Draw("Sprites/Caraters/c.png", 300, 50, 1.75f, 1.75f);
-            Engine.Draw("Sprites/Caraters/k.png", 390, 50, 1.75f, 1.75f);
+            // Se crean los textos.
+            Text titulo = new Text(new Transform(30, 50, 0, 1.75f, 1.75f), "snack");
+            Text boton_play = new Text(new Transform(190, 254, 0, 0.5f, 0.5f), "play");
+            Text boton_options = new Text(new Transform(190, 400, 0, 1, 1), "options");
+            Text boton_quit = new Text(new Transform(0, 400, 0, 1, 1), "quit");
 
-            //BOTON PLAY
-            float ButtonLetterScale = 0.5f;
-
-            Engine.Draw("Sprites/grey.png", 186, 250, 8, 2.5f);
-            Engine.Draw("Sprites/Caraters/p.png", 190, 254, ButtonLetterScale, ButtonLetterScale);
-            Engine.Draw("Sprites/Caraters/l.png", 220, 254, ButtonLetterScale, ButtonLetterScale);
-            Engine.Draw("Sprites/Caraters/a.png", 250, 254, ButtonLetterScale, ButtonLetterScale);
-            Engine.Draw("Sprites/Caraters/y.png", 280, 254, ButtonLetterScale, ButtonLetterScale);
-            //BOTON OPTIONS
-            Engine.Draw("Sprites/grey.png", 186, 250, 8, 2.5f);
-            Engine.Draw("Sprites/Caraters/p.png", 190, 254, ButtonLetterScale, ButtonLetterScale);
-            Engine.Draw("Sprites/Caraters/l.png", 220, 254, ButtonLetterScale, ButtonLetterScale);
-            Engine.Draw("Sprites/Caraters/a.png", 250, 254, ButtonLetterScale, ButtonLetterScale);
-            Engine.Draw("Sprites/Caraters/y.png", 280, 254, ButtonLetterScale, ButtonLetterScale);
-            //BOTON QUIT
-            Engine.Draw("Sprites/grey.png", 186, 250, 8, 2.5f);
-            Engine.Draw("Sprites/Caraters/p.png", 190, 254, ButtonLetterScale, ButtonLetterScale);
-            Engine.Draw("Sprites/Caraters/l.png", 220, 254, ButtonLetterScale, ButtonLetterScale);
-            Engine.Draw("Sprites/Caraters/a.png", 250, 254, ButtonLetterScale, ButtonLetterScale);
-            Engine.Draw("Sprites/Caraters/y.png", 280, 254, ButtonLetterScale, ButtonLetterScale);
-
-            foreach (Draw draw in LevelsManager.Instance.CurrentLevel.updates)
-            {
-                draw.Draw();
-            }
+            // Se escriben los textos.
+            titulo.Draw();
+            boton_play.Draw();
+            boton_options.Draw();
+            boton_quit.Draw();
         }
 
         public override void Input()
@@ -87,17 +54,11 @@ namespace Game
             // Si la Snake toca el Boton PLAY collision.rectrect de snake con Boton gris
             //LevelsManager.Instance.SetLevel("Gameplay");
             //LevelsManager.Instance.SetLevel("Options");
-
-           foreach (Update update in LevelsManager.Instance.CurrentLevel.updates)
-           {
-               update.Update();
-           }
         }
 
         public override void Reset()
         {
-            LevelsManager.Instance.CurrentLevel.updates.Clear();
-            LevelsManager.Instance.CurrentLevel.updates.Clear();
+
         }
     }
 
@@ -109,33 +70,28 @@ namespace Game
         public static List<Wall> walls;
         public Gameplay()
         {
-
-        }
-        public override void Inizialize()
-        {
             mySnake = new Snake(50, 5);
             grid = new int[50, 50];
             fruits = new List<PickUP>();
             walls = new List<Wall>();
+
+            mySnake.snake.Add(new SnakePart(10, 200, 1, mySnake));
             for (int i = 1; i < 6; i++)
                 mySnake.snake.Add(new SnakePart(50, 500, 1, mySnake));
             fruits.Add(new Fruit(250, 300, 10));
+
             for (int i = 0; i < 10; i++)
             {
                 walls.Add(new Wall(new Transform(20 + i * 10, 100), "Sprites/rect4.png"));
             }
-            mySnake.snake.Add(new SnakePart(10, 200, 1, mySnake));
         }
         public override void Input()
         {
-            foreach(Inputs input in LevelsManager.Instance.CurrentLevel.inputs)
-            {
-                input.Input();
-            }
+            
         }
         public override void Update()
         {
-            foreach (Update update in LevelsManager.Instance.CurrentLevel.updates)
+            foreach (Update update in GameManager.Instance.Update)
             {
                 update.Update();
             }
@@ -143,11 +99,11 @@ namespace Game
             Console.WriteLine(GameManager.Instance.lives);
             if (GameManager.Instance.points >= 20)
             {
-                LevelsManager.Instance.SetLevel("Victory");
+                Console.WriteLine("Win");
             }
             if (GameManager.Instance.lives == 0)
             {
-                LevelsManager.Instance.SetLevel("Defeat");
+                Console.WriteLine("Loss");
             }
             Collisions();
         }
@@ -159,19 +115,36 @@ namespace Game
                 {
                     if ((i + j) % 2 == 0)
                     {
+                        //GameManager.Instance.sprites.Add(new Sprite("Sprites/green.png", i * 10, j * 10,0, .625f, .625f,0,0,0));
                         Engine.Draw("Sprites/green.png", i * 10, j * 10, .625f, .625f);
                     }
                     else
                     {
+                        //GameManager.Instance.sprites.Add(new Sprite("Sprites/grey.png", i * 10, j * 10, 0, .625f, .625f, 0, 0, 0));
                         Engine.Draw("Sprites/grey.png", i * 10, j * 10, .625f, .625f);
                     }
                 }
             }
             //GameManager.Instance.sprites = GameManager.Instance.sprites.OrderBy(o=>o.order).ToList();
-            foreach(Draw draw in LevelsManager.Instance.CurrentLevel.draws)
+            foreach (Sprite sprite in GameManager.Instance.sprites)
             {
-                draw.Draw();
+                Engine.Draw(sprite.path,
+                            sprite.transform.positon.x, sprite.transform.positon.y,
+                            sprite.transform.scale.x, sprite.transform.scale.y,
+                            sprite.transform.rotation,
+                            sprite.offset.x, sprite.offset.y);
             }
+            mySnake.DrawSnakeParts();
+            foreach (Fruit fruit in fruits)
+            {
+                fruit.Draw();
+            }
+
+            foreach (Wall wall in walls)
+            {
+                wall.Draw();
+            }
+
         }
 
         static void Collisions()
@@ -182,15 +155,12 @@ namespace Game
                wall.transform.positon.x, wall.transform.positon.y, wall.transform.scale.x))
                 {
                     GameManager.Instance.lives--;
-                    foreach (SnakePart snakePart in mySnake.snake)
-                    {
-                        LevelsManager.Instance.CurrentLevel.draws.Remove(snakePart);
-                    }
-                    mySnake.snake.Clear();
                     mySnake.snake.Clear();
                     NewSnake();
                 }
             }
+
+
             VoidEvent eatFruit = null;
             eatFruit += addSnakePiece;
             if (Collision.RectRect(mySnake.snake.First().transform.positon.x, mySnake.snake.First().transform.positon.y, mySnake.snake.First().transform.scale.x * 10,
@@ -221,12 +191,10 @@ namespace Game
                 mySnake.snake[i].transform.positon.x, mySnake.snake[i].transform.positon.y, mySnake.snake[i].transform.scale.x))
                 {
                     GameManager.Instance.lives--;
-                    foreach(SnakePart snakePart in mySnake.snake)
-                    {
-                        LevelsManager.Instance.CurrentLevel.draws.Remove(snakePart);
-                    }
                     mySnake.snake.Clear();
                     NewSnake();
+
+
                 }
             }
             if (mySnake.snake.First().transform.positon.x < -10)
@@ -252,17 +220,12 @@ namespace Game
         }
         public override void Reset()
         {
-            LevelsManager.Instance.CurrentLevel.updates.Clear();
-            LevelsManager.Instance.CurrentLevel.updates.Clear();
+
         }
     }
 
     public class Options : Levels
     {
-        public override void Inizialize()
-        {
-
-        }
         public override void Input()
         {
 
@@ -283,10 +246,6 @@ namespace Game
 
     public class Victory : Levels
     {
-        public override void Inizialize()
-        {
-            
-        }
         public override void Input()
         {
 
@@ -307,10 +266,6 @@ namespace Game
 
     public class Defeat : Levels
     {
-        public override void Inizialize()
-        {
-
-        }
         public override void Input()
         {
 

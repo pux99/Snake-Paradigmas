@@ -6,7 +6,28 @@ using System.Threading.Tasks;
 
 namespace Game
 {
-    class Text
+    //Esta clase recibe un string (lo que se quiere escribir) y un transform (su posicion). Con Draw escribe su string.
+    class Text : Draw
     {
+        private Transform _transform;
+        private string _text;
+        
+        public Text(Transform t_transform, string t_text)
+        {
+            this._transform = t_transform;
+            _text = t_text;
+        }
+        public void Draw()
+        {
+            for (int i = 0; i < _text.Count(); i++)
+            {
+                char letter = _text[i];
+                if (letter >= 'a' && letter <= 'z') {
+                    letter = (char)(letter - 32); //Transforma las minusculas en mayusculas. No tenemos sprites de minusculas.
+                }
+                Transform tran = new Transform(_transform.positon.x + i * 56* _transform.scale.x, _transform.positon.y, _transform.rotation, _transform.scale.x, _transform.scale.y);
+                Engine.Draw($"Sprites/Caraters/" + letter + ".png",tran.positon.x, tran.positon.y, tran.scale.x, tran.scale.y, tran.rotation);
+            }
+        }
     }
 }
