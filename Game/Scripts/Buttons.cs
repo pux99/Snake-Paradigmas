@@ -6,25 +6,24 @@ using System.Threading.Tasks;
 
 namespace Game.Scripts
 {
-    public class Buttons
+    public class Buttons:Draw
     {
         private Transform transform;
-        public string Text;
-        public string action;
-        public Buttons(Transform transform, string text, string action)
+        private string _text;
+        public bool active { get { return active; } }
+        public Buttons(Transform transform, string text)
         {
             this.transform = transform;
-            Text = text;
-            this.action = action;
+            _text = text;
+            LevelsManager.Instance.CurrentLevel.draws.Add(this);
         }
-        public void draw()
+
+        public void Draw()
         {
-            for (int i = 0;i< Text.Count(); i++)
+            for (int i = 0;i< _text.Count(); i++)
             {
-                Transform tran = new Transform(transform.positon.x + i * 50, transform.positon.y);
-                GameManager.Instance.sprites.Add(new Sprite($"Sprites/Caraters/" +Text[i].ToString()+".png", tran, Vector2.cero(), 10));
-               // Engine.Draw("Sprites/green.png",
-               //             transform.positon.x + i * 5, transform.positon.y);
+                Transform tran = new Transform(transform.positon.x + i * 50, transform.positon.y,0,1,1);
+                Engine.Draw("Sprites/Caraters/" +_text[i].ToString()+".png", tran.positon.x,tran.positon.y,tran.scale.x,tran.scale.y);
             }
         }
     }

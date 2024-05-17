@@ -14,5 +14,24 @@ namespace Game
     public interface Draw
     {
         void Draw();
+        bool active
+        {
+            get;
+        }
     }
+
+    public interface Inputs
+    {
+        void Input();
+    }
+
+
+    //public interface Collider
+    //{
+    //    int layer
+    //    {
+    //        get;
+    //    }
+    //    void Collicion();
+    //}
 }

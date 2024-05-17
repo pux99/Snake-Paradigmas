@@ -13,8 +13,5 @@ namespace Game
         public static GameManager Instance {  get { return instance; } }
         public int points = 0;
         public int lives = 3;
-        public int currentLevel;
-        public List<Sprite> sprites = new List<Sprite>();// porque tube que aser todos los structs publics para poeder hacer esto
-        public List<Update> Update=new List<Update>();
     }
 }

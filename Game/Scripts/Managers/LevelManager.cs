@@ -9,43 +9,78 @@ namespace Game
 {
     public class LevelsManager
     {
-        private static LevelsManager instance = new LevelsManager();
+        private static readonly LevelsManager instance = new LevelsManager();
         
         public static LevelsManager Instance { get { return instance; } }
 
         private Dictionary<string, Levels> levels = new Dictionary<string, Levels>();
 
         private Levels currentLevel = null;
+        public int a = 0;
 
 
         public LevelsManager()
         {
             levels.Clear();
-            AddNewLevel("Menu", new Menu());
-            AddNewLevel("Gameplay", new Gameplay());
+            //AddNewLevel("Menu", new Menu());
+            //AddNewLevel("Gameplay", new Gameplay());
 
 
-            SetLevel("Menu");
+            //SetLevel("Menu"); esto me estaba cagadon
         }
 
         public Levels CurrentLevel => currentLevel;
 
+        //public void SetLevel(string levelName)
+        //{
+        //   if(levels.TryGetValue(levelName, out var l_currentLevel))
+        //   {
+        //        currentLevel = l_currentLevel;
+        //        currentLevel.Reset();
+        //   } 
+        //   else 
+        //   {
+        //        Console.WriteLine("No nay nivel"); 
+        //   }
+        //}
         public void SetLevel(string levelName)
         {
-           if(levels.TryGetValue(levelName, out var l_currentLevel))
-           {
-               currentLevel = l_currentLevel;
+            if(currentLevel!=null)
                 currentLevel.Reset();
-           } 
-           else 
-           {
-                Console.WriteLine("No nay nivel"); 
-           }
+            switch (levelName)
+            {
+                case "Menu":
+                    currentLevel = new Menu();
+                    break;
+                case "Gameplay":
+                    currentLevel = new Gameplay();
+                    break;
+                case "Defeat":
+                    currentLevel = new Defeat();
+                    break;
+                case "Victory":
+                    currentLevel = new Victory();
+                    break;
+                default:
+                    Console.WriteLine("No nay nivel");
+                    break;
+            }
+            LevelsManager.Instance.CurrentLevel.Inizialize();
         }
 
         public void AddNewLevel(string levelName, Levels level)
         {
             levels.Add(levelName, level);
+        }
+
+        public void AddToCurrentLevelUpdate(Update update)
+        {
+            if (currentLevel!=null)
+                currentLevel?.updates.Add(update);
+        }
+        public void AddToCurrentLevelDraw(Draw draw)
+        {
+            currentLevel?.draws.Add(draw);
         }
     }
 }

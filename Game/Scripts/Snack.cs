@@ -9,77 +9,74 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace Game
 {
-	public class Snake : Update
-	{
-        public Action Move;
-       
-        public Snake(float Speed, int skankePartDelay)
+	public class Snake : Update , Inputs
+	{       
+        public Snake(float speed, int skankePartDelay)
         {
-            speed = 1 / Speed;
-            _SkankePartDelay = skankePartDelay;
-            GameManager.Instance.Update.Add(this);
+            _speed = 1 / speed;
+            _skankePartDelay = skankePartDelay;
+            LevelsManager.Instance.CurrentLevel.updates.Add(this);
+            LevelsManager.Instance.CurrentLevel.inputs.Add(this);
         }
-        private int DelayCounter;
-        private float timer=0;
-        private int _SkankePartDelay;
+
+
+        private int _skankePartDelay;
+        private float _timer=0;
+        private float _speed = 0.5f;
+        private string _direction = "Down";
+        private string _nextDirection = "Down";
         public List<SnakePart> snake = new List<SnakePart>();
-        private float speed = 0.5f;
-        private string direction = "Down";
-        private string nextDirection = "Down";
-        public int SkankePartDelay { get { return _SkankePartDelay; } set { _SkankePartDelay = value; } }
-        public void DrawSnakeParts()
-        {
-            foreach (SnakePart snakePart in snake)
-            {
-                snakePart.Draw();
-            }
-        }
+
+        public int SkankePartDelay { get { return _skankePartDelay; } set { _skankePartDelay = value; } }
 
         public void Update()
         {
-            Movement(MyDeltaTimer.DeltaTime());
+            Movement(MyDeltaTimer.deltaTime);
+        }
+        public void Input()
+        {
+            if (Engine.GetKey(Keys.A))
+                _nextDirection = "Left";
+            if (Engine.GetKey(Keys.D))
+                _nextDirection = "Right";
+            if (Engine.GetKey(Keys.S))
+                _nextDirection = "Down";
+            if (Engine.GetKey(Keys.W))
+                _nextDirection = "Up";
         }
         public void Movement(float deltaTime)
         {
-            if (Engine.GetKey(Keys.A))
-                nextDirection = "Left";
-            if (Engine.GetKey(Keys.D))
-                nextDirection = "Right";
-            if (Engine.GetKey(Keys.S))
-                nextDirection = "Down";
-            if (Engine.GetKey(Keys.W))
-                nextDirection = "Up";
-            timer -= deltaTime;
-            if (timer <= 0)
+            _timer -= deltaTime;
+            if (_timer <= 0)
             {
-                switch (nextDirection)
+                switch (_nextDirection)
                 {
                     case "Left":
-                        if ( direction != "Right")
+                        if ( _direction != "Right")
                         {
-                            direction = nextDirection;
+                            _direction = _nextDirection;
                         }
                         break;
                     case "Right":
-                        if ( direction != "Left")
+                        if ( _direction != "Left")
                         {
-                            direction = nextDirection;
+                            _direction = _nextDirection;
                         }
                         break;
                     case "Down":
-                        if ( direction != "Up")
+                        if ( _direction != "Up")
                         {
-                            direction = nextDirection;
+                            _direction = _nextDirection;
                         }
                         break;
                     case "Up":
-                        if ( direction != "Down")
+                        if ( _direction != "Down")
                         {
-                            direction = nextDirection;
+                            _direction = _nextDirection;
                         }
                         break;
                 }
-                switch (direction)
+                switch (_direction)
                 {
                     case "Left":                      
                         snake.First().transform.positon.x -= 10;
@@ -94,103 +91,84 @@ namespace Game
                         snake.First().transform.positon.y -= 10;
                         break;
                 }
-                timer = speed;
+                _timer = _speed;
                 SnakePartsMovement();
             }
         }
-        public void swapDirection()
+        public void SwapDirection()
         {
-            switch (direction)
+            switch (_direction)
             {
                 case "Left":
-                    direction = "Right";
+                    _direction = "Right";
                     break;
                 case "Right":
-                    direction = "Left";
+                    _direction = "Left";
                     break;
                 case "Down":
-                    direction = "Up";
+                    _direction = "Up";
                     break;
                 case "Up":
-                    direction = "Down";
+                    _direction = "Down";
                     break;
             }
-            nextDirection = direction;
+            _nextDirection = _direction;
+        }
+        public void DrawSnakeParts()
+        {
+            foreach (SnakePart snakePart in snake)
+            {
+                snakePart.Draw();
+            }
         }
         public void SnakePartsMovement()
         {
-            DelayCounter++;
             snake[0].myPositions.Add(snake[0].transform.positon);
-            if (snake[0].myPositions.Count > _SkankePartDelay+1)
+            if (snake[0].myPositions.Count > _skankePartDelay+1)
             {
                 snake[0].myPositions.RemoveAt(0);
             }
             for (int i = 1; i < snake.Count; i++)
             {
-                //snake[i].parentPositions.Add(snake[i - 1].transform.positon);
-                //if (snake[i].parentPositions.Count > _SkankePartDelay + 2)
-                //{
-                //    snake[i].parentPositions.RemoveAt(0);
-                //    snake[i].transform.positon = snake[i].parentPositions[0];
-                //}
-
                 snake[i].myPositions.Add(snake[i].transform.positon);
-                if (snake[i].myPositions.Count > _SkankePartDelay)
+                if (snake[i].myPositions.Count > _skankePartDelay)
                 {
                     snake[i].myPositions.RemoveAt(0);
                 }
-                if (snake[i - 1].myPositions.Count > _SkankePartDelay - 1)
+                if (snake[i - 1].myPositions.Count > _skankePartDelay -1)
                 {
                     snake[i].transform.positon = snake[i - 1].myPositions[0];
-                }
-                    
-            }
-            if (DelayCounter== _SkankePartDelay)
-            {
-                DelayCounter=0;
+                }  
             }
         }
         public void addSnakePiece()
         {
-            snake.Add(new SnakePart(snake.Last().transform.positon.x, snake.Last().transform.positon.y - 11, 1, this));
-        }
-        public void collition()
-        {
-
+            snake.Add(new SnakePart(snake.Last().transform.positon.x, snake.Last().transform.positon.y, 1, this));
         }
     }
-    public class SnakePart
+    public class SnakePart:Draw
     {
-        public Transform transform;
         public SnakePart(float X, float Y, int Size,Snake body)
         {
-            transform.positon.x = X; transform.positon.y = Y;
-            transform.scale.x = Size; transform.scale.y = Size;
-            _moveDelay = body.SkankePartDelay;
-            //body.Move += MoveToPatentLastPosition;
+            transform.positon.x = X;    transform.positon.y = Y;
+            transform.scale.x   = Size; transform.scale.y   = Size;
+            LevelsManager.Instance.CurrentLevel.draws.Add(this);
         }
-        private int _moveDelay;
-        private List<Vector2> _myPositions = new List<Vector2>();
-        private List<Vector2> _parentPositions = new List<Vector2>();
-        private int _size = 10;
+        public Transform transform;
+
+        private bool _active;
         private string _texture = "Sprites/rect4.png";
-
-        public List<Vector2> parentPositions
-        {
-            get { return _parentPositions; }set { _parentPositions = value; }
-        }
-
+        private List<Vector2> _myPositions = new List<Vector2>();
+        public bool active { get { return _active; } }
         public List<Vector2> myPositions
         {
             get { return _myPositions; }
             set { _myPositions = value; }
         }
-        public int size { get { return _size; } set { _size = value; } }
 
         public void Draw()
         {
             Engine.Draw(_texture, transform.positon.x, transform.positon.y, transform.scale.x, transform.scale.y);
         }
-
     }
 }

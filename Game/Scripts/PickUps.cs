@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace Game
 {
-    public class PickUP
+    public class PickUP:Draw
     {
         public Transform transform;
-        //public int x;
-        //public int y;
-        //public int size = 10;
         public bool state = true;
+        public bool active { get { return active; } }
         private string _texture = "Sprites/apple.png";
         
         public PickUP(int x, int y, int scale)
@@ -20,6 +18,7 @@ namespace Game
             transform.positon.x = x;
             transform.positon.y=y;
             transform.scale.x = scale;
+            LevelsManager.Instance.CurrentLevel.draws.Add(this);
         }
         public void effect()
         {
@@ -29,7 +28,6 @@ namespace Game
         {
             Random rndY = new Random();
             Random rndX = new Random();
-
             transform.positon.x = rndX.Next(10, 490);
             transform.positon.y = rndY.Next(10, 490);
         }

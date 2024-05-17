@@ -10,23 +10,13 @@ namespace Game
 
     public static class MyDeltaTimer
     {
-        private static Stopwatch stopwatch=new Stopwatch();
-        private static float previousElapsedTime = 0f;
-
-        //public  MyDeltaTimer()
-        //{
-        //    stopwatch = new Stopwatch();
-        //    stopwatch.Start();
-        //    previousElapsedTime = 0f;
-        //}
-
-        public static float DeltaTime()//pregunrtar si esta bien?
+        public static float deltaTime = 0;
+        static DateTime lastFrameTime = DateTime.Now;
+        public static void CalcDeltaTime()
         {
-            stopwatch.Start();
-            float currentTime = (float)stopwatch.Elapsed.TotalSeconds;
-            float deltaTime = currentTime - previousElapsedTime;
-            previousElapsedTime = currentTime;
-            return deltaTime;
+            TimeSpan deltaSpan = DateTime.Now - lastFrameTime;
+            deltaTime = (float)deltaSpan.TotalSeconds;
+            lastFrameTime = DateTime.Now;
         }
     }
 }

@@ -17,9 +17,11 @@ namespace Game
             Engine.Initialize("Snake",500,500);
 
             LevelsManager.Instance.SetLevel("Menu");
+            
 
             while (true)
             {
+                MyDeltaTimer.CalcDeltaTime();
                 Input();
                 Update();//todo: update
                 Render();
