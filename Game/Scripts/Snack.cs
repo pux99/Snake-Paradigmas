@@ -14,20 +14,20 @@ namespace Game
         public Snake(float speed, int skankePartDelay)
         {
             _speed = 1 / speed;
-            _skankePartDelay = skankePartDelay;
+            _snakePartDelay = skankePartDelay;
             LevelsManager.Instance.CurrentLevel.updates.Add(this);
             LevelsManager.Instance.CurrentLevel.inputs.Add(this);
         }
 
 
-        private int _skankePartDelay;
+        private int _snakePartDelay;
         private float _timer=0;
         private float _speed = 0.5f;
         private string _direction = "Down";
         private string _nextDirection = "Down";
         public List<SnakePart> snake = new List<SnakePart>();
 
-        public int SkankePartDelay { get { return _skankePartDelay; } set { _skankePartDelay = value; } }
+        public int snakePartDelay { get { return _snakePartDelay; } set { _snakePartDelay = value; } }
 
         public void Update()
         {
@@ -117,18 +117,18 @@ namespace Game
         public void SnakePartsMovement()
         {
             snake[0].myPositions.Add(snake[0].transform.positon);
-            if (snake[0].myPositions.Count > _skankePartDelay+1)
+            if (snake[0].myPositions.Count > _snakePartDelay +1)
             {
                 snake[0].myPositions.RemoveAt(0);
             }
             for (int i = 1; i < snake.Count; i++)
             {
                 snake[i].myPositions.Add(snake[i].transform.positon);
-                if (snake[i].myPositions.Count > _skankePartDelay)
+                if (snake[i].myPositions.Count > _snakePartDelay)
                 {
                     snake[i].myPositions.RemoveAt(0);
                 }
-                if (snake[i - 1].myPositions.Count > _skankePartDelay -1)
+                if (snake[i - 1].myPositions.Count > _snakePartDelay -1)
                 {
                     snake[i].transform.positon = snake[i - 1].myPositions[0];
                 }  

@@ -13,5 +13,6 @@ namespace Game
         public static GameManager Instance {  get { return instance; } }
         public int points = 0;
         public int lives = 3;
+        public int SnakeDelay = 5;
     }
 }

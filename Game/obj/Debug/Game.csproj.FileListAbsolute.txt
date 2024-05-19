@@ -336,3 +336,4 @@ C:\Users\Zeki\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Sprites\Animation
 C:\Users\Zeki\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Sprites\Animations\Uroboros\25.png
 C:\Users\Zeki\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Sprites\Animations\Uroboros\26.png
 C:\Users\Zeki\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Sprites\SnakeHead.png
+C:\Users\Ignacio Puk\source\repos\Snake Paradigmas\Snake-Paradigmas\Game\bin\Debug\Sounds\Munching.wav

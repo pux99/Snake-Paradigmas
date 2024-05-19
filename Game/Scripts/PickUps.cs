@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,6 +28,7 @@ namespace Game
             LevelsManager.Instance.CurrentLevel.draws.Add(this);
             _textures = new Texture(_texture);
             _imgSize = new Vector2(_textures.Width * transform.scale.x, _textures.Height * transform.scale.y);
+            Console.WriteLine(imgSize.x.ToString()+" " +imgSize.y.ToString());
         }
         public void effect()
         {
@@ -51,12 +53,32 @@ namespace Game
     }
     public class Fruit : PickUP
     {
-        public Fruit(int x, int y, float SizeX, float SizeY):base(x,y,SizeX,SizeY)
+        public Fruit(int x, int y, float SizeX, float SizeY, string _direction, int _volume) :base(x,y,SizeX,SizeY)
         {
-            //transform.positon.x = x;
-            //transform.positon.y = y;
-            //transform.scale.x = scale;
+            sound = new Sound(_direction, _volume);
+        }
+        private Sound sound;
+
+        public void Reproducer()
+        {
+            SoundPlayer player = new SoundPlayer(this.sound.direction);
+            player.Play();
         }
 
+    }
+    public class Sound
+    {
+        private string _direction;
+        public string direction
+        {
+            get { return _direction; }
+            set { _direction = value; }
+        }
+        private int _volume;
+        public Sound(string direction, int volume)
+        {
+            _direction = direction;
+            _volume = volume;
+        }
     }
 }

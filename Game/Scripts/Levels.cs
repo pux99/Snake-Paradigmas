@@ -135,10 +135,10 @@ namespace Game
         }
         public static void NewSnake()
         {
-            mySnake.SkankePartDelay = 2;
-            mySnake.snake.Add(new SnakePart(70, 400, 1, "Sprites/rect4.png"));
+            mySnake.snakePartDelay = 2;
+            mySnake.snake.Add(new SnakePart(240, 240, 1, "Sprites/rect4.png"));
             for (int i = 1; i < 6; i++)
-                mySnake.snake.Add(new SnakePart(50, 460, 1, "Sprites/rect4.png"));
+                mySnake.snake.Add(new SnakePart(250, 250, 1, "Sprites/rect4.png"));
         }
 
         public override void Reset()
@@ -152,7 +152,7 @@ namespace Game
     {
         public static Snake mySnake;
         public static int[,] grid;
-        public static List<PickUP> fruits;
+        public static List<Fruit> fruits;
         public static List<Wall> walls;
         public static CombatUi combatUI;
         public VoidEvent getPoint { get; set; }
@@ -165,7 +165,7 @@ namespace Game
         {
             mySnake  = new Snake(50, 5);
             grid     = new int[50, 50];
-            fruits   = new List<PickUP>();
+            fruits   = new List<Fruit>();
             walls    = new List<Wall>();
             combatUI = new CombatUi(this);
 
@@ -180,7 +180,7 @@ namespace Game
                 }
             }
 
-            fruits.Add(new Fruit(250, 300, .31f, .31f));
+            fruits.Add(new Fruit(250, 300, .31f, .31f, "Sounds/Munching.wav",1));
             for (int i = 0; i < 10; i++)
             {
                 walls.Add(new Wall(new Transform(100 + i * 10 , 100), "Sprites/rect4.png"));
@@ -208,7 +208,6 @@ namespace Game
                 update.Update();
             }
 
-            Console.WriteLine(GameManager.Instance.lives);
             if (GameManager.Instance.points >= 20)
             {
                 LevelsManager.Instance.SetLevel("Victory");
@@ -269,8 +268,9 @@ namespace Game
             }
             VoidEvent eatFruit = null;
             eatFruit += addSnakePiece;
-            if (Collision.RectRect(mySnake.snake.First().transform.positon.x, mySnake.snake.First().transform.positon.y, mySnake.snake.First().imgSize.x * mySnake.snake.First().imgSize.x, mySnake.snake.First().imgSize.y * mySnake.snake.First().imgSize.x,
-                fruits.First().transform.positon.x, fruits.First().transform.positon.y, fruits.First().imgSize.x * fruits.First().imgSize.x, fruits.First().imgSize.y * fruits.First().imgSize.y))
+            eatFruit += fruits.First().Reproducer;
+            if (Collision.RectRect(mySnake.snake.First().transform.positon.x, mySnake.snake.First().transform.positon.y, mySnake.snake.First().imgSize.x , mySnake.snake.First().imgSize.y,
+                fruits.First().transform.positon.x, fruits.First().transform.positon.y,fruits.First().imgSize.x , fruits.First().imgSize.y))
             {
                 fruits.First().ChangeToRandomPosition();
                 //for (int i = 0;i< mySnake.snake.Count/2; i++)
@@ -324,10 +324,10 @@ namespace Game
         }
         public static void NewSnake()
         {
-            mySnake.SkankePartDelay = 2;
-            mySnake.snake.Add(new SnakePart(70, 400, 1, "Sprites/SnakeHead.png"));
+            mySnake.snakePartDelay = GameManager.Instance.SnakeDelay;
+            mySnake.snake.Add(new SnakePart(240, 240, 1, "Sprites/SnakeHead.png"));
             for (int i = 1; i < 6; i++)
-                mySnake.snake.Add(new SnakePart(50, 460, 1, "Sprites/rect4.png"));
+                mySnake.snake.Add(new SnakePart(250, 250, 1, "Sprites/rect4.png"));
         }
         public override void Reset()
         {
