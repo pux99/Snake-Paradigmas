@@ -55,6 +55,9 @@ namespace Game
                 case "Gameplay":
                     currentLevel = new Gameplay();
                     break;
+                case "Options":
+                    currentLevel = new Options();
+                    break;
                 case "Defeat":
                     currentLevel = new Defeat();
                     break;
