@@ -114,13 +114,6 @@ namespace Game
             }
             _nextDirection = _direction;
         }
-        public void DrawSnakeParts()
-        {
-            foreach (SnakePart snakePart in snake)
-            {
-                snakePart.Draw();
-            }
-        }
         public void SnakePartsMovement()
         {
             snake[0].myPositions.Add(snake[0].transform.positon);
@@ -143,21 +136,22 @@ namespace Game
         }
         public void addSnakePiece()
         {
-            snake.Add(new SnakePart(snake.Last().transform.positon.x, snake.Last().transform.positon.y, 1, this));
+            snake.Add(new SnakePart(snake.Last().transform.positon.x, snake.Last().transform.positon.y, 1, "Sprites/rect4.png"));
         }
     }
     public class SnakePart:Draw
     {
-        public SnakePart(float X, float Y, int Size,Snake body)
+        public SnakePart(float X, float Y, int Size, string Path)
         {
             active = true;
             transform.positon.x = X;    transform.positon.y = Y;
             transform.scale.x   = Size; transform.scale.y   = Size;
             LevelsManager.Instance.CurrentLevel.draws.Add(this);
+            _texture = Path;
         }
         public Transform transform;
 
-        private string _texture = "Sprites/rect4.png";
+        private string _texture;
         private List<Vector2> _myPositions = new List<Vector2>();
         public bool active { get; set; }
         public List<Vector2> myPositions
@@ -168,7 +162,9 @@ namespace Game
 
         public void Draw()
         {
-            Engine.Draw(_texture, transform.positon.x, transform.positon.y, transform.scale.x, transform.scale.y);
+             
+                Engine.Draw(_texture, transform.positon.x, transform.positon.y, transform.scale.x, transform.scale.y);
+            
         }
     }
 }

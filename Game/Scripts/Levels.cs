@@ -134,8 +134,18 @@ namespace Game
             fruits   = new List<PickUP>();
             walls    = new List<Wall>();
             combatUI = new CombatUi(this);
-            for (int i = 1; i < 6; i++)
-                mySnake.snake.Add(new SnakePart(50, 500, 1, mySnake));
+
+            for (int i = 1; i < 6; i++) { 
+                if(i==1)
+                {
+                    mySnake.snake.Add(new SnakePart(50, 500, 1, "Sprites/SnakeHead.png"));
+                }
+                else
+                { 
+                mySnake.snake.Add(new SnakePart(50, 500, 1, "Sprites/rect4.png"));
+                }
+            }
+
             fruits.Add(new Fruit(250, 300, 10));
             for (int i = 0; i < 10; i++)
             {
@@ -148,7 +158,7 @@ namespace Game
                 walls.Add(new Wall(new Transform(100 , 310 + i * 10), "Sprites/rect4.png"));
                 walls.Add(new Wall(new Transform(400 , 310 + i * 10), "Sprites/rect4.png"));
             }
-            mySnake.snake.Add(new SnakePart(10, 200, 1, mySnake));
+            mySnake.snake.Add(new SnakePart(10, 200, 1, "Sprites/rect4.png"));
         }
         public override void Input()
         {
@@ -278,9 +288,9 @@ namespace Game
         public static void NewSnake()
         {
             mySnake.SkankePartDelay = 2;
-            mySnake.snake.Add(new SnakePart(70, 400, 1, mySnake));
+            mySnake.snake.Add(new SnakePart(70, 400, 1, "Sprites/SnakeHead.png"));
             for (int i = 1; i < 6; i++)
-                mySnake.snake.Add(new SnakePart(50, 460, 1, mySnake));
+                mySnake.snake.Add(new SnakePart(50, 460, 1, "Sprites/rect4.png"));
         }
         public override void Reset()
         {

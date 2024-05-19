@@ -306,3 +306,4 @@ C:\Users\matul\Documents\GitHub\Snake-Paradigmas\Game\obj\Debug\Game.csproj.Sugg
 C:\Users\matul\Documents\GitHub\Snake-Paradigmas\Game\obj\Debug\Game.csproj.CoreCompileInputs.cache
 C:\Users\matul\Documents\GitHub\Snake-Paradigmas\Game\obj\Debug\Game.exe
 C:\Users\matul\Documents\GitHub\Snake-Paradigmas\Game\obj\Debug\Game.pdb
+C:\Users\matul\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Sprites\SnakeHead.png
