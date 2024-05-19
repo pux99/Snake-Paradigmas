@@ -10,11 +10,12 @@ namespace Game
     {
         public Transform transform;
         public bool state = true;
-        public bool active { get { return active; } }
+        public bool active { get; set; }
         private string _texture = "Sprites/apple.png";
         
         public PickUP(int x, int y, int scale)
         {
+            active = true;
             transform.positon.x = x;
             transform.positon.y=y;
             transform.scale.x = scale;

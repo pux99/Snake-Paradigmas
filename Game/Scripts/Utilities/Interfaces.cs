@@ -17,12 +17,19 @@ namespace Game
         bool active
         {
             get;
+            set;
         }
     }
 
     public interface Inputs
     {
         void Input();
+    }
+
+    public interface PlayableLevel
+    {
+        VoidEvent getPoint { get; set; }
+        VoidEvent lossLife { get; set; }
     }
 
 

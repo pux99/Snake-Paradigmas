@@ -10,6 +10,7 @@ namespace Game.Scripts
     {
         public Animation(string path, Transform transform,float timeBetweenFrames, int frameCount)
         {
+            active = true;
             _path = path;
             _transform = transform;
             _timeBetweenFrames = timeBetweenFrames;
@@ -26,7 +27,7 @@ namespace Game.Scripts
         private float _timer;
         private string _path;
         private Transform _transform;
-        public bool active { get { return active; } }
+        public bool active { get; set; }
 
 
         public void Draw()

@@ -150,16 +150,16 @@ namespace Game
     {
         public SnakePart(float X, float Y, int Size,Snake body)
         {
+            active = true;
             transform.positon.x = X;    transform.positon.y = Y;
             transform.scale.x   = Size; transform.scale.y   = Size;
             LevelsManager.Instance.CurrentLevel.draws.Add(this);
         }
         public Transform transform;
 
-        private bool _active;
         private string _texture = "Sprites/rect4.png";
         private List<Vector2> _myPositions = new List<Vector2>();
-        public bool active { get { return _active; } }
+        public bool active { get; set; }
         public List<Vector2> myPositions
         {
             get { return _myPositions; }

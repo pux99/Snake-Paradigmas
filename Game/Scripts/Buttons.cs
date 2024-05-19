@@ -10,9 +10,10 @@ namespace Game.Scripts
     {
         private Transform transform;
         private string _text;
-        public bool active { get { return active; } }
+        public bool active { get; set; }
         public Buttons(Transform transform, string text)
         {
+            active = true;
             this.transform = transform;
             _text = text;
             LevelsManager.Instance.CurrentLevel.draws.Add(this);

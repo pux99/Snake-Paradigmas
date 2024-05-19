@@ -10,11 +10,11 @@ namespace Game
     {
         public Transform transform;
         private string texture;
-        private bool _active;
 
-        public bool active {  get { return _active; } }
+        public bool active {  get; set; }
        public Wall(Transform transform, string texture)
         {
+            active = true;
             this.transform = transform;
             this.texture = texture;
             LevelsManager.Instance.CurrentLevel.draws.Add(this);

@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Scripts\Animation.cs" />
+    <Compile Include="Scripts\CombatUi.cs" />
     <Compile Include="Scripts\Utilities\Interfaces.cs" />
     <Compile Include="Scripts\Levels.cs" />
     <Compile Include="Scripts\Buttons.cs" />

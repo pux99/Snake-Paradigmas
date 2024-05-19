@@ -114,28 +114,39 @@ namespace Game
         }
     }
 
-    public class Gameplay : Levels
+    public class Gameplay : Levels,PlayableLevel
     {
         public static Snake mySnake;
         public static int[,] grid;
         public static List<PickUP> fruits;
         public static List<Wall> walls;
+        public static CombatUi combatUI;
+        public VoidEvent getPoint { get; set; }
+        public VoidEvent lossLife { get; set; }
         public Gameplay()
         {
 
         }
         public override void Inizialize()
         {
-            mySnake = new Snake(50, 5);
-            grid = new int[50, 50];
-            fruits = new List<PickUP>();
-            walls = new List<Wall>();
+            mySnake  = new Snake(50, 5);
+            grid     = new int[50, 50];
+            fruits   = new List<PickUP>();
+            walls    = new List<Wall>();
+            combatUI = new CombatUi(this);
             for (int i = 1; i < 6; i++)
                 mySnake.snake.Add(new SnakePart(50, 500, 1, mySnake));
             fruits.Add(new Fruit(250, 300, 10));
             for (int i = 0; i < 10; i++)
             {
-                walls.Add(new Wall(new Transform(20 + i * 10, 100), "Sprites/rect4.png"));
+                walls.Add(new Wall(new Transform(100 + i * 10 , 100), "Sprites/rect4.png"));
+                walls.Add(new Wall(new Transform(300 + i * 10 , 100), "Sprites/rect4.png"));
+                walls.Add(new Wall(new Transform(100 + i * 10 , 400), "Sprites/rect4.png"));
+                walls.Add(new Wall(new Transform(300 + i * 10 , 400), "Sprites/rect4.png"));
+                walls.Add(new Wall(new Transform(100 , 100 + i * 10), "Sprites/rect4.png"));
+                walls.Add(new Wall(new Transform(400 , 100 + i * 10), "Sprites/rect4.png"));
+                walls.Add(new Wall(new Transform(100 , 310 + i * 10), "Sprites/rect4.png"));
+                walls.Add(new Wall(new Transform(400 , 310 + i * 10), "Sprites/rect4.png"));
             }
             mySnake.snake.Add(new SnakePart(10, 200, 1, mySnake));
         }
@@ -162,7 +173,7 @@ namespace Game
             {
                 LevelsManager.Instance.SetLevel("Defeat");
             }
-            Collisions();
+            Collisions(this.lossLife,this.getPoint);
         }
         public override void Draw()
         {
@@ -183,11 +194,12 @@ namespace Game
             //GameManager.Instance.sprites = GameManager.Instance.sprites.OrderBy(o=>o.order).ToList();
             foreach(Draw draw in LevelsManager.Instance.CurrentLevel.draws)
             {
-                draw.Draw();
+                if (draw.active)
+                    draw.Draw();
             }
         }
 
-        static void Collisions()
+        static void Collisions(VoidEvent losslifes, VoidEvent getPoints)
         {
             foreach (Wall wall in walls)
             {
@@ -200,8 +212,13 @@ namespace Game
                         LevelsManager.Instance.CurrentLevel.draws.Remove(snakePart);
                     }
                     mySnake.snake.Clear();
-                    mySnake.snake.Clear();
+                    losslifes.Invoke();
                     NewSnake();
+                }
+                if (Collision.RectRect(fruits.First().transform.positon.x, fruits.First().transform.positon.y, fruits.First().transform.scale.x,
+               wall.transform.positon.x, wall.transform.positon.y, wall.transform.scale.x))
+                {
+                    fruits.First().ChangeToRandomPosition();
                 }
             }
             VoidEvent eatFruit = null;
@@ -227,6 +244,7 @@ namespace Game
                 //mySnake.swapDirection();
                 eatFruit();
                 GameManager.Instance.points++;
+                getPoints();
             }
             for (int i = 1; i < mySnake.snake.Count; i++)
             {
@@ -239,6 +257,7 @@ namespace Game
                         LevelsManager.Instance.CurrentLevel.draws.Remove(snakePart);
                     }
                     mySnake.snake.Clear();
+                    losslifes.Invoke();
                     NewSnake();
                 }
             }

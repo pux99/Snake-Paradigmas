@@ -10,10 +10,13 @@ namespace Game
     {
         private Transform _transform;
         private string _text;
-        public bool active { get { return active; } }
+
+        public string text { get { return _text; } set { _text = value; } }
+        public bool active { get; set; }
 
         public Text(Transform t_transform, string t_text)
         {
+            active= true;
             this._transform = t_transform;
             _text = t_text;
             LevelsManager.Instance.CurrentLevel.draws.Add(this);
