@@ -12,14 +12,21 @@ namespace Game
         public bool state = true;
         public bool active { get; set; }
         private string _texture = "Sprites/apple.png";
-        
-        public PickUP(int x, int y, int scale)
+        private Texture _textures;
+        private Vector2 _imgSize;
+        public Vector2 imgSize { get { return _imgSize; } }
+
+
+        public PickUP(int x, int y, float SizeX ,float SizeY)
         {
             active = true;
             transform.positon.x = x;
             transform.positon.y=y;
-            transform.scale.x = scale;
+            transform.scale.x = SizeX;
+            transform.scale.y = SizeY;
             LevelsManager.Instance.CurrentLevel.draws.Add(this);
+            _textures = new Texture(_texture);
+            _imgSize = new Vector2(_textures.Width * transform.scale.x, _textures.Height * transform.scale.y);
         }
         public void effect()
         {
@@ -38,13 +45,13 @@ namespace Game
         }
         public void Draw()
         {
-            Engine.Draw(_texture, transform.positon.x, transform.positon.y, .31f, .31f);
+            Engine.Draw(_texture, transform.positon.x, transform.positon.y, transform.scale.x, transform.scale.y);
         }
 
     }
     public class Fruit : PickUP
     {
-        public Fruit(int x, int y, int scale):base(x,y,scale)
+        public Fruit(int x, int y, float SizeX, float SizeY):base(x,y,SizeX,SizeY)
         {
             //transform.positon.x = x;
             //transform.positon.y = y;

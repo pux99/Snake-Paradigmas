@@ -141,13 +141,15 @@ namespace Game
     }
     public class SnakePart:Draw
     {
-        public SnakePart(float X, float Y, int Size, string Path)
+        public SnakePart(float X, float Y, int Size, string Path) 
         {
             active = true;
             transform.positon.x = X;    transform.positon.y = Y;
             transform.scale.x   = Size; transform.scale.y   = Size;
             LevelsManager.Instance.CurrentLevel.draws.Add(this);
             _texture = Path;
+            _textures = new Texture(Path);
+            _imgSize = new Vector2(_textures.Width * transform.scale.x, _textures.Height * transform.scale.y);
         }
         public Transform transform;
 
@@ -159,6 +161,10 @@ namespace Game
             get { return _myPositions; }
             set { _myPositions = value; }
         }
+        private Texture _textures;
+        private Vector2 _imgSize;
+        public Vector2 imgSize { get { return _imgSize; } }
+
 
         public void Draw()
         {

@@ -46,11 +46,6 @@ namespace Game
 
         public override void Inizialize()
         {
-           
-
-
-
-
             buttons = new List<Button>();
 
             snack = new Text(new Transform(110, 50, 0, 1, 1), "SNACK");
@@ -72,11 +67,8 @@ namespace Game
         {
             for (int i = 0; i < buttons.Count; i++)
             {
-       
-
-
-                if (Collision.RectRect(mySnake.snake[0].transform.positon.x, mySnake.snake[0].transform.positon.y, mySnake.snake[0].transform.scale.x, mySnake.snake[0].transform.scale.y,
-               buttons[i].transform.positon.x, buttons[i].transform.positon.y, buttons[i].transform.scale.x, buttons[i].transform.scale.y))
+                if (Collision.RectRect(mySnake.snake[0].transform.positon.x, mySnake.snake[0].transform.positon.y, mySnake.snake[0].imgSize.x, mySnake.snake[0].imgSize.y,
+               buttons[i].transform.positon.x, buttons[i].transform.positon.y, buttons[i].imgSize.x, buttons[i].imgSize.y))
                 {
                     switch (i)
                     {
@@ -188,7 +180,7 @@ namespace Game
                 }
             }
 
-            fruits.Add(new Fruit(250, 300, 10));
+            fruits.Add(new Fruit(250, 300, .31f, .31f));
             for (int i = 0; i < 10; i++)
             {
                 walls.Add(new Wall(new Transform(100 + i * 10 , 100), "Sprites/rect4.png"));
@@ -257,8 +249,8 @@ namespace Game
         {
             foreach (Wall wall in walls)
             {
-                if (Collision.RectRect(mySnake.snake[0].transform.positon.x, mySnake.snake[0].transform.positon.y, mySnake.snake[0].transform.scale.x, mySnake.snake[0].transform.scale.y,
-               wall.transform.positon.x, wall.transform.positon.y, wall.transform.scale.x, wall.transform.scale.y))
+                if (Collision.RectRect(mySnake.snake[0].transform.positon.x, mySnake.snake[0].transform.positon.y, mySnake.snake[0].imgSize.x, mySnake.snake[0].imgSize.y,
+               wall.transform.positon.x, wall.transform.positon.y, wall.imgSize.x, wall.imgSize.y))
                 {
                     GameManager.Instance.lives--;
                     foreach (SnakePart snakePart in mySnake.snake)
@@ -269,16 +261,16 @@ namespace Game
                     losslifes.Invoke();
                     NewSnake();
                 }
-                if (Collision.RectRect(fruits.First().transform.positon.x, fruits.First().transform.positon.y, fruits.First().transform.scale.x, fruits.First().transform.scale.y,
-               wall.transform.positon.x, wall.transform.positon.y, wall.transform.scale.x, wall.transform.scale.y))
+                if (Collision.RectRect(fruits.First().transform.positon.x, fruits.First().transform.positon.y, fruits.First().imgSize.x, fruits.First().imgSize.y,
+               wall.transform.positon.x, wall.transform.positon.y, wall.imgSize.x, wall.imgSize.y))
                 {
                     fruits.First().ChangeToRandomPosition();
                 }
             }
             VoidEvent eatFruit = null;
             eatFruit += addSnakePiece;
-            if (Collision.RectRect(mySnake.snake.First().transform.positon.x, mySnake.snake.First().transform.positon.y, mySnake.snake.First().transform.scale.x * 10, mySnake.snake.First().transform.scale.y * 10,
-                fruits.First().transform.positon.x, fruits.First().transform.positon.y, fruits.First().transform.scale.x, fruits.First().transform.scale.y))
+            if (Collision.RectRect(mySnake.snake.First().transform.positon.x, mySnake.snake.First().transform.positon.y, mySnake.snake.First().imgSize.x * mySnake.snake.First().imgSize.x, mySnake.snake.First().imgSize.y * mySnake.snake.First().imgSize.x,
+                fruits.First().transform.positon.x, fruits.First().transform.positon.y, fruits.First().imgSize.x * fruits.First().imgSize.x, fruits.First().imgSize.y * fruits.First().imgSize.y))
             {
                 fruits.First().ChangeToRandomPosition();
                 //for (int i = 0;i< mySnake.snake.Count/2; i++)
@@ -303,8 +295,8 @@ namespace Game
             for (int i = 1; i < mySnake.snake.Count; i++)
             {
 
-                if (Collision.RectRect(mySnake.snake[0].transform.positon.x, mySnake.snake[0].transform.positon.y, mySnake.snake[0].transform.scale.x, mySnake.snake[0].transform.scale.y,
-                mySnake.snake[i].transform.positon.x, mySnake.snake[i].transform.positon.y, mySnake.snake[i].transform.scale.x, mySnake.snake[i].transform.scale.y))
+                if (Collision.RectRect(mySnake.snake[0].transform.positon.x, mySnake.snake[0].transform.positon.y, mySnake.snake[0].imgSize.x, mySnake.snake[0].imgSize.y,
+                mySnake.snake[i].transform.positon.x, mySnake.snake[i].transform.positon.y, mySnake.snake[i].imgSize.x, mySnake.snake[i].imgSize.y))
                 {
                     GameManager.Instance.lives--;
                     foreach(SnakePart snakePart in mySnake.snake)
