@@ -40,7 +40,7 @@ namespace Game
         public override void Inizialize()
         {
             uroboros = new Animation("Sprites/Animations/Uroboros/", new Transform(200, 100, 0, .5f, .5f), .2f, 27);
-            snack = new Text(new Transform(30, 50, 0, 1.75f, 1.75f),"start");
+            snack = new Text(new Transform(30, 50, 0, 1, 1),"start");
             
         }
         public override void Draw()
