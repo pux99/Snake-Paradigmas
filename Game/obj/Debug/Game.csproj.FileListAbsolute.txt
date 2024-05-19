@@ -307,3 +307,4 @@ C:\Users\matul\Documents\GitHub\Snake-Paradigmas\Game\obj\Debug\Game.csproj.Core
 C:\Users\matul\Documents\GitHub\Snake-Paradigmas\Game\obj\Debug\Game.exe
 C:\Users\matul\Documents\GitHub\Snake-Paradigmas\Game\obj\Debug\Game.pdb
 C:\Users\matul\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Sprites\SnakeHead.png
+C:\Users\Ignacio Puk\source\repos\Snake Paradigmas\Snake-Paradigmas\Game\bin\Debug\Sprites\SnakeHead.png
