@@ -16,7 +16,6 @@ namespace Game
         private Dictionary<string, Levels> levels = new Dictionary<string, Levels>();
 
         private Levels currentLevel = null;
-        public int a = 0;
 
 
         public LevelsManager()
@@ -45,7 +44,8 @@ namespace Game
         //}
         public void SetLevel(string levelName)
         {
-            if(currentLevel!=null)
+            levels.Clear();
+            if (currentLevel!=null)
                 currentLevel.Reset();
             switch (levelName)
             {
