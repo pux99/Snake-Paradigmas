@@ -195,6 +195,12 @@
     <Content Include="Sprites\Caraters\B.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Sprites\bg_defeat.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sprites\bg_victory.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Sprites\Caraters\C.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

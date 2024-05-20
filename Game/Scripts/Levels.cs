@@ -121,7 +121,7 @@ namespace Game
                 input.Input();
             }
             if (Engine.GetKey(Keys.SPACE))
-                LevelsManager.Instance.SetLevel("Victory");
+                LevelsManager.Instance.SetLevel("Defeat");
         }
 
         public override void Update()
@@ -496,7 +496,7 @@ namespace Game
         public override void Draw()
         {
 
-            Engine.Draw("Sprites/apple.png", 0, 0, 15.625f, 15.625f);
+            Engine.Draw("Sprites/bg_victory.png", 0, 0, 50f, 50f);
             foreach (Draw draw in LevelsManager.Instance.CurrentLevel.draws)
             {
                 draw.Draw();
@@ -536,8 +536,8 @@ namespace Game
 
     public class Defeat : Levels
     {
-        private Animation uroboros;
-        private Text defeat;
+        private Text over;
+        private Text game;
         private Text back;
         public Texture texture;
         public static Snake mySnake;
@@ -546,10 +546,11 @@ namespace Game
         {
             buttons = new List<Button>();
 
-            defeat = new Text(new Transform(60, 50, 0, 1, 1), "Defeat");
+            game = new Text(new Transform(140, 100, 0, 1, 1), "Game");
+            over = new Text(new Transform(140, 170, 0, 1, 1), "Over");
             buttons.Add(new Button(new Transform(190, 390, 0, 8, 2.5f)));
             back = new Text(new Transform(190, 390, 0, 0.5f, 0.5f), "Menu");
-            uroboros = new Animation("Sprites/Animations/Uroboros/", new Transform(150, 130, 0, .25f, .25f), .2f, 27);
+
 
             mySnake = new Snake(50, 5);
             for (int i = 1; i < 6; i++)
@@ -595,7 +596,7 @@ namespace Game
         public override void Draw()
         {
 
-            Engine.Draw("Sprites/grey.png", 0, 0, 31.25f, 31.25f);
+            Engine.Draw("Sprites/bg_defeat.png", 0, 0, 50f, 50f);
             foreach (Draw draw in LevelsManager.Instance.CurrentLevel.draws)
             {
                 draw.Draw();
