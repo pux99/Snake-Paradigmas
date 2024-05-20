@@ -267,6 +267,9 @@
     <Content Include="Sprites\Caraters\Z.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Sprites\bg_menu.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Sprites\green.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
