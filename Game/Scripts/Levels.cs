@@ -149,6 +149,7 @@ namespace Game
         public static Snake mySnake;
         public static int[,] grid;
         public static List<Fruit> fruits;
+        public static List<Trash> trash;
         public static List<Wall> walls;
         public static CombatUi combatUI;
         public VoidEvent getPoint { get; set; }
@@ -162,8 +163,11 @@ namespace Game
             mySnake = new Snake(50, 5);
             grid = new int[50, 50];
             fruits = new List<Fruit>();
+            trash = new List<Trash>();
             walls = new List<Wall>();
             combatUI = new CombatUi(this);
+            GameManager.Instance.lives = 3;
+            GameManager.Instance.points = 0;
 
             for (int i = 1; i < 6; i++)
             {
@@ -177,7 +181,7 @@ namespace Game
                 }
             }
 
-            fruits.Add(new Fruit(250, 300, .31f, .31f, "Sounds/Munching.wav", 1));
+            fruits.Add(new Fruit(250, 300, .3125f, .3125f, "Sounds/Munching.wav", 1));
             for (int i = 0; i < 10; i++)
             {
                 walls.Add(new Wall(new Transform(100 + i * 10, 100), "Sprites/rect4.png"));
@@ -269,6 +273,12 @@ namespace Game
             if (Collision.RectRect(mySnake.snake.First().transform.positon.x, mySnake.snake.First().transform.positon.y, mySnake.snake.First().imgSize.x, mySnake.snake.First().imgSize.y,
                 fruits.First().transform.positon.x, fruits.First().transform.positon.y, fruits.First().imgSize.x, fruits.First().imgSize.y))
             {
+                if (GameManager.Instance.leaveTrash)
+                {
+                    Trash trashs = new Trash((int)fruits.First().transform.positon.x, (int)fruits.First().transform.positon.y, .03125f, .03125f);
+                    trashs.active = false;
+                    trash.Add(trashs);
+                }
                 fruits.First().ChangeToRandomPosition();
                 //for (int i = 0;i< mySnake.snake.Count/2; i++)
                 //{
@@ -288,6 +298,22 @@ namespace Game
                 eatFruit();
                 GameManager.Instance.points++;
                 getPoints();
+                
+                
+            }
+            foreach(Trash trashs in trash) {
+                if (Collision.RectRect(mySnake.snake.First().transform.positon.x, mySnake.snake.First().transform.positon.y, mySnake.snake.First().imgSize.x, mySnake.snake.First().imgSize.y,
+                trashs.transform.positon.x, trashs.transform.positon.y, trashs.imgSize.x, trashs.imgSize.y)&&trashs.active)
+                {
+                    GameManager.Instance.lives--;
+                    foreach (SnakePart snakePart in mySnake.snake)
+                    {
+                        LevelsManager.Instance.CurrentLevel.draws.Remove(snakePart);
+                    }
+                    mySnake.snake.Clear();
+                    losslifes.Invoke();
+                    NewSnake();
+                }
             }
             for (int i = 1; i < mySnake.snake.Count; i++)
             {
@@ -338,6 +364,7 @@ namespace Game
         private Animation uroboros;
         private Text opt;
         private Text back;
+        private Text trash;
         public Texture texture;
         public static Snake mySnake;
         public static List<Button> buttons;
@@ -348,6 +375,8 @@ namespace Game
             opt = new Text(new Transform(60, 50, 0, 1, 1), "Options");
             buttons.Add(new Button(new Transform(190, 390, 0, 8, 2.5f)));
             back = new Text(new Transform(190, 390, 0, 0.5f, 0.5f), "Menu");
+            buttons.Add(new Button(new Transform(175, 330, 0, 10, 2.5f)));
+            trash = new Text(new Transform(175, 330, 0, 0.5f, 0.5f), "Trash");
             uroboros = new Animation("Sprites/Animations/Uroboros/", new Transform(150, 130, 0, .25f, .25f), .2f, 27);
 
             mySnake = new Snake(50, 5);
@@ -377,9 +406,7 @@ namespace Game
                             break;
                         case 1:
                             LevelsManager.Instance.SetLevel("Menu");
-                            break;
-                        case 2:
-                            Environment.Exit(1);
+                            GameManager.Instance.leaveTrash = !GameManager.Instance.leaveTrash;
                             break;
                         default:
                             Console.WriteLine("No nay nivel");
@@ -439,6 +466,7 @@ namespace Game
         private Animation uroboros;
         private Text victory;
         private Text back;
+        private Text Trash;
         public Texture texture;
         public static Snake mySnake;
         public static List<Button> buttons;
@@ -450,6 +478,7 @@ namespace Game
             victory = new Text(new Transform(60, 50, 0, 1, 1), "Victory");
             buttons.Add(new Button(new Transform(190, 390, 0, 8, 2.5f)));
             back = new Text(new Transform(190, 390, 0, 0.5f, 0.5f), "Menu");
+            
             uroboros = new Animation("Sprites/Animations/Uroboros/", new Transform(150, 130, 0, .25f, .25f), .2f, 27);
 
             mySnake = new Snake(50, 5);

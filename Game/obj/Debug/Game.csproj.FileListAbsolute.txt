@@ -341,3 +341,7 @@ C:\Users\Zeki\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Sounds\Munching.w
 C:\Users\Zeki\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Sprites\bg_menu.jpg
 C:\Users\Zeki\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Sprites\bg_defeat.png
 C:\Users\Zeki\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Sprites\bg_victory.png
+C:\Users\Ignacio Puk\source\repos\Snake Paradigmas\Snake-Paradigmas\Game\bin\Debug\Sprites\bg_defeat.png
+C:\Users\Ignacio Puk\source\repos\Snake Paradigmas\Snake-Paradigmas\Game\bin\Debug\Sprites\bg_victory.png
+C:\Users\Ignacio Puk\source\repos\Snake Paradigmas\Snake-Paradigmas\Game\bin\Debug\Sprites\bg_menu.jpg
+C:\Users\Ignacio Puk\source\repos\Snake Paradigmas\Snake-Paradigmas\Game\bin\Debug\Sprites\trash_apple.png

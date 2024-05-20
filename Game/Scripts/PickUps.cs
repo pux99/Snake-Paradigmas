@@ -12,9 +12,9 @@ namespace Game
         public Transform transform;
         public bool state = true;
         public bool active { get; set; }
-        private string _texture = "Sprites/apple.png";
-        private Texture _textures;
-        private Vector2 _imgSize;
+        protected string _texture = "Sprites/apple.png";
+        protected Texture _textures;
+        protected Vector2 _imgSize;
         public Vector2 imgSize { get { return _imgSize; } }
 
 
@@ -50,6 +50,31 @@ namespace Game
             Engine.Draw(_texture, transform.positon.x, transform.positon.y, transform.scale.x, transform.scale.y);
         }
 
+    }
+    public class Trash : PickUP,Update
+    {
+        public float toActivaTimer=1;
+        public Trash(int x, int y, float SizeX, float SizeY) : base(x, y, SizeX, SizeY)
+        {
+            LevelsManager.Instance.CurrentLevel.updates.Add(this);
+            _texture = "Sprites/trash_apple.png";
+            //_textures= new Texture("Sprites/trash_apple.png");
+            //transform.scale= new Vector2(10/_textures.Width, 10/_textures.Height);
+            //_imgSize = new Vector2(_textures.Width * transform.scale.x, _textures.Height * transform.scale.y);
+
+
+        }
+        public void Update()
+        {
+            if (!active)
+            {
+                toActivaTimer -= MyDeltaTimer.deltaTime;
+                if(toActivaTimer < 0)
+                {
+                    active = true;
+                }
+            }
+        }
     }
     public class Fruit : PickUP
     {
