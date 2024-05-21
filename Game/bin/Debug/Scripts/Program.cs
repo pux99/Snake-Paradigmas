@@ -15,10 +15,7 @@ namespace Game
         static void Main(string[] args)
         {
             Engine.Initialize("Snake",500,500);
-
             LevelsManager.Instance.SetLevel("Menu");
-            
-
             while (true)
             {
                 MyDeltaTimer.CalcDeltaTime();

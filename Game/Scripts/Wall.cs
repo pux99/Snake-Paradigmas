@@ -8,10 +8,10 @@ namespace Game
 {
     public class Wall : Draw
     {
-        public Transform transform;
         private string _texture;
         private Texture _textures;
         private Vector2 _imgSize;
+        public Transform transform;
         public Vector2 imgSize { get { return _imgSize; } }
         public bool active {  get; set; }
        public Wall(Transform transform, string texture)

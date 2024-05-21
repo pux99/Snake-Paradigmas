@@ -151,26 +151,22 @@ namespace Game
             _textures = new Texture(Path);
             _imgSize = new Vector2(_textures.Width * transform.scale.x, _textures.Height * transform.scale.y);
         }
-        public Transform transform;
-
-        private string _texture;
-        private List<Vector2> _myPositions = new List<Vector2>();
         public bool active { get; set; }
+        private string _texture;
+        private Texture _textures;
+        private Vector2 _imgSize;
+        public Transform transform;
+        private List<Vector2> _myPositions = new List<Vector2>();
+
         public List<Vector2> myPositions
         {
             get { return _myPositions; }
             set { _myPositions = value; }
         }
-        private Texture _textures;
-        private Vector2 _imgSize;
         public Vector2 imgSize { get { return _imgSize; } }
-
-
         public void Draw()
         {
-             
                 Engine.Draw(_texture, transform.positon.x, transform.positon.y, transform.scale.x, transform.scale.y);
-            
         }
     }
 }

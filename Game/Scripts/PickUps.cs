@@ -10,7 +10,7 @@ namespace Game
     public class PickUP:Draw
     {
         public Transform transform;
-        public bool state = true;
+        private bool _state = true;
         public bool active { get; set; }
         protected string _texture = "Sprites/apple.png";
         protected Texture _textures;
@@ -43,7 +43,7 @@ namespace Game
         }
         public void TurnOnOff(bool value)
         {
-            state = value;
+            _state = value;
         }
         public void Draw()
         {
@@ -58,11 +58,6 @@ namespace Game
         {
             LevelsManager.Instance.CurrentLevel.updates.Add(this);
             _texture = "Sprites/trash_apple.png";
-            //_textures= new Texture("Sprites/trash_apple.png");
-            //transform.scale= new Vector2(10/_textures.Width, 10/_textures.Height);
-            //_imgSize = new Vector2(_textures.Width * transform.scale.x, _textures.Height * transform.scale.y);
-
-
         }
         public void Update()
         {

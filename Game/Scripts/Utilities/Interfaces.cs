@@ -19,11 +19,6 @@ namespace Game
             get;
             set;
         }
-        //Texture textures
-        //{
-        //    get;
-        //    set;
-        //}
     }
 
     public interface Inputs

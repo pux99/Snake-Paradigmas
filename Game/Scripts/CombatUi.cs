@@ -10,8 +10,8 @@ namespace Game.Scripts
     {
         public CombatUi(PlayableLevel CurrentLevel) 
         {
-            _points = new Text(new Transform(10, 30,0,.3f,.3f), GameManager.Instance.points.ToString() + "of20");
-            _lifes = new Text(new Transform(10, 10, 0, .3f, .3f), GameManager.Instance.lives.ToString() + "of3");
+            _points = new Text(new Transform(10, 30,0,.3f,.3f), GameManager.Instance.points.ToString() + " of 20");
+            _lifes = new Text(new Transform(10, 10, 0, .3f, .3f), GameManager.Instance.lives.ToString() + " of 3");
             CurrentLevel.lossLife += UpdateLife;
             CurrentLevel.getPoint += UpdatePoints;
             LevelsManager.Instance.CurrentLevel.updates.Add(this);
@@ -38,13 +38,13 @@ namespace Game.Scripts
         }
         public void UpdateLife()
         {
-            _lifes.text = GameManager.Instance.lives.ToString() + "of3";
+            _lifes.text = GameManager.Instance.lives.ToString() + " of 3";
             _lifes.active=true;
             _lifeTimer = 0;
         }
         public void UpdatePoints()
         {
-            _points.text = GameManager.Instance.points.ToString() + "of20";
+            _points.text = GameManager.Instance.points.ToString() + " of 20";
             _points.active=true;
             _pointsTimer = 0;
         }

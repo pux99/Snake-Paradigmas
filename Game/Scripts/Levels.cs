@@ -27,12 +27,11 @@ namespace Game
     public class Menu : Levels
     {
 
-        private Animation uroboros;
-        private Text snack;
-        private Text start;
-        private Text opt;
-        private Text quit;
-        public Texture texture;
+        private Animation _uroboros;
+        private Text _snack;
+        private Text _start;
+        private Text _opt;
+        private Text _quit;
         public static Snake mySnake;
         public static List<Button> buttons;
 
@@ -45,20 +44,18 @@ namespace Game
         {
 
             buttons = new List<Button>();
-
-            snack = new Text(new Transform(110, 50, 0, 1, 1), "SNACK");
-            uroboros = new Animation("Sprites/Animations/Uroboros/", new Transform(150, 130, 0, .25f, .25f), .2f, 27);
+            _snack = new Text(new Transform(110, 50, 0, 1, 1), "SNACK");
+            _uroboros = new Animation("Sprites/Animations/Uroboros/", new Transform(150, 130, 0, .25f, .25f), .2f, 27);
             buttons.Add(new Button(new Transform(190, 270, 0, 8, 2.5f)));
-            start = new Text(new Transform(190, 270, 0, 0.5f, 0.5f), "play");
+            _start = new Text(new Transform(190, 270, 0, 0.5f, 0.5f), "play");
             buttons.Add(new Button(new Transform(150, 330, 0, 13.5f, 2.5f)));
-            opt = new Text(new Transform(150, 330, 0, 0.5f, 0.5f), "Options");
+            _opt = new Text(new Transform(150, 330, 0, 0.5f, 0.5f), "Options");
             buttons.Add(new Button(new Transform(190, 390, 0, 8, 2.5f)));
-            quit = new Text(new Transform(190, 390, 0, 0.5f, 0.5f), "Exit");
-
+            _quit = new Text(new Transform(190, 390, 0, 0.5f, 0.5f), "Exit");
             mySnake = new Snake(50, 5);
-            for (int i = 1; i < 6; i++)
+            for (int i = 0; i < 5; i++)
             {
-                if (i == 1)
+                if (i == 0)
                 {
                     mySnake.snake.Add(new SnakePart(50, 500, 1, "Sprites/SnakeHead.png"));
                 }
@@ -69,6 +66,40 @@ namespace Game
             }
         }
 
+        public override void Draw()
+        {
+            Engine.Draw("Sprites/bg_menu.jpg", 0, 0, 1.5f, 1.5f, 0, 200);
+
+            foreach (Draw draw in LevelsManager.Instance.CurrentLevel.draws)
+            {
+                draw.Draw();
+            }
+        }
+
+        public override void Input()
+        {
+            foreach (Inputs input in LevelsManager.Instance.CurrentLevel.inputs)
+            {
+                input.Input();
+            }
+        }
+
+        public override void Update()
+        {
+            // Si la Snake toca el Boton PLAY collision.rectrect de snake con Boton gris
+            Collisions();
+            foreach (Update update in LevelsManager.Instance.CurrentLevel.updates)
+            {
+                update.Update();
+            }
+
+        }
+
+        public override void Reset()
+        {
+            LevelsManager.Instance.CurrentLevel.updates.Clear();
+            LevelsManager.Instance.CurrentLevel.draws.Clear();
+        }
         public void Collisions()
         {
             for (int i = 0; i < buttons.Count; i++)
@@ -103,45 +134,6 @@ namespace Game
             if (mySnake.snake.First().transform.positon.y > 510)
                 mySnake.snake.First().transform.positon.y = 0;
         }
-
-        public override void Draw()
-        {
-            Engine.Draw("Sprites/bg_menu.jpg", 0, 0, 1.5f, 1.5f, 0, 200);
-
-            foreach (Draw draw in LevelsManager.Instance.CurrentLevel.draws)
-            {
-                draw.Draw();
-            }
-        }
-
-        public override void Input()
-        {
-            foreach (Inputs input in LevelsManager.Instance.CurrentLevel.inputs)
-            {
-                input.Input();
-            }
-            if (Engine.GetKey(Keys.SPACE))
-                LevelsManager.Instance.SetLevel("Defeat");
-        }
-
-        public override void Update()
-        {
-            // Si la Snake toca el Boton PLAY collision.rectrect de snake con Boton gris
-            //LevelsManager.Instance.SetLevel("Gameplay");
-            //LevelsManager.Instance.SetLevel("Options");
-            Collisions();
-            foreach (Update update in LevelsManager.Instance.CurrentLevel.updates)
-            {
-                update.Update();
-            }
-
-        }
-
-        public override void Reset()
-        {
-            LevelsManager.Instance.CurrentLevel.updates.Clear();
-            LevelsManager.Instance.CurrentLevel.updates.Clear();
-        }
     }
 
     public class Gameplay : Levels, PlayableLevel
@@ -169,9 +161,9 @@ namespace Game
             GameManager.Instance.lives = 3;
             GameManager.Instance.points = 0;
 
-            for (int i = 1; i < 6; i++)
+            for (int i = 0; i < 5; i++)
             {
-                if (i == 1)
+                if (i == 0)
                 {
                     mySnake.snake.Add(new SnakePart(50, 500, 1, "Sprites/SnakeHead.png"));
                 }
@@ -193,7 +185,6 @@ namespace Game
                 walls.Add(new Wall(new Transform(100, 310 + i * 10), "Sprites/rect4.png"));
                 walls.Add(new Wall(new Transform(400, 310 + i * 10), "Sprites/rect4.png"));
             }
-            mySnake.snake.Add(new SnakePart(10, 200, 1, "Sprites/rect4.png"));
         }
         public override void Input()
         {
@@ -217,7 +208,7 @@ namespace Game
             {
                 LevelsManager.Instance.SetLevel("Defeat");
             }
-            Collisions(this.lossLife, this.getPoint);
+            Collisions(lossLife,getPoint);
 
 
         }
@@ -237,7 +228,6 @@ namespace Game
                     }
                 }
             }
-            //GameManager.Instance.sprites = GameManager.Instance.sprites.OrderBy(o=>o.order).ToList();
             foreach (Draw draw in LevelsManager.Instance.CurrentLevel.draws)
             {
                 if (draw.active)
@@ -298,8 +288,6 @@ namespace Game
                 eatFruit();
                 GameManager.Instance.points++;
                 getPoints();
-                
-                
             }
             foreach(Trash trashs in trash) {
                 if (Collision.RectRect(mySnake.snake.First().transform.positon.x, mySnake.snake.First().transform.positon.y, mySnake.snake.First().imgSize.x, mySnake.snake.First().imgSize.y,
@@ -309,6 +297,11 @@ namespace Game
                     foreach (SnakePart snakePart in mySnake.snake)
                     {
                         LevelsManager.Instance.CurrentLevel.draws.Remove(snakePart);
+                    }
+                    if (Collision.RectRect(fruits.First().transform.positon.x, fruits.First().transform.positon.y, fruits.First().imgSize.x, fruits.First().imgSize.y,
+                        trashs.transform.positon.x, trashs.transform.positon.y, trashs.imgSize.x, trashs.imgSize.y))
+                    {
+                        fruits.First().ChangeToRandomPosition();
                     }
                     mySnake.snake.Clear();
                     losslifes.Invoke();
@@ -361,23 +354,22 @@ namespace Game
 
     public class Options : Levels
     {
-        private Animation uroboros;
-        private Text opt;
-        private Text back;
-        private Text trash;
-        public Texture texture;
+        private Animation _uroboros;
+        private Text _opt;
+        private Text _back;
+        private Text _trash;
         public static Snake mySnake;
         public static List<Button> buttons;
         public override void Inizialize()
         {
             buttons = new List<Button>();
 
-            opt = new Text(new Transform(60, 50, 0, 1, 1), "Options");
+            _opt = new Text(new Transform(60, 50, 0, 1, 1), "Options");
             buttons.Add(new Button(new Transform(190, 390, 0, 8, 2.5f)));
-            back = new Text(new Transform(190, 390, 0, 0.5f, 0.5f), "Menu");
+            _back = new Text(new Transform(190, 390, 0, 0.5f, 0.5f), "Menu");
             buttons.Add(new Button(new Transform(175, 330, 0, 10, 2.5f)));
-            trash = new Text(new Transform(175, 330, 0, 0.5f, 0.5f), "Trash");
-            uroboros = new Animation("Sprites/Animations/Uroboros/", new Transform(150, 130, 0, .25f, .25f), .2f, 27);
+            _trash = new Text(new Transform(175, 330, 0, 0.5f, 0.5f), "Trash");
+            _uroboros = new Animation("Sprites/Animations/Uroboros/", new Transform(150, 130, 0, .25f, .25f), .2f, 27);
 
             mySnake = new Snake(50, 5);
             for (int i = 1; i < 6; i++)
@@ -463,11 +455,10 @@ namespace Game
 
     public class Victory : Levels
     {
-        private Animation uroboros;
-        private Text victory;
-        private Text back;
-        private Text Trash;
-        public Texture texture;
+        private Animation _uroboros;
+        private Text _victory;
+        private Text _back;
+        private Text _Trash;
         public static Snake mySnake;
         public static List<Button> buttons;
 
@@ -475,11 +466,11 @@ namespace Game
         {
             buttons = new List<Button>();
 
-            victory = new Text(new Transform(60, 50, 0, 1, 1), "Victory");
+            _victory = new Text(new Transform(60, 50, 0, 1, 1), "Victory");
             buttons.Add(new Button(new Transform(190, 390, 0, 8, 2.5f)));
-            back = new Text(new Transform(190, 390, 0, 0.5f, 0.5f), "Menu");
+            _back = new Text(new Transform(190, 390, 0, 0.5f, 0.5f), "Menu");
             
-            uroboros = new Animation("Sprites/Animations/Uroboros/", new Transform(150, 130, 0, .25f, .25f), .2f, 27);
+            _uroboros = new Animation("Sprites/Animations/Uroboros/", new Transform(150, 130, 0, .25f, .25f), .2f, 27);
 
             mySnake = new Snake(50, 5);
             for (int i = 1; i < 6; i++)
@@ -565,20 +556,19 @@ namespace Game
 
     public class Defeat : Levels
     {
-        private Text over;
-        private Text game;
-        private Text back;
-        public Texture texture;
+        private Text _over;
+        private Text _game;
+        private Text _back;
         public static Snake mySnake;
         public static List<Button> buttons;
         public override void Inizialize()
         {
             buttons = new List<Button>();
 
-            game = new Text(new Transform(140, 100, 0, 1, 1), "Game");
-            over = new Text(new Transform(140, 170, 0, 1, 1), "Over");
+            _game = new Text(new Transform(140, 100, 0, 1, 1), "Game");
+            _over = new Text(new Transform(140, 170, 0, 1, 1), "Over");
             buttons.Add(new Button(new Transform(190, 390, 0, 8, 2.5f)));
-            back = new Text(new Transform(190, 390, 0, 0.5f, 0.5f), "Menu");
+            _back = new Text(new Transform(190, 390, 0, 0.5f, 0.5f), "Menu");
 
 
             mySnake = new Snake(50, 5);
