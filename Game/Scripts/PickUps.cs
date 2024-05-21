@@ -30,10 +30,6 @@ namespace Game
             _imgSize = new Vector2(_textures.Width * transform.scale.x, _textures.Height * transform.scale.y);
             Console.WriteLine(imgSize.x.ToString()+" " +imgSize.y.ToString());
         }
-        public void effect()
-        {
-
-        }
         public void ChangeToRandomPosition()
         {
             Random rndY = new Random();

@@ -63,7 +63,7 @@
     <Compile Include="Scripts\Program.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Scripts\Utilities\Propertis.cs" />
+    <Compile Include="Scripts\Utilities\Properties.cs" />
     <Compile Include="Scripts\Snack.cs" />
     <Compile Include="Scripts\Text.cs" />
     <Compile Include="Scripts\Wall.cs" />

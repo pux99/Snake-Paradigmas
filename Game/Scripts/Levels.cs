@@ -100,7 +100,7 @@ namespace Game
             LevelsManager.Instance.CurrentLevel.updates.Clear();
             LevelsManager.Instance.CurrentLevel.draws.Clear();
         }
-        public void Collisions()
+        private void Collisions()
         {
             for (int i = 0; i < buttons.Count; i++)
             {
@@ -372,9 +372,9 @@ namespace Game
             _uroboros = new Animation("Sprites/Animations/Uroboros/", new Transform(150, 130, 0, .25f, .25f), .2f, 27);
 
             mySnake = new Snake(50, 5);
-            for (int i = 1; i < 6; i++)
+            for (int i = 0; i < 6; i++)
             {
-                if (i == 1)
+                if (i == 0)
                 {
                     mySnake.snake.Add(new SnakePart(50, 500, 1, "Sprites/SnakeHead.png"));
                 }
@@ -458,7 +458,6 @@ namespace Game
         private Animation _uroboros;
         private Text _victory;
         private Text _back;
-        private Text _Trash;
         public static Snake mySnake;
         public static List<Button> buttons;
 
@@ -473,9 +472,9 @@ namespace Game
             _uroboros = new Animation("Sprites/Animations/Uroboros/", new Transform(150, 130, 0, .25f, .25f), .2f, 27);
 
             mySnake = new Snake(50, 5);
-            for (int i = 1; i < 6; i++)
+            for (int i = 0; i < 6; i++)
             {
-                if (i == 1)
+                if (i == 0)
                 {
                     mySnake.snake.Add(new SnakePart(50, 500, 1, "Sprites/SnakeHead.png"));
                 }
@@ -572,9 +571,9 @@ namespace Game
 
 
             mySnake = new Snake(50, 5);
-            for (int i = 1; i < 6; i++)
+            for (int i = 0; i < 5; i++)
             {
-                if (i == 1)
+                if (i == 0)
                 {
                     mySnake.snake.Add(new SnakePart(50, 500, 1, "Sprites/SnakeHead.png"));
                 }

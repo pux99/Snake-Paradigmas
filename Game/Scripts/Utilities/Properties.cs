@@ -108,7 +108,7 @@ namespace Game
             this.order = oreder;
         }
     }
-    internal class Propertis
+    internal class Properties
     {
 
     }

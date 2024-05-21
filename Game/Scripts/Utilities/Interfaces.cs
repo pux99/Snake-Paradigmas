@@ -23,7 +23,7 @@ namespace Game
 
     public interface Inputs
     {
-        void Input();
+        void Input();   
     }
 
     public interface PlayableLevel
