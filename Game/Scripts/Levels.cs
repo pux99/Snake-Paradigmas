@@ -82,6 +82,7 @@ namespace Game
             {
                 input.Input();
             }
+            //if (Engine.GetKey(Keys.SPACE)) { LevelsManager.Instance.SetLevel("Defeat"); }
         }
 
         public override void Update()
@@ -251,7 +252,7 @@ namespace Game
                     losslifes.Invoke();
                     NewSnake();
                 }
-                if (Collision.RectRect(fruits.First().transform.positon.x, fruits.First().transform.positon.y, fruits.First().imgSize.x, fruits.First().imgSize.y,
+                if (Collision.RectRect(fruits.First().transform.positon.x, fruits.First().transform.positon.y, fruits.First().imgSize.x*2, fruits.First().imgSize.y*2,
                wall.transform.positon.x, wall.transform.positon.y, wall.imgSize.x, wall.imgSize.y))
                 {
                     fruits.First().ChangeToRandomPosition();
@@ -298,14 +299,15 @@ namespace Game
                     {
                         LevelsManager.Instance.CurrentLevel.draws.Remove(snakePart);
                     }
-                    if (Collision.RectRect(fruits.First().transform.positon.x, fruits.First().transform.positon.y, fruits.First().imgSize.x, fruits.First().imgSize.y,
-                        trashs.transform.positon.x, trashs.transform.positon.y, trashs.imgSize.x, trashs.imgSize.y))
-                    {
-                        fruits.First().ChangeToRandomPosition();
-                    }
+                    
                     mySnake.snake.Clear();
                     losslifes.Invoke();
                     NewSnake();
+                }
+                if (Collision.RectRect(fruits.First().transform.positon.x, fruits.First().transform.positon.y, fruits.First().imgSize.x*2, fruits.First().imgSize.y*2,
+                        trashs.transform.positon.x, trashs.transform.positon.y, trashs.imgSize.x, trashs.imgSize.y))
+                {
+                    fruits.First().ChangeToRandomPosition();
                 }
             }
             for (int i = 1; i < mySnake.snake.Count; i++)
@@ -555,6 +557,7 @@ namespace Game
 
     public class Defeat : Levels
     {
+        private Animation _uroboros;
         private Text _over;
         private Text _game;
         private Text _back;
@@ -564,8 +567,9 @@ namespace Game
         {
             buttons = new List<Button>();
 
-            _game = new Text(new Transform(140, 100, 0, 1, 1), "Game");
-            _over = new Text(new Transform(140, 170, 0, 1, 1), "Over");
+            _uroboros = new Animation("Sprites/Animations/Uroboros/", new Transform(150, 130, 0, .25f, .25f), .2f, 27);
+            _game = new Text(new Transform(140, 10, 0, 1, 1), "Game");
+            _over = new Text(new Transform(140, 70, 0, 1, 1), "Over");
             buttons.Add(new Button(new Transform(190, 390, 0, 8, 2.5f)));
             _back = new Text(new Transform(190, 390, 0, 0.5f, 0.5f), "Menu");
 
