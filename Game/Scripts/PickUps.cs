@@ -47,7 +47,7 @@ namespace Game
         }
 
     }
-    public class Trash : PickUP,Update
+    public class Trash : PickUP,Update, IPickable
     {
         public float toActivaTimer=1;
         public Trash(int x, int y, float SizeX, float SizeY) : base(x, y, SizeX, SizeY)
@@ -66,8 +66,9 @@ namespace Game
                 }
             }
         }
+        public void PickAp() { }
     }
-    public class Fruit : PickUP
+    public class Fruit : PickUP, IPickable
     {
         public Fruit(int x, int y, float SizeX, float SizeY, string _direction, int _volume) :base(x,y,SizeX,SizeY)
         {
@@ -80,6 +81,7 @@ namespace Game
             SoundPlayer player = new SoundPlayer(this.sound.direction);
             player.Play();
         }
+        public void PickAp() { }
 
     }
     public class Sound

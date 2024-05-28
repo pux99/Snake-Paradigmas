@@ -41,4 +41,8 @@ namespace Game
     //    }
     //    void Collicion();
     //}
+    public interface IPickable
+    {
+        void PickAp();
+    }
 }

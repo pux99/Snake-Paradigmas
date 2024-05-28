@@ -50,6 +50,7 @@
     <Compile Include="Scripts\Button.cs" />
     <Compile Include="Scripts\Animation.cs" />
     <Compile Include="Scripts\CombatUi.cs" />
+    <Compile Include="Scripts\Factories.cs" />
     <Compile Include="Scripts\Utilities\Interfaces.cs" />
     <Compile Include="Scripts\Levels.cs" />
     <Compile Include="Scripts\Collision.cs" />

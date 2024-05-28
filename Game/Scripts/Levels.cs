@@ -162,6 +162,7 @@ namespace Game
             GameManager.Instance.lives = 3;
             GameManager.Instance.points = 0;
 
+
             for (int i = 0; i < 5; i++)
             {
                 if (i == 0)
@@ -174,7 +175,7 @@ namespace Game
                 }
             }
 
-            fruits.Add(new Fruit(250, 300, .3125f, .3125f, "Sounds/Munching.wav", 1));
+            fruits.Add((Fruit)FruitFactory.CreateFruit(FruitFactory.fruit.apple, new Vector2(250, 300)));
             for (int i = 0; i < 10; i++)
             {
                 walls.Add(new Wall(new Transform(100 + i * 10, 100), "Sprites/rect4.png"));
@@ -266,7 +267,7 @@ namespace Game
             {
                 if (GameManager.Instance.leaveTrash)
                 {
-                    Trash trashs = new Trash((int)fruits.First().transform.positon.x, (int)fruits.First().transform.positon.y, .03125f, .03125f);
+                    Trash trashs = (Trash)FruitFactory.CreateFruit(FruitFactory.fruit.rottenApple, new Vector2((int)fruits.First().transform.positon.x, (int)fruits.First().transform.positon.y));
                     trashs.active = false;
                     trash.Add(trashs);
                 }
