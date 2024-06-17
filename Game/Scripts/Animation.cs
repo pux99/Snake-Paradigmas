@@ -33,8 +33,8 @@ namespace Game.Scripts
         public void Draw()
         {
             Engine.Draw(_path + _currentFrame.ToString()+".png",
-                        _transform.positon.x, 
-                        _transform.positon.y, 
+                        _transform.position.x, 
+                        _transform.position.y, 
                         _transform.scale.x, 
                         _transform.scale.y);
         }

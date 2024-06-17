@@ -26,14 +26,14 @@ namespace Game
             for (int i = 0; i < _text.Count(); i++)
             {
                 char letter = _text[i];
-                Transform transform = new Transform(_transform.positon.x + i * 56 * _transform.scale.x, _transform.positon.y, _transform.rotation, _transform.scale.x, _transform.scale.y);
+                Transform transform = new Transform(_transform.position.x + i * 56 * _transform.scale.x, _transform.position.y, _transform.rotation, _transform.scale.x, _transform.scale.y);
                 if (letter >= 'a' && letter <= 'z')//Transforma las minusculas en mayusculas. No tenemos sprites de minusculas.
                 {
                     letter = (char)(letter - 32); 
                 }
                 if ((letter >= 'A' && letter <= 'Z' || letter >= '0' && letter <= '9'))//Chequea si el caracter es una letra o un numero.
                 {
-                    Engine.Draw($"Sprites/Caraters/" + letter + ".png", transform.positon.x, transform.positon.y, transform.scale.x, transform.scale.y, transform.rotation);
+                    Engine.Draw($"Sprites/Caraters/" + letter + ".png", transform.position.x, transform.position.y, transform.scale.x, transform.scale.y, transform.rotation);
                 }
             }
         }

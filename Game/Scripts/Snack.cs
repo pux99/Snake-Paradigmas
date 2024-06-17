@@ -2,6 +2,7 @@
 using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.IO.Ports;
 using System.Linq;
 using System.Reflection;
@@ -79,16 +80,16 @@ namespace Game
                 switch (_direction)
                 {
                     case "Left":                      
-                        snake.First().transform.positon.x -= 10;
+                        snake.First().transform.position.x -= 10;
                         break;
                     case "Right":
-                        snake.First().transform.positon.x += 10;
+                        snake.First().transform.position.x += 10;
                         break;
                     case "Down":
-                        snake.First().transform.positon.y += 10;
+                        snake.First().transform.position.y += 10;
                         break;
                     case "Up":;
-                        snake.First().transform.positon.y -= 10;
+                        snake.First().transform.position.y -= 10;
                         break;
                 }
                 _timer = _speed;
@@ -116,45 +117,42 @@ namespace Game
         }
         public void SnakePartsMovement()
         {
-            snake[0].myPositions.Add(snake[0].transform.positon);
+            snake[0].myPositions.Add(snake[0].transform.position);
             if (snake[0].myPositions.Count > _snakePartDelay +1)
             {
                 snake[0].myPositions.RemoveAt(0);
             }
             for (int i = 1; i < snake.Count; i++)
             {
-                snake[i].myPositions.Add(snake[i].transform.positon);
+                snake[i].myPositions.Add(snake[i].transform.position);
                 if (snake[i].myPositions.Count > _snakePartDelay)
                 {
                     snake[i].myPositions.RemoveAt(0);
                 }
                 if (snake[i - 1].myPositions.Count > _snakePartDelay -1)
                 {
-                    snake[i].transform.positon = snake[i - 1].myPositions[0];
+                    snake[i].transform.position = snake[i - 1].myPositions[0];
                 }  
             }
         }
         public void addSnakePiece()
         {
-            snake.Add(new SnakePart(snake.Last().transform.positon.x, snake.Last().transform.positon.y, 1, "Sprites/rect4.png"));
+            snake.Add(new SnakePart(snake.Last().transform.position.x, snake.Last().transform.position.y, 1, "Sprites/rect4.png"));
         }
     }
     public class SnakePart:Draw
     {
-        public SnakePart(float X, float Y, int Size, string Path) 
+        public SnakePart(float X, float Y, int Size, string path) 
         {
             active = true;
-            transform.positon.x = X;    transform.positon.y = Y;
+            transform.position.x = X;    transform.position.y = Y;
             transform.scale.x   = Size; transform.scale.y   = Size;
             LevelsManager.Instance.CurrentLevel.draws.Add(this);
-            _texture = Path;
-            _textures = new Texture(Path);
-            _imgSize = new Vector2(_textures.Width * transform.scale.x, _textures.Height * transform.scale.y);
+            _render = new Render(path, transform);
         }
         public bool active { get; set; }
-        private string _texture;
-        private Texture _textures;
-        private Vector2 _imgSize;
+        protected Render _render;
+        public Render render { get { return _render; } }
         public Transform transform;
         private List<Vector2> _myPositions = new List<Vector2>();
 
@@ -163,10 +161,9 @@ namespace Game
             get { return _myPositions; }
             set { _myPositions = value; }
         }
-        public Vector2 imgSize { get { return _imgSize; } }
         public void Draw()
         {
-                Engine.Draw(_texture, transform.positon.x, transform.positon.y, transform.scale.x, transform.scale.y);
+                Engine.Draw(render.textures, transform.position.x, transform.position.y, transform.scale.x, transform.scale.y);
         }
     }
 }

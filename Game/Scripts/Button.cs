@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,24 +12,22 @@ namespace Game
         private Transform _transform;
         public Transform transform { get { return _transform; } set { _transform = value; } }
         public bool active { get; set; }
-        private string _texture = "Sprites/grey.png";
-        private Texture _textures;
-        private Vector2 _imgSize;
-        public Vector2 imgSize { get { return _imgSize; } }
+        private Render _render;
+        public Render render { get { return _render; } }
 
-        public Button(Transform t_transform)
+        public Button(Transform t_transform,string path)
         {
             active = true;
             this._transform = t_transform;
+            _transform.position.x -= 10;
+            _transform.position.y -= 5;
             LevelsManager.Instance.CurrentLevel.draws.Add(this);
-            _textures = new Texture(_texture);
-            _imgSize = new Vector2(_textures.Width * transform.scale.x, _textures.Height * transform.scale.y);
+            _render = new Render(path, transform);
         }
 
         public void Draw()
         {
-            Transform tran = new Transform(_transform.positon.x - 10, _transform.positon.y - 5, _transform.rotation, _transform.scale.x, _transform.scale.y);
-            Engine.Draw(_textures, tran.positon.x, tran.positon.y, tran.scale.x, tran.scale.y, tran.rotation);
+            Engine.Draw(render.textures, transform.position.x, transform.position.y, transform.scale.x, transform.scale.y, transform.rotation);
         }
     }
 }

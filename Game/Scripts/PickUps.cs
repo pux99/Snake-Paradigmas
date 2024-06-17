@@ -10,50 +10,42 @@ namespace Game
     public class PickUP:Draw
     {
         public Transform transform;
-        private bool _state = true;
         public bool active { get; set; }
-        protected string _texture = "Sprites/apple.png";
-        protected Texture _textures;
-        protected Vector2 _imgSize;
-        public Vector2 imgSize { get { return _imgSize; } }
+        protected Render _render;
+        public Render render { get { return _render; } }
 
 
-        public PickUP(int x, int y, float SizeX ,float SizeY)
+        public PickUP(int x, int y, float SizeX ,float SizeY,string path)
         {
             active = true;
-            transform.positon.x = x;
-            transform.positon.y=y;
+            transform.position.x = x;
+            transform.position.y=y;
             transform.scale.x = SizeX;
             transform.scale.y = SizeY;
+            _render=new Render(path, transform);
             LevelsManager.Instance.CurrentLevel.draws.Add(this);
-            _textures = new Texture(_texture);
-            _imgSize = new Vector2(_textures.Width * transform.scale.x, _textures.Height * transform.scale.y);
-            Console.WriteLine(imgSize.x.ToString()+" " +imgSize.y.ToString());
+            Console.WriteLine(_render.imgSize.x.ToString()+" " +_render.imgSize.y.ToString());
         }
         public void ChangeToRandomPosition()
         {
             Random rndY = new Random();
             Random rndX = new Random();
-            transform.positon.x = rndX.Next(10, 490);
-            transform.positon.y = rndY.Next(10, 490);
+            transform.position.x = rndX.Next(10, 490);
+            transform.position.y = rndY.Next(10, 490);
         }
-        public void TurnOnOff(bool value)
-        {
-            _state = value;
-        }
+
         public void Draw()
         {
-            Engine.Draw(_texture, transform.positon.x, transform.positon.y, transform.scale.x, transform.scale.y);
+            Engine.Draw(_render.textures, transform.position.x, transform.position.y, transform.scale.x, transform.scale.y);
         }
 
     }
     public class Trash : PickUP,Update, IPickable
     {
         public float toActivaTimer=1;
-        public Trash(int x, int y, float SizeX, float SizeY) : base(x, y, SizeX, SizeY)
+        public Trash(int x, int y, float SizeX, float SizeY) : base(x, y, SizeX, SizeY, "Sprites/trash_apple.png")
         {
             LevelsManager.Instance.CurrentLevel.updates.Add(this);
-            _texture = "Sprites/trash_apple.png";
         }
         public void Update()
         {
@@ -70,7 +62,7 @@ namespace Game
     }
     public class Fruit : PickUP, IPickable
     {
-        public Fruit(int x, int y, float SizeX, float SizeY, string _direction, int _volume) :base(x,y,SizeX,SizeY)
+        public Fruit(int x, int y, float SizeX, float SizeY, string _direction, int _volume) :base(x,y,SizeX,SizeY, "Sprites/apple.png")
         {
             sound = new Sound(_direction, _volume);
         }

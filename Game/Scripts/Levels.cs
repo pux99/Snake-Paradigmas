@@ -46,11 +46,11 @@ namespace Game
             buttons = new List<Button>();
             _snack = new Text(new Transform(110, 50, 0, 1, 1), "SNACK");
             _uroboros = new Animation("Sprites/Animations/Uroboros/", new Transform(150, 130, 0, .25f, .25f), .2f, 27);
-            buttons.Add(new Button(new Transform(190, 270, 0, 8, 2.5f)));
+            buttons.Add(new Button(new Transform(190, 270, 0, 8, 2.5f), "Sprites/grey.png"));
             _start = new Text(new Transform(190, 270, 0, 0.5f, 0.5f), "play");
-            buttons.Add(new Button(new Transform(150, 330, 0, 13.5f, 2.5f)));
+            buttons.Add(new Button(new Transform(150, 330, 0, 13.5f, 2.5f), "Sprites/grey.png"));
             _opt = new Text(new Transform(150, 330, 0, 0.5f, 0.5f), "Options");
-            buttons.Add(new Button(new Transform(190, 390, 0, 8, 2.5f)));
+            buttons.Add(new Button(new Transform(190, 390, 0, 8, 2.5f), "Sprites/grey.png"));
             _quit = new Text(new Transform(190, 390, 0, 0.5f, 0.5f), "Exit");
             mySnake = new Snake(50, 5);
             for (int i = 0; i < 5; i++)
@@ -105,8 +105,8 @@ namespace Game
         {
             for (int i = 0; i < buttons.Count; i++)
             {
-                if (Collision.RectRect(mySnake.snake[0].transform.positon.x, mySnake.snake[0].transform.positon.y, mySnake.snake[0].imgSize.x, mySnake.snake[0].imgSize.y,
-               buttons[i].transform.positon.x, buttons[i].transform.positon.y, buttons[i].imgSize.x, buttons[i].imgSize.y))
+                if (Collision.RectRect(mySnake.snake[0].transform.position.x, mySnake.snake[0].transform.position.y, mySnake.snake[0].render.imgSize.x, mySnake.snake[0].render.imgSize.y,
+               buttons[i].transform.position.x, buttons[i].transform.position.y, buttons[i].render.imgSize.x, buttons[i].render.imgSize.y))
                 {
                     switch (i)
                     {
@@ -126,14 +126,14 @@ namespace Game
                 }
             }
 
-            if (mySnake.snake.First().transform.positon.x < -10)
-                mySnake.snake.First().transform.positon.x = 500;
-            if (mySnake.snake.First().transform.positon.x > 510)
-                mySnake.snake.First().transform.positon.x = 0;
-            if (mySnake.snake.First().transform.positon.y < -10)
-                mySnake.snake.First().transform.positon.y = 500;
-            if (mySnake.snake.First().transform.positon.y > 510)
-                mySnake.snake.First().transform.positon.y = 0;
+            if (mySnake.snake.First().transform.position.x < -10)
+                mySnake.snake.First().transform.position.x = 500;
+            if (mySnake.snake.First().transform.position.x > 510)
+                mySnake.snake.First().transform.position.x = 0;
+            if (mySnake.snake.First().transform.position.y < -10)
+                mySnake.snake.First().transform.position.y = 500;
+            if (mySnake.snake.First().transform.position.y > 510)
+                mySnake.snake.First().transform.position.y = 0;
         }
     }
 
@@ -241,8 +241,8 @@ namespace Game
         {
             foreach (Wall wall in walls)
             {
-                if (Collision.RectRect(mySnake.snake[0].transform.positon.x, mySnake.snake[0].transform.positon.y, mySnake.snake[0].imgSize.x, mySnake.snake[0].imgSize.y,
-               wall.transform.positon.x, wall.transform.positon.y, wall.imgSize.x, wall.imgSize.y))
+                if (Collision.RectRect(mySnake.snake[0].transform.position.x, mySnake.snake[0].transform.position.y, mySnake.snake[0].render.imgSize.x, mySnake.snake[0].render.imgSize.y,
+               wall.transform.position.x, wall.transform.position.y, wall.render.imgSize.x, wall.render.imgSize.y))
                 {
                     GameManager.Instance.lives--;
                     foreach (SnakePart snakePart in mySnake.snake)
@@ -253,8 +253,8 @@ namespace Game
                     losslifes.Invoke();
                     NewSnake();
                 }
-                if (Collision.RectRect(fruits.First().transform.positon.x, fruits.First().transform.positon.y, fruits.First().imgSize.x*2, fruits.First().imgSize.y*2,
-               wall.transform.positon.x, wall.transform.positon.y, wall.imgSize.x, wall.imgSize.y))
+                if (Collision.RectRect(fruits.First().transform.position.x, fruits.First().transform.position.y, fruits.First().render.imgSize.x*2, fruits.First().render.imgSize.y*2,
+               wall.transform.position.x, wall.transform.position.y, wall.render.imgSize.x, wall.render.imgSize.y))
                 {
                     fruits.First().ChangeToRandomPosition();
                 }
@@ -262,12 +262,12 @@ namespace Game
             VoidEvent eatFruit = null;
             eatFruit += addSnakePiece;
             eatFruit += fruits.First().Reproducer;
-            if (Collision.RectRect(mySnake.snake.First().transform.positon.x, mySnake.snake.First().transform.positon.y, mySnake.snake.First().imgSize.x, mySnake.snake.First().imgSize.y,
-                fruits.First().transform.positon.x, fruits.First().transform.positon.y, fruits.First().imgSize.x, fruits.First().imgSize.y))
+            if (Collision.RectRect(mySnake.snake.First().transform.position.x, mySnake.snake.First().transform.position.y, mySnake.snake.First().render.imgSize.x, mySnake.snake.First().render.imgSize.y,
+                fruits.First().transform.position.x, fruits.First().transform.position.y, fruits.First().render.imgSize.x, fruits.First().render.imgSize.y))
             {
                 if (GameManager.Instance.leaveTrash)
                 {
-                    Trash trashs = (Trash)FruitFactory.CreateFruit(FruitFactory.fruit.rottenApple, new Vector2((int)fruits.First().transform.positon.x, (int)fruits.First().transform.positon.y));
+                    Trash trashs = (Trash)FruitFactory.CreateFruit(FruitFactory.fruit.rottenApple, new Vector2((int)fruits.First().transform.position.x, (int)fruits.First().transform.position.y));
                     trashs.active = false;
                     trash.Add(trashs);
                 }
@@ -292,8 +292,8 @@ namespace Game
                 getPoints();
             }
             foreach(Trash trashs in trash) {
-                if (Collision.RectRect(mySnake.snake.First().transform.positon.x, mySnake.snake.First().transform.positon.y, mySnake.snake.First().imgSize.x, mySnake.snake.First().imgSize.y,
-                trashs.transform.positon.x, trashs.transform.positon.y, trashs.imgSize.x, trashs.imgSize.y)&&trashs.active)
+                if (Collision.RectRect(mySnake.snake.First().transform.position.x, mySnake.snake.First().transform.position.y, mySnake.snake.First().render.imgSize.x, mySnake.snake.First().render.imgSize.y,
+                trashs.transform.position.x, trashs.transform.position.y, trashs.render.imgSize.x, trashs.render.imgSize.y)&&trashs.active)
                 {
                     GameManager.Instance.lives--;
                     foreach (SnakePart snakePart in mySnake.snake)
@@ -305,8 +305,8 @@ namespace Game
                     losslifes.Invoke();
                     NewSnake();
                 }
-                if (Collision.RectRect(fruits.First().transform.positon.x, fruits.First().transform.positon.y, fruits.First().imgSize.x*2, fruits.First().imgSize.y*2,
-                        trashs.transform.positon.x, trashs.transform.positon.y, trashs.imgSize.x, trashs.imgSize.y))
+                if (Collision.RectRect(fruits.First().transform.position.x, fruits.First().transform.position.y, fruits.First().render.imgSize.x*2, fruits.First().render.imgSize.y*2,
+                        trashs.transform.position.x, trashs.transform.position.y, trashs.render.imgSize.x, trashs.render.imgSize.y))
                 {
                     fruits.First().ChangeToRandomPosition();
                 }
@@ -314,8 +314,8 @@ namespace Game
             for (int i = 1; i < mySnake.snake.Count; i++)
             {
 
-                if (Collision.RectRect(mySnake.snake[0].transform.positon.x, mySnake.snake[0].transform.positon.y, mySnake.snake[0].imgSize.x, mySnake.snake[0].imgSize.y,
-                mySnake.snake[i].transform.positon.x, mySnake.snake[i].transform.positon.y, mySnake.snake[i].imgSize.x, mySnake.snake[i].imgSize.y))
+                if (Collision.RectRect(mySnake.snake[0].transform.position.x, mySnake.snake[0].transform.position.y, mySnake.snake[0].render.imgSize.x, mySnake.snake[0].render.imgSize.y,
+                mySnake.snake[i].transform.position.x, mySnake.snake[i].transform.position.y, mySnake.snake[i].render.imgSize.x, mySnake.snake[i].render.imgSize.y))
                 {
                     GameManager.Instance.lives--;
                     foreach (SnakePart snakePart in mySnake.snake)
@@ -327,14 +327,14 @@ namespace Game
                     NewSnake();
                 }
             }
-            if (mySnake.snake.First().transform.positon.x < -10)
-                mySnake.snake.First().transform.positon.x = 500;
-            if (mySnake.snake.First().transform.positon.x > 510)
-                mySnake.snake.First().transform.positon.x = 0;
-            if (mySnake.snake.First().transform.positon.y < -10)
-                mySnake.snake.First().transform.positon.y = 500;
-            if (mySnake.snake.First().transform.positon.y > 510)
-                mySnake.snake.First().transform.positon.y = 0;
+            if (mySnake.snake.First().transform.position.x < -10)
+                mySnake.snake.First().transform.position.x = 500;
+            if (mySnake.snake.First().transform.position.x > 510)
+                mySnake.snake.First().transform.position.x = 0;
+            if (mySnake.snake.First().transform.position.y < -10)
+                mySnake.snake.First().transform.position.y = 500;
+            if (mySnake.snake.First().transform.position.y > 510)
+                mySnake.snake.First().transform.position.y = 0;
         }
 
         public static void addSnakePiece()
@@ -368,9 +368,9 @@ namespace Game
             buttons = new List<Button>();
 
             _opt = new Text(new Transform(60, 50, 0, 1, 1), "Options");
-            buttons.Add(new Button(new Transform(190, 390, 0, 8, 2.5f)));
+            buttons.Add(new Button(new Transform(190, 390, 0, 8, 2.5f), "Sprites/grey.png"));
             _back = new Text(new Transform(190, 390, 0, 0.5f, 0.5f), "Menu");
-            buttons.Add(new Button(new Transform(175, 330, 0, 10, 2.5f)));
+            buttons.Add(new Button(new Transform(175, 330, 0, 10, 2.5f), "Sprites/grey.png"));
             _trash = new Text(new Transform(175, 330, 0, 0.5f, 0.5f), "Trash");
             _uroboros = new Animation("Sprites/Animations/Uroboros/", new Transform(150, 130, 0, .25f, .25f), .2f, 27);
 
@@ -391,8 +391,8 @@ namespace Game
         {
             for (int i = 0; i < buttons.Count; i++)
             {
-                if (Collision.RectRect(mySnake.snake[0].transform.positon.x, mySnake.snake[0].transform.positon.y, mySnake.snake[0].imgSize.x, mySnake.snake[0].imgSize.y,
-               buttons[i].transform.positon.x, buttons[i].transform.positon.y, buttons[i].imgSize.x, buttons[i].imgSize.y))
+                if (Collision.RectRect(mySnake.snake[0].transform.position.x, mySnake.snake[0].transform.position.y, mySnake.snake[0].render .imgSize.x, mySnake.snake[0].render.imgSize.y,
+               buttons[i].transform.position.x, buttons[i].transform.position.y, buttons[i].render.imgSize.x, buttons[i].render.imgSize.y))
                 {
                     switch (i)
                     {
@@ -410,14 +410,14 @@ namespace Game
                 }
             }
 
-            if (mySnake.snake.First().transform.positon.x < -10)
-                mySnake.snake.First().transform.positon.x = 500;
-            if (mySnake.snake.First().transform.positon.x > 510)
-                mySnake.snake.First().transform.positon.x = 0;
-            if (mySnake.snake.First().transform.positon.y < -10)
-                mySnake.snake.First().transform.positon.y = 500;
-            if (mySnake.snake.First().transform.positon.y > 510)
-                mySnake.snake.First().transform.positon.y = 0;
+            if (mySnake.snake.First().transform.position.x < -10)
+                mySnake.snake.First().transform.position.x = 500;
+            if (mySnake.snake.First().transform.position.x > 510)
+                mySnake.snake.First().transform.position.x = 0;
+            if (mySnake.snake.First().transform.position.y < -10)
+                mySnake.snake.First().transform.position.y = 500;
+            if (mySnake.snake.First().transform.position.y > 510)
+                mySnake.snake.First().transform.position.y = 0;
         }
         public override void Draw()
         {
@@ -469,7 +469,7 @@ namespace Game
             buttons = new List<Button>();
 
             _victory = new Text(new Transform(60, 50, 0, 1, 1), "Victory");
-            buttons.Add(new Button(new Transform(190, 390, 0, 8, 2.5f)));
+            buttons.Add(new Button(new Transform(190, 390, 0, 8, 2.5f), "Sprites/grey.png"));
             _back = new Text(new Transform(190, 390, 0, 0.5f, 0.5f), "Menu");
             
             _uroboros = new Animation("Sprites/Animations/Uroboros/", new Transform(150, 130, 0, .25f, .25f), .2f, 27);
@@ -491,8 +491,8 @@ namespace Game
         {
             for (int i = 0; i < buttons.Count; i++)
             {
-                if (Collision.RectRect(mySnake.snake[0].transform.positon.x, mySnake.snake[0].transform.positon.y, mySnake.snake[0].imgSize.x, mySnake.snake[0].imgSize.y,
-               buttons[i].transform.positon.x, buttons[i].transform.positon.y, buttons[i].imgSize.x, buttons[i].imgSize.y))
+                if (Collision.RectRect(mySnake.snake[0].transform.position.x, mySnake.snake[0].transform.position.y, mySnake.snake[0].render.imgSize.x, mySnake.snake[0].render.imgSize.y,
+               buttons[i].transform.position.x, buttons[i].transform.position.y, buttons[i].render.imgSize.x, buttons[i].render.imgSize.y))
                 {
                     switch (i)
                     {
@@ -506,14 +506,14 @@ namespace Game
                 }
             }
 
-            if (mySnake.snake.First().transform.positon.x < -10)
-                mySnake.snake.First().transform.positon.x = 500;
-            if (mySnake.snake.First().transform.positon.x > 510)
-                mySnake.snake.First().transform.positon.x = 0;
-            if (mySnake.snake.First().transform.positon.y < -10)
-                mySnake.snake.First().transform.positon.y = 500;
-            if (mySnake.snake.First().transform.positon.y > 510)
-                mySnake.snake.First().transform.positon.y = 0;
+            if (mySnake.snake.First().transform.position.x < -10)
+                mySnake.snake.First().transform.position.x = 500;
+            if (mySnake.snake.First().transform.position.x > 510)
+                mySnake.snake.First().transform.position.x = 0;
+            if (mySnake.snake.First().transform.position.y < -10)
+                mySnake.snake.First().transform.position.y = 500;
+            if (mySnake.snake.First().transform.position.y > 510)
+                mySnake.snake.First().transform.position.y = 0;
         }
         public override void Draw()
         {
@@ -571,7 +571,7 @@ namespace Game
             _uroboros = new Animation("Sprites/Animations/Uroboros/", new Transform(150, 130, 0, .25f, .25f), .2f, 27);
             _game = new Text(new Transform(140, 10, 0, 1, 1), "Game");
             _over = new Text(new Transform(140, 70, 0, 1, 1), "Over");
-            buttons.Add(new Button(new Transform(190, 390, 0, 8, 2.5f)));
+            buttons.Add(new Button(new Transform(190, 390, 0, 8, 2.5f), "Sprites/grey.png"));
             _back = new Text(new Transform(190, 390, 0, 0.5f, 0.5f), "Menu");
 
 
@@ -592,8 +592,8 @@ namespace Game
         {
             for (int i = 0; i < buttons.Count; i++)
             {
-                if (Collision.RectRect(mySnake.snake[0].transform.positon.x, mySnake.snake[0].transform.positon.y, mySnake.snake[0].imgSize.x, mySnake.snake[0].imgSize.y,
-               buttons[i].transform.positon.x, buttons[i].transform.positon.y, buttons[i].imgSize.x, buttons[i].imgSize.y))
+                if (Collision.RectRect(mySnake.snake[0].transform.position.x, mySnake.snake[0].transform.position.y, mySnake.snake[0].render.imgSize.x, mySnake.snake[0].render.imgSize.y,
+               buttons[i].transform.position.x, buttons[i].transform.position.y, buttons[i].render.imgSize.x, buttons[i].render.imgSize.y))
                 {
                     switch (i)
                     {
@@ -607,14 +607,14 @@ namespace Game
                 }
             }
 
-            if (mySnake.snake.First().transform.positon.x < -10)
-                mySnake.snake.First().transform.positon.x = 500;
-            if (mySnake.snake.First().transform.positon.x > 510)
-                mySnake.snake.First().transform.positon.x = 0;
-            if (mySnake.snake.First().transform.positon.y < -10)
-                mySnake.snake.First().transform.positon.y = 500;
-            if (mySnake.snake.First().transform.positon.y > 510)
-                mySnake.snake.First().transform.positon.y = 0;
+            if (mySnake.snake.First().transform.position.x < -10)
+                mySnake.snake.First().transform.position.x = 500;
+            if (mySnake.snake.First().transform.position.x > 510)
+                mySnake.snake.First().transform.position.x = 0;
+            if (mySnake.snake.First().transform.position.y < -10)
+                mySnake.snake.First().transform.position.y = 500;
+            if (mySnake.snake.First().transform.position.y > 510)
+                mySnake.snake.First().transform.position.y = 0;
         }
         public override void Draw()
         {

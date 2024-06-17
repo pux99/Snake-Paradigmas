@@ -47,24 +47,37 @@ namespace Game
     }
     public struct Transform
     {
-        public Vector2 positon;
+        public Vector2 position;
         public float rotation;
         public Vector2 scale;
 
         public Transform(Vector2 pos,float ang,Vector2 scale)
         {
-            this.positon = pos;
+            this.position = pos;
             this.rotation = ang;
             this.scale = scale;
         }
         public Transform(float x=0, float y=0, float ang=0,float Sx=1,float Sy = 1)
         {
-            positon.x = x;
-            positon.y = y;
+            position.x = x;
+            position.y = y;
             rotation = ang;
             scale.x = Sx;
             scale.y = Sy;
         }
+    }
+    
+    public class Render
+    {
+        public Render(string path,Transform transform)
+        {
+            this.textures = new Texture(path);
+            this._texture = path;
+            this.imgSize = new Vector2(textures.Width * transform.scale.x, textures.Height * transform.scale.y);
+        }
+        public string _texture;
+        public Texture textures;
+        public Vector2 imgSize;
     }
 
     public struct Sprite
@@ -83,7 +96,7 @@ namespace Game
         public Sprite(string path,Vector2 posittion,float rotation, Vector2 scale,Vector2 offset,float oreder=0)
         {
             this.path = path;
-            transform.positon = posittion;
+            transform.position = posittion;
             transform.rotation = rotation;
             transform.scale = scale;
             this.offset = offset;
@@ -98,8 +111,8 @@ namespace Game
             float oreder = 0)
         {
             this.path = path;
-            transform.positon.x = posX;
-            transform.positon.y = posY;
+            transform.position.x = posX;
+            transform.position.y = posY;
             transform.rotation = rotation;
             transform.scale.x = sclX;
             transform.scale.y = sclY;
