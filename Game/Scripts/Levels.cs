@@ -161,9 +161,7 @@ namespace Game
             combatUI = new CombatUi(this);
             GameManager.Instance.lives = 3;
             GameManager.Instance.points = 0;
-
-
-
+           
 
             for (int i = 0; i < 5; i++)
             {

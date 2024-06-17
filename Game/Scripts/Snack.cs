@@ -6,6 +6,7 @@ using System.IO.Ports;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms.DataVisualization.Charting;
+using static Game.Scripts.SnakeFactory;
 
 namespace Game
 {
@@ -26,6 +27,7 @@ namespace Game
         private string _direction = "Down";
         private string _nextDirection = "Down";
         public List<SnakePart> snake = new List<SnakePart>();
+        Pool<String, SnakePart> pool = new Pool<String, SnakePart>(generatePart);
 
         public int snakePartDelay { get { return _snakePartDelay; } set { _snakePartDelay = value; } }
 
@@ -136,13 +138,24 @@ namespace Game
         }
         public void addSnakePiece(string part)
         {
-            if(part == "body") 
-            { 
-            snake.Add((SnakePart)SnakeFactory.CreateSnake(SnakeFactory.part.snakePart, new Vector2(snake.Last().transform.positon.x, snake.Last().transform.positon.y)));
-            }
-            else if(part =="head")
+            SnakePart snakePart = pool.GetElement(part);
+            snake.Add(snakePart);
+        }
+
+        static SnakePart generatePart(String  part)
+        {
+
+            if (part == "body")
             {
-                snake.Add((SnakePart)SnakeFactory.CreateSnake(SnakeFactory.part.snakeHead, new Vector2(240, 240)));
+                return (SnakePart)SnakeFactory.CreateSnake(SnakeFactory.part.snakePart, new Vector2(-10, -10));
+            }
+            else if (part == "head")
+            {
+                return (SnakePart)SnakeFactory.CreateSnake(SnakeFactory.part.snakeHead, new Vector2(240, 240));
+            }
+            else
+            {
+                return null;
             }
         }
     }
