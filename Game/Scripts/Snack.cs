@@ -134,9 +134,16 @@ namespace Game
                 }  
             }
         }
-        public void addSnakePiece()
+        public void addSnakePiece(string part)
         {
-            snake.Add(new SnakePart(snake.Last().transform.positon.x, snake.Last().transform.positon.y, 1, "Sprites/rect4.png"));
+            if(part == "body") 
+            { 
+            snake.Add((SnakePart)SnakeFactory.CreateSnake(SnakeFactory.part.snakePart, new Vector2(snake.Last().transform.positon.x, snake.Last().transform.positon.y)));
+            }
+            else if(part =="head")
+            {
+                snake.Add((SnakePart)SnakeFactory.CreateSnake(SnakeFactory.part.snakeHead, new Vector2(240, 240)));
+            }
         }
     }
     public class SnakePart:Draw

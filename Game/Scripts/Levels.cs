@@ -163,15 +163,17 @@ namespace Game
             GameManager.Instance.points = 0;
 
 
+
+
             for (int i = 0; i < 5; i++)
             {
                 if (i == 0)
                 {
-                    mySnake.snake.Add(new SnakePart(50, 500, 1, "Sprites/SnakeHead.png"));
+                    mySnake.addSnakePiece("head");
                 }
                 else
                 {
-                    mySnake.snake.Add(new SnakePart(50, 500, 1, "Sprites/rect4.png"));
+                    mySnake.addSnakePiece("body");
                 }
             }
 
@@ -339,14 +341,14 @@ namespace Game
 
         public static void addSnakePiece()
         {
-            mySnake.addSnakePiece();
+            mySnake.addSnakePiece("body");
         }
         public static void NewSnake()
         {
             mySnake.snakePartDelay = GameManager.Instance.SnakeDelay;
-            mySnake.snake.Add(new SnakePart(240, 240, 1, "Sprites/SnakeHead.png"));
+            mySnake.addSnakePiece("head");
             for (int i = 1; i < 6; i++)
-                mySnake.snake.Add(new SnakePart(250, 250, 1, "Sprites/rect4.png"));
+                mySnake.addSnakePiece("body");
         }
         public override void Reset()
         {
