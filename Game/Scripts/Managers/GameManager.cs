@@ -14,6 +14,6 @@ namespace Game
         public int points = 0;
         public int lives = 3;
         public int SnakeDelay = 5;
-        public bool leaveTrash=false;
+        public bool leaveTrash = false;
     }
 }

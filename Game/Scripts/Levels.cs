@@ -247,9 +247,24 @@ namespace Game
                     GameManager.Instance.lives--;
                     foreach (SnakePart snakePart in mySnake.snake)
                     {
-                        LevelsManager.Instance.CurrentLevel.draws.Remove(snakePart);
+                        if (snakePart != mySnake.snake[0]) 
+                        { 
+                            LevelsManager.Instance.CurrentLevel.draws.Remove(snakePart);
+                            snakePart.myPositions.Clear();
+                            mySnake.pool.ReleaseObject(snakePart);
+                            //mySnake.snake.Remove(snakePart);
+                            
+                        }
                     }
-                    mySnake.snake.Clear();
+                    for(int i = mySnake.snake.Count; i > 1; i--)
+                    {
+                        Console.WriteLine(mySnake.snake.Count);
+                        mySnake.snake[i-1].myPositions.Clear();
+                        mySnake.snake[i - 1].myPositions.Clear();
+                        mySnake.snake.Remove(mySnake.snake[i-1]);   
+
+                    }
+                    //mySnake.snake.First().myPositions.Clear();
                     losslifes.Invoke();
                     NewSnake();
                 }
@@ -344,9 +359,16 @@ namespace Game
         public static void NewSnake()
         {
             mySnake.snakePartDelay = GameManager.Instance.SnakeDelay;
-            mySnake.addSnakePiece("head");
-            for (int i = 1; i < 6; i++)
+            mySnake.snake.First().transform.positon.x = 240;
+            mySnake.snake.First().transform.positon.y = 240;
+
+            for (int i = 1; i < 5; i++) 
+            { 
                 mySnake.addSnakePiece("body");
+                mySnake.snake[i].transform.positon = new Vector2 { x = -10, y = -10 };
+                LevelsManager.Instance.CurrentLevel.draws.Add(mySnake.snake[i]);
+            }
+
         }
         public override void Reset()
         {

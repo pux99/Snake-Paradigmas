@@ -27,7 +27,7 @@ namespace Game
         private string _direction = "Down";
         private string _nextDirection = "Down";
         public List<SnakePart> snake = new List<SnakePart>();
-        Pool<String, SnakePart> pool = new Pool<String, SnakePart>(generatePart);
+        public Pool<String, SnakePart> pool = new Pool<String, SnakePart>(generatePart);
 
         public int snakePartDelay { get { return _snakePartDelay; } set { _snakePartDelay = value; } }
 

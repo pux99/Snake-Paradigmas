@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.Compatibility.VB6;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,12 @@ namespace Game.Scripts
         { 
             _elements = new Queue<T>();
             _elementGenerator = elementGenerator;
+        }
+
+        public Queue<T> Elements  
+        {
+            get { return _elements; }   
+            set { _elements = value; }  
         }
 
         public T GetElement(T1 id) 
