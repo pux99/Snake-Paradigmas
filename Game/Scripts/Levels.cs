@@ -236,7 +236,6 @@ namespace Game
                     draw.Draw();
             }
         }
-
         static void Collisions(VoidEvent losslifes, VoidEvent getPoints)
         {
             foreach (Wall wall in walls)
@@ -244,29 +243,7 @@ namespace Game
                 if (Collision.RectRect(mySnake.snake[0].transform.positon.x, mySnake.snake[0].transform.positon.y, mySnake.snake[0].imgSize.x, mySnake.snake[0].imgSize.y,
                wall.transform.positon.x, wall.transform.positon.y, wall.imgSize.x, wall.imgSize.y))
                 {
-                    GameManager.Instance.lives--;
-                    foreach (SnakePart snakePart in mySnake.snake)
-                    {
-                        if (snakePart != mySnake.snake[0]) 
-                        { 
-                            LevelsManager.Instance.CurrentLevel.draws.Remove(snakePart);
-                            snakePart.myPositions.Clear();
-                            mySnake.pool.ReleaseObject(snakePart);
-                            //mySnake.snake.Remove(snakePart);
-                            
-                        }
-                    }
-                    for(int i = mySnake.snake.Count; i > 1; i--)
-                    {
-                        Console.WriteLine(mySnake.snake.Count);
-                        mySnake.snake[i-1].myPositions.Clear();
-                        mySnake.snake[i - 1].myPositions.Clear();
-                        mySnake.snake.Remove(mySnake.snake[i-1]);   
-
-                    }
-                    //mySnake.snake.First().myPositions.Clear();
-                    losslifes.Invoke();
-                    NewSnake();
+                    KillSnake(losslifes);
                 }
                 if (Collision.RectRect(fruits.First().transform.positon.x, fruits.First().transform.positon.y, fruits.First().imgSize.x*2, fruits.First().imgSize.y*2,
                wall.transform.positon.x, wall.transform.positon.y, wall.imgSize.x, wall.imgSize.y))
@@ -310,15 +287,7 @@ namespace Game
                 if (Collision.RectRect(mySnake.snake.First().transform.positon.x, mySnake.snake.First().transform.positon.y, mySnake.snake.First().imgSize.x, mySnake.snake.First().imgSize.y,
                 trashs.transform.positon.x, trashs.transform.positon.y, trashs.imgSize.x, trashs.imgSize.y)&&trashs.active)
                 {
-                    GameManager.Instance.lives--;
-                    foreach (SnakePart snakePart in mySnake.snake)
-                    {
-                        LevelsManager.Instance.CurrentLevel.draws.Remove(snakePart);
-                    }
-                    
-                    mySnake.snake.Clear();
-                    losslifes.Invoke();
-                    NewSnake();
+                    KillSnake(losslifes);
                 }
                 if (Collision.RectRect(fruits.First().transform.positon.x, fruits.First().transform.positon.y, fruits.First().imgSize.x*2, fruits.First().imgSize.y*2,
                         trashs.transform.positon.x, trashs.transform.positon.y, trashs.imgSize.x, trashs.imgSize.y))
@@ -332,14 +301,7 @@ namespace Game
                 if (Collision.RectRect(mySnake.snake[0].transform.positon.x, mySnake.snake[0].transform.positon.y, mySnake.snake[0].imgSize.x, mySnake.snake[0].imgSize.y,
                 mySnake.snake[i].transform.positon.x, mySnake.snake[i].transform.positon.y, mySnake.snake[i].imgSize.x, mySnake.snake[i].imgSize.y))
                 {
-                    GameManager.Instance.lives--;
-                    foreach (SnakePart snakePart in mySnake.snake)
-                    {
-                        LevelsManager.Instance.CurrentLevel.draws.Remove(snakePart);
-                    }
-                    mySnake.snake.Clear();
-                    losslifes.Invoke();
-                    NewSnake();
+                    KillSnake(losslifes);
                 }
             }
             if (mySnake.snake.First().transform.positon.x < -10)
@@ -351,10 +313,11 @@ namespace Game
             if (mySnake.snake.First().transform.positon.y > 510)
                 mySnake.snake.First().transform.positon.y = 0;
         }
-
         public static void addSnakePiece()
         {
             mySnake.addSnakePiece("body");
+            int lastPosition = mySnake.snake.Count -1;
+            LevelsManager.Instance.CurrentLevel.draws.Add(mySnake.snake[lastPosition]);
         }
         public static void NewSnake()
         {
@@ -363,12 +326,33 @@ namespace Game
             mySnake.snake.First().transform.positon.y = 240;
 
             for (int i = 1; i < 5; i++) 
-            { 
+            {
                 mySnake.addSnakePiece("body");
-                mySnake.snake[i].transform.positon = new Vector2 { x = -10, y = -10 };
+                //mySnake.snake[i].transform.positon = new Vector2 { x = -10, y = -10 };
                 LevelsManager.Instance.CurrentLevel.draws.Add(mySnake.snake[i]);
             }
-
+        }
+        public static void KillSnake(VoidEvent lossLife)
+        {
+            GameManager.Instance.lives--;
+            foreach (SnakePart snakePart in mySnake.snake)
+            {
+                if (snakePart != mySnake.snake[0])
+                {
+                    LevelsManager.Instance.CurrentLevel.draws.Remove(snakePart);
+                    snakePart.myPositions.Clear();
+                    mySnake.pool.ReleaseObject(snakePart);
+                }
+            }
+            for (int i = mySnake.snake.Count; i > 1; i--)
+            {
+                mySnake.snake[i - 1].myPositions.Clear();
+                mySnake.snake[i - 1].transform.positon = new Vector2 { x = -10, y = -10 };
+                mySnake.snake.Remove(mySnake.snake[i - 1]);
+            }
+            mySnake.snake.First().myPositions.Clear();
+            lossLife.Invoke();
+            NewSnake();
         }
         public override void Reset()
         {
