@@ -27,7 +27,7 @@ namespace Game
 
         public void Draw()
         {
-            Engine.Draw(render.textures, transform.position.x, transform.position.y, transform.scale.x, transform.scale.y, transform.rotation);
+            render.Draw(transform);
         }
     }
 }

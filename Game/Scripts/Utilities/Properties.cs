@@ -72,53 +72,15 @@ namespace Game
         public Render(string path,Transform transform)
         {
             this.textures = new Texture(path);
-            this._texture = path;
+            this._path = path;
             this.imgSize = new Vector2(textures.Width * transform.scale.x, textures.Height * transform.scale.y);
         }
-        public string _texture;
+        public string _path;
         public Texture textures;
         public Vector2 imgSize;
-    }
-
-    public struct Sprite
-    {
-        public string path;
-        public Transform transform;
-        public Vector2 offset;
-        public float order;
-        public Sprite(string path,Transform transform,Vector2 offset,float oreder)
+        public void Draw(Transform transform)
         {
-            this.path = path;
-            this.transform = transform;
-            this.offset = offset;
-            this.order =0;
-        }
-        public Sprite(string path,Vector2 posittion,float rotation, Vector2 scale,Vector2 offset,float oreder=0)
-        {
-            this.path = path;
-            transform.position = posittion;
-            transform.rotation = rotation;
-            transform.scale = scale;
-            this.offset = offset;
-            this.order = oreder;
-        }
-        public Sprite(
-            string path,
-            float posX=0, float posY = 0,
-            float rotation = 0,
-            float sclX = 1,float sclY = 1,
-            float offsX = 0,float offsY = 0,
-            float oreder = 0)
-        {
-            this.path = path;
-            transform.position.x = posX;
-            transform.position.y = posY;
-            transform.rotation = rotation;
-            transform.scale.x = sclX;
-            transform.scale.y = sclY;
-            offset.x = offsX;
-            offset.y = offsY;
-            this.order = oreder;
+            Engine.Draw(textures, transform.position.x, transform.position.y, transform.scale.x, transform.scale.y);
         }
     }
     internal class Properties

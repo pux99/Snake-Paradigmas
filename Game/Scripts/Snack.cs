@@ -27,7 +27,7 @@ namespace Game
         private string _direction = "Down";
         private string _nextDirection = "Down";
         public List<SnakePart> snake = new List<SnakePart>();
-
+        public Pool<String, SnakePart> pool = new Pool<String, SnakePart>(generatePart);
         public int snakePartDelay { get { return _snakePartDelay; } set { _snakePartDelay = value; } }
 
         public void Update()
@@ -135,9 +135,26 @@ namespace Game
                 }  
             }
         }
-        public void addSnakePiece()
+        public void addSnakePiece(string part)
         {
-            snake.Add(new SnakePart(snake.Last().transform.position.x, snake.Last().transform.position.y, 1, "Sprites/rect4.png"));
+            SnakePart snakePart = pool.GetElement(part);
+            snake.Add(snakePart);
+        }
+        static SnakePart generatePart(String part)
+        {
+
+            if (part == "body")
+            {
+                return (SnakePart)SnakeFactory.CreateSnake(SnakeFactory.part.snakePart, new Vector2(-10, -10));
+            }
+            else if (part == "head")
+            {
+                return (SnakePart)SnakeFactory.CreateSnake(SnakeFactory.part.snakeHead, new Vector2(240, 240));
+            }
+            else
+            {
+                return null;
+            }
         }
     }
     public class SnakePart:Draw
@@ -163,7 +180,7 @@ namespace Game
         }
         public void Draw()
         {
-                Engine.Draw(render.textures, transform.position.x, transform.position.y, transform.scale.x, transform.scale.y);
+            render.Draw(transform);
         }
     }
 }

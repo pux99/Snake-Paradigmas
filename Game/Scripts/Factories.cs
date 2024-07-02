@@ -24,4 +24,23 @@ namespace Game.Scripts
             return null;
         }
     }
+    public static class SnakeFactory
+    {
+        public enum part { snakePart, snakeHead }
+        public static Draw CreateSnake(part snake, Vector2 position)
+        {
+            switch (snake)
+            {
+
+                case part.snakePart:
+                    return new SnakePart(position.x, position.y, 1, "Sprites/rect4.png");
+                case part.snakeHead:
+                    return new SnakePart(position.x, position.y, 1, "Sprites/SnakeHead.png");
+
+                default:
+                    break;
+            }
+            return null;
+        }
+    }
 }
