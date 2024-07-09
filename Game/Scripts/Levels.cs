@@ -57,13 +57,15 @@ namespace Game
             {
                 if (i == 0)
                 {
-                    mySnake.snake.Add(new SnakePart(50, 500, 1, "Sprites/SnakeHead.png"));
+                    mySnake.addSnakePiece("head");
                 }
                 else
                 {
-                    mySnake.snake.Add(new SnakePart(50, 500, 1, "Sprites/rect4.png"));
+                    mySnake.addSnakePiece("body");
                 }
             }
+            mySnake.snake.First().transform.position.x = 50;
+            mySnake.snake.First().transform.position.y = 0;
         }
 
         public override void Draw()
@@ -365,34 +367,42 @@ namespace Game
     public class Options : Levels
     {
         private Animation _uroboros;
-        private Text _opt;
+        private Text _title;
         private Text _back;
         private Text _trash;
+        private Text _skins;
         public static Snake mySnake;
         public static List<Button> buttons;
         public override void Inizialize()
         {
             buttons = new List<Button>();
 
-            _opt = new Text(new Transform(60, 50, 0, 1, 1), "Options");
+            _title = new Text(new Transform(60, 50, 0, 1, 1), "Options");
+            _uroboros = new Animation("Sprites/Animations/Uroboros/", new Transform(150, 130, 0, .25f, .25f), .2f, 27);
+
             buttons.Add(new Button(new Transform(190, 390, 0, 8, 2.5f), "Sprites/grey.png"));
             _back = new Text(new Transform(190, 390, 0, 0.5f, 0.5f), "Menu");
             buttons.Add(new Button(new Transform(175, 330, 0, 10, 2.5f), "Sprites/grey.png"));
             _trash = new Text(new Transform(175, 330, 0, 0.5f, 0.5f), "Trash");
-            _uroboros = new Animation("Sprites/Animations/Uroboros/", new Transform(150, 130, 0, .25f, .25f), .2f, 27);
+            buttons.Add(new Button(new Transform(175, 270, 0, 10, 2.5f), "Sprites/grey.png"));
+            _skins = new Text(new Transform(175, 270, 0, 0.5f, 0.5f), "Skins");
+
+
 
             mySnake = new Snake(50, 5);
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 5; i++)
             {
                 if (i == 0)
                 {
-                    mySnake.snake.Add(new SnakePart(50, 500, 1, "Sprites/SnakeHead.png"));
+                    mySnake.addSnakePiece("head");
                 }
                 else
                 {
-                    mySnake.snake.Add(new SnakePart(50, 500, 1, "Sprites/rect4.png"));
+                    mySnake.addSnakePiece("body");
                 }
             }
+            mySnake.snake.First().transform.position.x = 50;
+            mySnake.snake.First().transform.position.y = 0;
         }
         public void Collisions()
         {
@@ -409,6 +419,9 @@ namespace Game
                         case 1:
                             LevelsManager.Instance.SetLevel("Menu");
                             GameManager.Instance.leaveTrash = !GameManager.Instance.leaveTrash;
+                            break;
+                        case 2:
+                            LevelsManager.Instance.SetLevel("Skins");
                             break;
                         default:
                             Console.WriteLine("No nay nivel");
@@ -482,17 +495,19 @@ namespace Game
             _uroboros = new Animation("Sprites/Animations/Uroboros/", new Transform(150, 130, 0, .25f, .25f), .2f, 27);
 
             mySnake = new Snake(50, 5);
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 5; i++)
             {
                 if (i == 0)
                 {
-                    mySnake.snake.Add(new SnakePart(50, 500, 1, "Sprites/SnakeHead.png"));
+                    mySnake.addSnakePiece("head");
                 }
                 else
                 {
-                    mySnake.snake.Add(new SnakePart(50, 500, 1, "Sprites/rect4.png"));
+                    mySnake.addSnakePiece("body");
                 }
             }
+            mySnake.snake.First().transform.position.x = 50;
+            mySnake.snake.First().transform.position.y = 0;
         }
         public void Collisions()
         {
@@ -587,13 +602,15 @@ namespace Game
             {
                 if (i == 0)
                 {
-                    mySnake.snake.Add(new SnakePart(50, 500, 1, "Sprites/SnakeHead.png"));
+                    mySnake.addSnakePiece("head");
                 }
                 else
                 {
-                    mySnake.snake.Add(new SnakePart(50, 500, 1, "Sprites/rect4.png"));
+                    mySnake.addSnakePiece("body");
                 }
             }
+            mySnake.snake.First().transform.position.x = 50;
+            mySnake.snake.First().transform.position.y = 0;
         }
         public void Collisions()
         {
@@ -643,6 +660,151 @@ namespace Game
             //LevelsManager.Instance.SetLevel("Gameplay");
         }
 
+        public override void Update()
+        {
+            // Si la Snake toca el Boton PLAY collision.rectrect de snake con Boton gris
+            //LevelsManager.Instance.SetLevel("Gameplay");
+            //LevelsManager.Instance.SetLevel("Options");
+            Collisions();
+            foreach (Update update in LevelsManager.Instance.CurrentLevel.updates)
+            {
+                update.Update();
+            }
+
+        }
+
+        public override void Reset()
+        {
+            LevelsManager.Instance.CurrentLevel.updates.Clear();
+            LevelsManager.Instance.CurrentLevel.updates.Clear();
+        }
+    }
+
+    public class Skins : Levels
+    {
+        private Text _title;
+        private Text _back;
+        private Text _head;
+        private Text _body;
+        public static Snake mySnake;
+        public static List<Button> buttons;
+        public override void Inizialize()
+        {
+            buttons = new List<Button>();
+
+            _title = new Text(new Transform(110, 50, 0, 1, 1), "Skins");
+
+            buttons.Add(new Button(new Transform(190, 450, 0, 8, 2.5f), "Sprites/grey.png"));
+            _back = new Text(new Transform(190, 450, 0, 0.5f, 0.5f), "Menu");
+
+            
+            _head = new Text(new Transform(85, 150, 0, 0.5f, 0.5f), "Head");
+            buttons.Add(new Button(new Transform(125, 200, 0, 5, 5f), "Sprites/SnakeHead.png"));
+            buttons.Add(new Button(new Transform(125, 275, 0, 5, 5f), "Sprites/Head_1.png"));
+            buttons.Add(new Button(new Transform(125, 350, 0, 5, 5f), "Sprites/Head_1.png"));
+
+            _body = new Text(new Transform(285, 150, 0, 0.5f, 0.5f), "Body");
+            buttons.Add(new Button(new Transform(325, 200, 0, 5, 5f), "Sprites/Rect4.png"));
+            buttons.Add(new Button(new Transform(325, 275, 0, 5, 5f), "Sprites/Body_1.png"));
+            buttons.Add(new Button(new Transform(325, 350, 0, 5, 5f), "Sprites/Body_1.png"));
+
+            mySnake = new Snake(50, 5);
+
+            for (int i = 0; i < 5; i++)
+            {
+                if (i == 0)
+                {
+                    mySnake.addSnakePiece("head");
+                }
+                else
+                {
+                    mySnake.addSnakePiece("body");
+                }
+            }
+            mySnake.snake.First().transform.position.x = 50;
+            mySnake.snake.First().transform.position.y = 0;
+        }
+        public void Collisions()
+        {
+            for (int i = 0; i < buttons.Count; i++)
+            {
+                if (Collision.RectRect(mySnake.snake[0].transform.position.x, mySnake.snake[0].transform.position.y, mySnake.snake[0].render.imgSize.x, mySnake.snake[0].render.imgSize.y,
+               buttons[i].transform.position.x, buttons[i].transform.position.y, buttons[i].render.imgSize.x, buttons[i].render.imgSize.y))
+                {
+                    switch (i)
+                    {
+                        case 0:
+                            LevelsManager.Instance.SetLevel("Menu");
+                            break;
+                        case 1:
+                            GameManager.Instance.snackHead = 0;
+                            LevelsManager.Instance.SetLevel("Skins");
+                            mySnake.snake.First().transform.position.x = 50;
+                            mySnake.snake.First().transform.position.y = 0;
+                            break;
+                        case 2:
+                            GameManager.Instance.snackHead = 1;
+                            LevelsManager.Instance.SetLevel("Skins");
+                            mySnake.snake.First().transform.position.x = 50;
+                            mySnake.snake.First().transform.position.y = 0;
+                            break;
+                        case 3:
+                            GameManager.Instance.snackHead = 2;
+                            LevelsManager.Instance.SetLevel("Skins");
+                            mySnake.snake.First().transform.position.x = 50;
+                            mySnake.snake.First().transform.position.y = 0;
+                            break;
+                        case 4:
+                            GameManager.Instance.snackBody = 0;
+                            LevelsManager.Instance.SetLevel("Skins");
+                            mySnake.snake.First().transform.position.x = 50;
+                            mySnake.snake.First().transform.position.y = 0;
+                            break;
+                        case 5:
+                            GameManager.Instance.snackBody = 1;
+                            LevelsManager.Instance.SetLevel("Skins");
+                            mySnake.snake.First().transform.position.x = 50;
+                            mySnake.snake.First().transform.position.y = 0;
+                            break;
+                        case 6:
+                            GameManager.Instance.snackBody = 2;
+                            LevelsManager.Instance.SetLevel("Skins");
+                            mySnake.snake.First().transform.position.x = 50;
+                            mySnake.snake.First().transform.position.y = 0;
+                            break;
+                        default:
+                            Console.WriteLine("No nay nivel");
+                            break;
+                    }
+                }
+            }
+
+            if (mySnake.snake.First().transform.position.x < -10)
+                mySnake.snake.First().transform.position.x = 500;
+            if (mySnake.snake.First().transform.position.x > 510)
+                mySnake.snake.First().transform.position.x = 0;
+            if (mySnake.snake.First().transform.position.y < -10)
+                mySnake.snake.First().transform.position.y = 500;
+            if (mySnake.snake.First().transform.position.y > 510)
+                mySnake.snake.First().transform.position.y = 0;
+        }
+        public override void Draw()
+        {
+            Engine.Draw("Sprites/bg_menu.jpg", 0, 0, 1.5f, 1.5f, 0, 200);
+            foreach (Draw draw in LevelsManager.Instance.CurrentLevel.draws)
+            {
+                draw.Draw();
+            }
+        }
+        public override void Input()
+        {
+            foreach (Inputs input in LevelsManager.Instance.CurrentLevel.inputs)
+            {
+                input.Input();
+            }
+            //if (Engine.GetKey(Keys.SPACE))
+            //LevelsManager.Instance.SetLevel("Gameplay");
+        }
         public override void Update()
         {
             // Si la Snake toca el Boton PLAY collision.rectrect de snake con Boton gris
