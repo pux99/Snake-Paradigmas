@@ -36,11 +36,11 @@ namespace Game.Scripts
                     switch(GameManager.Instance.snackBody)
                     {
                         case 0:
-                            return new SnakePart(position.x, position.y, 1, "Sprites/rect4.png");   
+                            return new SnakePart(position.x, position.y, 1, "Sprites/Body_1.png");   
                         case 1:
-                            return new SnakePart(position.x, position.y, 1, "Sprites/Body_1.png");     
+                            return new SnakePart(position.x, position.y, 1, "Sprites/Body_2.png");     
                         case 2:
-                            return new SnakePart(position.x, position.y, 1, "Sprites/Body_1.png");     
+                            return new SnakePart(position.x, position.y, 1, "Sprites/Body_3.png");     
                         default: break;
                     }
                     break;
@@ -48,11 +48,11 @@ namespace Game.Scripts
                     switch (GameManager.Instance.snackHead)
                     {
                         case 0:
-                            return new SnakePart(position.x, position.y, 1, "Sprites/SnakeHead.png");
+                            return new SnakePart(position.x, position.y, 1, "Sprites/Head_1.png");
                         case 1:
-                            return new SnakePart(position.x, position.y, 1, "Sprites/Head_1.png");
+                            return new SnakePart(position.x, position.y, 1, "Sprites/Head_2.png");
                         case 2:
-                            return new SnakePart(position.x, position.y, 1, "Sprites/Head_1.png");
+                            return new SnakePart(position.x, position.y, 1, "Sprites/Head_3.png");
                         default: break;
                     }
                     break;

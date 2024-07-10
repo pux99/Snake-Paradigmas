@@ -335,7 +335,6 @@ C:\Users\Zeki\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Sprites\Animation
 C:\Users\Zeki\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Sprites\Animations\Uroboros\24.png
 C:\Users\Zeki\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Sprites\Animations\Uroboros\25.png
 C:\Users\Zeki\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Sprites\Animations\Uroboros\26.png
-C:\Users\Zeki\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Sprites\SnakeHead.png
 C:\Users\Ignacio Puk\source\repos\Snake Paradigmas\Snake-Paradigmas\Game\bin\Debug\Sounds\Munching.wav
 C:\Users\Zeki\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Sounds\Munching.wav
 C:\Users\Zeki\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Sprites\bg_menu.jpg
@@ -381,3 +380,7 @@ C:\Users\alu763\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Sprites\SnakeHe
 C:\Users\Zeki\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Sprites\trash_apple.png
 C:\Users\Zeki\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Sprites\Body_1.png
 C:\Users\Zeki\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Sprites\Head_1.png
+C:\Users\Zeki\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Sprites\Body_2.png
+C:\Users\Zeki\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Sprites\Body_3.png
+C:\Users\Zeki\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Sprites\Head_2.png
+C:\Users\Zeki\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Sprites\Head_3.png

@@ -699,14 +699,14 @@ namespace Game
 
             
             _head = new Text(new Transform(85, 150, 0, 0.5f, 0.5f), "Head");
-            buttons.Add(new Button(new Transform(125, 200, 0, 5, 5f), "Sprites/SnakeHead.png"));
-            buttons.Add(new Button(new Transform(125, 275, 0, 5, 5f), "Sprites/Head_1.png"));
-            buttons.Add(new Button(new Transform(125, 350, 0, 5, 5f), "Sprites/Head_1.png"));
+            buttons.Add(new Button(new Transform(125, 200, 0, 5, 5f), "Sprites/Head_1.png"));
+            buttons.Add(new Button(new Transform(125, 275, 0, 5, 5f), "Sprites/Head_2.png"));
+            buttons.Add(new Button(new Transform(125, 350, 0, 5, 5f), "Sprites/Head_3.png"));
 
             _body = new Text(new Transform(285, 150, 0, 0.5f, 0.5f), "Body");
-            buttons.Add(new Button(new Transform(325, 200, 0, 5, 5f), "Sprites/Rect4.png"));
-            buttons.Add(new Button(new Transform(325, 275, 0, 5, 5f), "Sprites/Body_1.png"));
-            buttons.Add(new Button(new Transform(325, 350, 0, 5, 5f), "Sprites/Body_1.png"));
+            buttons.Add(new Button(new Transform(325, 200, 0, 5, 5f), "Sprites/Body_1.png"));
+            buttons.Add(new Button(new Transform(325, 275, 0, 5, 5f), "Sprites/Body_2.png"));
+            buttons.Add(new Button(new Transform(325, 350, 0, 5, 5f), "Sprites/Body_3.png"));
 
             mySnake = new Snake(50, 5);
 
