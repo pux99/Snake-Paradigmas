@@ -302,7 +302,6 @@ C:\Users\matul\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Game.exe.config
 C:\Users\matul\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Game.exe
 C:\Users\matul\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Game.pdb
 C:\Users\matul\Documents\GitHub\Snake-Paradigmas\Game\obj\Debug\Game.csproj.AssemblyReference.cache
-C:\Users\matul\Documents\GitHub\Snake-Paradigmas\Game\obj\Debug\Game.csproj.SuggestedBindingRedirects.cache
 C:\Users\matul\Documents\GitHub\Snake-Paradigmas\Game\obj\Debug\Game.csproj.CoreCompileInputs.cache
 C:\Users\matul\Documents\GitHub\Snake-Paradigmas\Game\obj\Debug\Game.exe
 C:\Users\matul\Documents\GitHub\Snake-Paradigmas\Game\obj\Debug\Game.pdb
@@ -378,6 +377,10 @@ C:\Users\alu763\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Sprites\bg_vict
 C:\Users\alu763\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Sprites\bg_menu.jpg
 C:\Users\alu763\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Sprites\trash_apple.png
 C:\Users\alu763\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Sprites\SnakeHead.png
+<<<<<<< Updated upstream
+=======
+C:\Users\Zeki\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Sprites\trash_apple.png
+>>>>>>> Stashed changes
 C:\Users\matul\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Sounds\Munching.wav
 C:\Users\matul\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Sprites\bg_defeat.png
 C:\Users\matul\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Sprites\bg_victory.png
