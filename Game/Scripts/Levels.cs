@@ -52,7 +52,7 @@ namespace Game
             _opt = new Text(new Transform(150, 330, 0, 0.5f, 0.5f), "Options");
             buttons.Add(new Button(new Transform(190, 390, 0, 8, 2.5f), "Sprites/grey.png"));
             _quit = new Text(new Transform(190, 390, 0, 0.5f, 0.5f), "Exit");
-            mySnake = new Snake(50, 5);
+            mySnake = new Snake(GameManager.Instance.SnakeSpeed, 5);
             for (int i = 0; i < 5; i++)
             {
                 if (i == 0)
@@ -147,6 +147,7 @@ namespace Game
         public static List<Trash> trash;
         public static List<Wall> walls;
         public static CombatUi combatUI;
+        public static int speedMult = GameManager.Instance.SnakeSpeed;
         public VoidEvent getPoint { get; set; }
         public VoidEvent lossLife { get; set; }
         public Gameplay()
@@ -155,7 +156,7 @@ namespace Game
         }
         public override void Inizialize()
         {
-            mySnake = new Snake(50, 5);
+            mySnake = new Snake(GameManager.Instance.SnakeSpeed, 5);
             grid = new int[50, 50];
             fruits = new List<Fruit>();
             trash = new List<Trash>();
@@ -246,6 +247,7 @@ namespace Game
                wall.transform.position.x, wall.transform.position.y, wall.render.imgSize.x, wall.render.imgSize.y))
                 {
                     KillSnake(losslifes);
+                    
                 }
                 if (Collision.RectRect(fruits.First().transform.position.x, fruits.First().transform.position.y, fruits.First().render.imgSize.x * 2, fruits.First().render.imgSize.y * 2,
                wall.transform.position.x, wall.transform.position.y, wall.render.imgSize.x, wall.render.imgSize.y))
@@ -266,6 +268,14 @@ namespace Game
                     trash.Add(trashs);
                 }
                 fruits.First().ChangeToRandomPosition();
+                if (speedMult < 30)
+                {
+                    speedMult++;
+                    mySnake._speed = 1f / speedMult;
+                }
+
+
+
                 //for (int i = 0;i< mySnake.snake.Count/2; i++)
                 //{
                 //    List<Vector2> buffer = new List<Vector2>();
@@ -338,6 +348,7 @@ namespace Game
         public static void KillSnake(VoidEvent lossLife)
         {
             GameManager.Instance.lives--;
+            
             foreach (SnakePart snakePart in mySnake.snake)
             {
                 if (snakePart != mySnake.snake[0])
@@ -354,6 +365,8 @@ namespace Game
                 mySnake.snake.Remove(mySnake.snake[i - 1]);
             }
             mySnake.snake.First().myPositions.Clear();
+            mySnake._speed = 1f / GameManager.Instance.SnakeSpeed;
+            speedMult = GameManager.Instance.SnakeSpeed;
             lossLife.Invoke();
             NewSnake();
         }
@@ -389,7 +402,7 @@ namespace Game
 
 
 
-            mySnake = new Snake(50, 5);
+            mySnake = new Snake(GameManager.Instance.SnakeSpeed, 5);
             for (int i = 0; i < 5; i++)
             {
                 if (i == 0)
@@ -494,7 +507,7 @@ namespace Game
 
             _uroboros = new Animation("Sprites/Animations/Uroboros/", new Transform(150, 130, 0, .25f, .25f), .2f, 27);
 
-            mySnake = new Snake(50, 5);
+            mySnake = new Snake(GameManager.Instance.SnakeSpeed, 5);
             for (int i = 0; i < 5; i++)
             {
                 if (i == 0)
@@ -597,7 +610,7 @@ namespace Game
             _back = new Text(new Transform(190, 390, 0, 0.5f, 0.5f), "Menu");
 
 
-            mySnake = new Snake(50, 5);
+            mySnake = new Snake(GameManager.Instance.SnakeSpeed, 5);
             for (int i = 0; i < 5; i++)
             {
                 if (i == 0)
@@ -708,7 +721,7 @@ namespace Game
             buttons.Add(new Button(new Transform(325, 275, 0, 5, 5f), "Sprites/Body_2.png"));
             buttons.Add(new Button(new Transform(325, 350, 0, 5, 5f), "Sprites/Body_3.png"));
 
-            mySnake = new Snake(50, 5);
+            mySnake = new Snake(GameManager.Instance.SnakeSpeed, 5);
 
             for (int i = 0; i < 5; i++)
             {
