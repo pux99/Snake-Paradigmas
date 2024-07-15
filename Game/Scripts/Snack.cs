@@ -97,7 +97,6 @@ namespace Game
                 }
                 _timer = _speed;
                 SnakePartsMovement();
-                Console.WriteLine(_speed);
             }
         }
         public void SwapDirection()
