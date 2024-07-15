@@ -22,13 +22,16 @@ namespace Game
 
 
         private int _snakePartDelay;
+        private float _SnakeSpeed = 0;
         private float _timer=0;
-        private float _speed = 0.5f;
+        public float _speed = 0.5f;
         private string _direction = "Down";
         private string _nextDirection = "Down";
         public List<SnakePart> snake = new List<SnakePart>();
         public Pool<String, SnakePart> pool = new Pool<String, SnakePart>(generatePart);
+       
         public int snakePartDelay { get { return _snakePartDelay; } set { _snakePartDelay = value; } }
+        public float snakeSpeed = 0;
 
         public void Update()
         {
@@ -80,16 +83,16 @@ namespace Game
                 switch (_direction)
                 {
                     case "Left":                      
-                        snake.First().transform.position.x -= 10;
+                        snake.First().transform.position.x -= 10 + snakeSpeed;
                         break;
                     case "Right":
-                        snake.First().transform.position.x += 10;
+                        snake.First().transform.position.x += 10 + snakeSpeed;
                         break;
                     case "Down":
-                        snake.First().transform.position.y += 10;
+                        snake.First().transform.position.y += 10 + snakeSpeed;
                         break;
                     case "Up":;
-                        snake.First().transform.position.y -= 10;
+                        snake.First().transform.position.y -= 10 + snakeSpeed;
                         break;
                 }
                 _timer = _speed;

@@ -47,6 +47,9 @@ namespace Game
                 case "Victory":
                     _currentLevel = new Victory();
                     break;
+                case "Skins":
+                    _currentLevel = new Skins();
+                    break;
                 default:
                     Console.WriteLine("No nay nivel");
                     break;
