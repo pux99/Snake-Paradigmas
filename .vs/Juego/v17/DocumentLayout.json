@@ -3,23 +3,23 @@
   "WorkspaceRootPath": "C:\\Users\\Zeki\\Documents\\GitHub\\Snake-Paradigmas\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4B96137A-5E6A-434B-BBF0-8B3C9342750C}|Game\\Game.csproj|C:\\Users\\Zeki\\Documents\\GitHub\\Snake-Paradigmas\\game\\scripts\\snack.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{4B96137A-5E6A-434B-BBF0-8B3C9342750C}|Game\\Game.csproj|c:\\users\\zeki\\documents\\github\\snake-paradigmas\\game\\scripts\\snack.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4B96137A-5E6A-434B-BBF0-8B3C9342750C}|Game\\Game.csproj|solutionrelative:game\\scripts\\snack.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4B96137A-5E6A-434B-BBF0-8B3C9342750C}|Game\\Game.csproj|c:\\users\\zeki\\documents\\github\\snake-paradigmas\\game\\scripts\\levels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{4B96137A-5E6A-434B-BBF0-8B3C9342750C}|Game\\Game.csproj|C:\\Users\\Zeki\\Documents\\GitHub\\Snake-Paradigmas\\game\\scripts\\levels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4B96137A-5E6A-434B-BBF0-8B3C9342750C}|Game\\Game.csproj|solutionrelative:game\\scripts\\levels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4B96137A-5E6A-434B-BBF0-8B3C9342750C}|Game\\Game.csproj|c:\\users\\zeki\\documents\\github\\snake-paradigmas\\game\\scripts\\managers\\levelmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{4B96137A-5E6A-434B-BBF0-8B3C9342750C}|Game\\Game.csproj|C:\\Users\\Zeki\\Documents\\GitHub\\Snake-Paradigmas\\game\\scripts\\managers\\levelmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4B96137A-5E6A-434B-BBF0-8B3C9342750C}|Game\\Game.csproj|solutionrelative:game\\scripts\\managers\\levelmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4B96137A-5E6A-434B-BBF0-8B3C9342750C}|Game\\Game.csproj|c:\\users\\zeki\\documents\\github\\snake-paradigmas\\game\\scripts\\game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{4B96137A-5E6A-434B-BBF0-8B3C9342750C}|Game\\Game.csproj|C:\\Users\\Zeki\\Documents\\GitHub\\Snake-Paradigmas\\game\\scripts\\game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4B96137A-5E6A-434B-BBF0-8B3C9342750C}|Game\\Game.csproj|solutionrelative:game\\scripts\\game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4B96137A-5E6A-434B-BBF0-8B3C9342750C}|Game\\Game.csproj|c:\\users\\zeki\\documents\\github\\snake-paradigmas\\game\\scripts\\managers\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{4B96137A-5E6A-434B-BBF0-8B3C9342750C}|Game\\Game.csproj|C:\\Users\\Zeki\\Documents\\GitHub\\Snake-Paradigmas\\game\\scripts\\managers\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4B96137A-5E6A-434B-BBF0-8B3C9342750C}|Game\\Game.csproj|solutionrelative:game\\scripts\\managers\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -42,8 +42,7 @@
               "RelativeToolTip": "Game\\Scripts\\Game.cs",
               "ViewState": "AQIAANYAAAAAAAAAAAAQwOgAAABpAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-15T18:33:11.824Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-15T18:33:11.824Z"
             },
             {
               "$type": "Document",
@@ -55,8 +54,7 @@
               "RelativeToolTip": "Game\\Scripts\\Managers\\LevelManager.cs",
               "ViewState": "AQIAABIAAAAAAAAAAAAowB0AAAA4AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-15T18:06:40.757Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-15T18:06:40.757Z"
             },
             {
               "$type": "Document",
@@ -68,8 +66,7 @@
               "RelativeToolTip": "Game\\Scripts\\Managers\\GameManager.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAhAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-15T18:06:14.241Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-15T18:06:14.241Z"
             },
             {
               "$type": "Document",
@@ -79,7 +76,7 @@
               "RelativeDocumentMoniker": "Game\\Scripts\\Snack.cs",
               "ToolTip": "C:\\Users\\Zeki\\Documents\\GitHub\\Snake-Paradigmas\\Game\\Scripts\\Snack.cs",
               "RelativeToolTip": "Game\\Scripts\\Snack.cs",
-              "ViewState": "AQIAABYAAAAAAAAAAAAgwGIAAAAlAAAA",
+              "ViewState": "AQIAAEkAAAAAAAAAAAAcwGQAAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-11T03:08:52.515Z",
               "EditorCaption": ""
@@ -94,8 +91,7 @@
               "RelativeToolTip": "Game\\Scripts\\Levels.cs",
               "ViewState": "AQIAABMAAAAAAAAAAAA0wMACAAAYAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-09T14:15:22.834Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-09T14:15:22.834Z"
             }
           ]
         }
