@@ -1125,6 +1125,8 @@ namespace Game
             }
 
             pickUPs.Add((Fruit)FruitFactory.CreateFruit(FruitFactory.fruit.apple, new Vector2(250, 300)));
+            pickUPs.Add((Portal)FruitFactory.CreateFruit(FruitFactory.fruit.portal, new Vector2(260, 110)));
+            pickUPs.Add((Portal)FruitFactory.CreateFruit(FruitFactory.fruit.portal, new Vector2(270, 390)));
 
             foreach (PickUP pickUP in pickUPs)
             {
@@ -1145,12 +1147,12 @@ namespace Game
                 walls.Add(new Wall(new Transform(320 + i * 10, 400), "Sprites/rect4.png"));//palo abajo derecha
                 walls.Add(new Wall(new Transform(400 + i * 10, 400), "Sprites/rect4.png"));//palo abajo derecha2
 
-                walls.Add(new Wall(new Transform(260, 150 + i * 10), "Sprites/rect4.png"));//palo vertical derecha arriba
+                walls.Add(new Wall(new Transform(260, 130 + i * 10), "Sprites/rect4.png"));//palo vertical derecha arriba
 
 
                 walls.Add(new Wall(new Transform(260, +i * 10), "Sprites/rect4.png"));//palo vertical izquierda arriba
 
-                walls.Add(new Wall(new Transform(260, 210 + i * 10), "Sprites/rect4.png"));//palo vertical izquieda abajo
+                walls.Add(new Wall(new Transform(260, 280 + i * 10), "Sprites/rect4.png"));//palo vertical izquieda abajo
 
 
                 walls.Add(new Wall(new Transform(260, 410 + i * 10), "Sprites/rect4.png"));//palo vertical derecha abajo
@@ -1408,7 +1410,7 @@ namespace Game
             pickUPs.Add((Portal)FruitFactory.CreateFruit(FruitFactory.fruit.portal, new Vector2(50, 470)));
             pickUPs.Add((Portal)FruitFactory.CreateFruit(FruitFactory.fruit.portal, new Vector2(450, 470)));
             pickUPs.Add((Reverse)FruitFactory.CreateFruit(FruitFactory.fruit.revese, new Vector2(150, 150)));
-            pickUPs.Add((Reverse)FruitFactory.CreateFruit(FruitFactory.fruit.revese, new Vector2(340, 410)));
+            pickUPs.Add((Reverse)FruitFactory.CreateFruit(FruitFactory.fruit.revese, new Vector2(340, 400)));
 
             foreach (PickUP pickUP in pickUPs)
             {
