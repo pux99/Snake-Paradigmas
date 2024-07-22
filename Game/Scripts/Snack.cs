@@ -25,7 +25,7 @@ namespace Game
         private float _SnakeSpeed = 0;
         private float _timer=0;
         public float _speed = 0.5f;
-        private string _direction = "Down";
+        public string _direction = "Down";
         private string _nextDirection = "Down";
         public List<SnakePart> snake = new List<SnakePart>();
         public Pool<String, SnakePart> pool = new Pool<String, SnakePart>(generatePart);

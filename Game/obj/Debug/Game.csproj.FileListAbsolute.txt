@@ -392,3 +392,6 @@ C:\Users\Ignacio Puk\source\repos\Snake Paradigmas\Snake-Paradigmas\Game\bin\Deb
 C:\Users\Ignacio Puk\source\repos\Snake Paradigmas\Snake-Paradigmas\Game\bin\Debug\Sprites\Portal.png
 C:\Users\Ignacio Puk\source\repos\Snake Paradigmas\Snake-Paradigmas\Game\bin\Debug\Sprites\Switch.png
 C:\Users\Ignacio Puk\source\repos\Snake Paradigmas\Snake-Paradigmas\Game\bin\Debug\Sprites\SnakeHead.png
+C:\Users\Zeki\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Sprites\Portal.png
+C:\Users\Zeki\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Sprites\Switch.png
+C:\Users\Zeki\Documents\GitHub\Snake-Paradigmas\Game\bin\Debug\Sprites\SnakeHead.png

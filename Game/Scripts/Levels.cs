@@ -163,18 +163,18 @@ namespace Game
             buttons.Add(new Button(new Transform(110, 250, 0, 8, 2.5f), "Sprites/grey.png")); //Posicion de la lista 0.
             _level1 = new Text(new Transform(150, 250, 0, 0.5f, 0.5f), "1");
 
-            buttons.Add(new Button(new Transform(290, 285, 0, 8, 2.5f), "Sprites/grey.png")); //Posicion de la lista 1.
-            _level2 = new Text(new Transform(330, 285, 0, 0.5f, 0.5f), "2");
+            buttons.Add(new Button(new Transform(290, 290, 0, 8, 2.5f), "Sprites/grey.png")); //Posicion de la lista 1.
+            _level2 = new Text(new Transform(330, 290, 0, 0.5f, 0.5f), "2");
 
 
             buttons.Add(new Button(new Transform(110, 325, 0, 8, 2.5f), "Sprites/grey.png")); //Posicion de la lista 2.
             _level3 = new Text(new Transform(150, 325, 0, 0.5f, 0.5f), "3");
 
 
-            buttons.Add(new Button(new Transform(290, 357, 0, 8, 2.5f), "Sprites/grey.png")); //Posicion de la lista 3.
-            _level4 = new Text(new Transform(330, 357, 0, 0.5f, 0.5f), "4");
+            buttons.Add(new Button(new Transform(290, 362, 0, 8, 2.5f), "Sprites/grey.png")); //Posicion de la lista 3.
+            _level4 = new Text(new Transform(330, 362, 0, 0.5f, 0.5f), "4");
 
-            buttons.Add(new Button(new Transform(110, 400, 0, 8, 2.5f), "Sprites/grey.png")); //Posicion de la lista 3.
+            buttons.Add(new Button(new Transform(110, 400, 0, 8, 2.5f), "Sprites/grey.png")); //Posicion de la lista 4.
             _level4 = new Text(new Transform(150, 400, 0, 0.5f, 0.5f), "5");
 
 
@@ -313,7 +313,8 @@ namespace Game
             }
 
             pickUPs.Add((Fruit)FruitFactory.CreateFruit(FruitFactory.fruit.apple, new Vector2(100, 100)));
-            pickUPs.Add((Portal)FruitFactory.CreateFruit(FruitFactory.fruit.portal, new Vector2(250, 300)));
+            
+
             foreach (PickUP pickUP in pickUPs)
             {
                 if (pickUP is Portal portal)
@@ -345,7 +346,7 @@ namespace Game
                 update.Update();
             }
 
-            if (GameManager.Instance.points >= 20)
+            if (GameManager.Instance.points >= 10)
             {
                 LevelsManager.Instance.SetLevel("Victory");
             }
@@ -448,7 +449,23 @@ namespace Game
                         case Portal portal:
                             Random rnd = new Random();
                             portals.Remove(portal);
-                            mySnake.snake.First().transform.position = portals[rnd.Next(0, portals.Count)].transform.position;
+                            Vector2 offset = new Vector2(0,0);
+                            switch (mySnake._direction)
+                            {
+                                case "Left":
+                                    offset = new Vector2(-10 ,0);
+                                    break;
+                                case "Right":
+                                    offset = new Vector2(10, 0);
+                                    break;
+                                case "Down":
+                                    offset = new Vector2(0, 10);
+                                    break;
+                                case "Up":
+                                    offset = new Vector2(0, -10);
+                                    break;
+                            }
+                            mySnake.snake.First().transform.position = portals[rnd.Next(0, portals.Count)].transform.position + offset;
                             portals.Add(portal);
                             break;
                     }
@@ -463,14 +480,14 @@ namespace Game
                     KillSnake(losslifes);
                 }
             }
-            if (mySnake.snake.First().transform.position.x < -10)
-                mySnake.snake.First().transform.position.x = 500;
-            if (mySnake.snake.First().transform.position.x > 510)
-                mySnake.snake.First().transform.position.x = 0;
-            if (mySnake.snake.First().transform.position.y < -10)
-                mySnake.snake.First().transform.position.y = 500;
-            if (mySnake.snake.First().transform.position.y > 510)
-                mySnake.snake.First().transform.position.y = 0;
+            if (mySnake.snake.First().transform.position.x < 10)
+                mySnake.snake.First().transform.position.x = 490;
+            if (mySnake.snake.First().transform.position.x > 490)
+                mySnake.snake.First().transform.position.x = 10;
+            if (mySnake.snake.First().transform.position.y < 10)
+                mySnake.snake.First().transform.position.y = 490;
+            if (mySnake.snake.First().transform.position.y > 490)
+                mySnake.snake.First().transform.position.y = 10;
         }
         public static void addSnakePiece()
         {
@@ -569,12 +586,10 @@ namespace Game
 
 
             pickUPs.Add((Fruit)FruitFactory.CreateFruit(FruitFactory.fruit.apple, new Vector2(250, 300)));
-            pickUPs.Add((Reverse)FruitFactory.CreateFruit(FruitFactory.fruit.revese, new Vector2(150, 150)));
-            pickUPs.Add((Portal)FruitFactory.CreateFruit(FruitFactory.fruit.portal, new Vector2(450, 150)));
-            pickUPs.Add((Portal)FruitFactory.CreateFruit(FruitFactory.fruit.portal, new Vector2(200, 100)));
-            pickUPs.Add((Portal)FruitFactory.CreateFruit(FruitFactory.fruit.portal, new Vector2(100, 300)));
-            pickUPs.Add((Portal)FruitFactory.CreateFruit(FruitFactory.fruit.portal, new Vector2(300, 300)));
-            foreach(PickUP pickUP in pickUPs)
+            pickUPs.Add((Reverse)FruitFactory.CreateFruit(FruitFactory.fruit.revese, new Vector2(100, 230)));
+            pickUPs.Add((Reverse)FruitFactory.CreateFruit(FruitFactory.fruit.revese, new Vector2(400, 270)));
+
+            foreach (PickUP pickUP in pickUPs)
             {
                 if (pickUP is Portal portal)
                     portals.Add((Portal)portal);
@@ -605,7 +620,7 @@ namespace Game
                 update.Update();
             }
 
-            if (GameManager.Instance.points >= 20)
+            if (GameManager.Instance.points >= 10)
             {
                 LevelsManager.Instance.SetLevel("Victory");
             }
@@ -708,7 +723,23 @@ namespace Game
                         case Portal portal:
                             Random rnd = new Random();
                             portals.Remove(portal);
-                            mySnake.snake.First().transform.position = portals[rnd.Next(0, portals.Count)].transform.position;
+                            Vector2 offset = new Vector2(0, 0);
+                            switch (mySnake._direction)
+                            {
+                                case "Left":
+                                    offset = new Vector2(-10, 0);
+                                    break;
+                                case "Right":
+                                    offset = new Vector2(10, 0);
+                                    break;
+                                case "Down":
+                                    offset = new Vector2(0, 10);
+                                    break;
+                                case "Up":
+                                    offset = new Vector2(0, -10);
+                                    break;
+                            }
+                            mySnake.snake.First().transform.position = portals[rnd.Next(0, portals.Count)].transform.position + offset;
                             portals.Add(portal);
                             break;
                     }
@@ -723,14 +754,14 @@ namespace Game
                     KillSnake(losslifes);
                 }
             }
-            if (mySnake.snake.First().transform.position.x < -10)
-                mySnake.snake.First().transform.position.x = 500;
-            if (mySnake.snake.First().transform.position.x > 510)
-                mySnake.snake.First().transform.position.x = 0;
-            if (mySnake.snake.First().transform.position.y < -10)
-                mySnake.snake.First().transform.position.y = 500;
-            if (mySnake.snake.First().transform.position.y > 510)
-                mySnake.snake.First().transform.position.y = 0;
+            if (mySnake.snake.First().transform.position.x < 10)
+                mySnake.snake.First().transform.position.x = 490;
+            if (mySnake.snake.First().transform.position.x > 490)
+                mySnake.snake.First().transform.position.x = 10;
+            if (mySnake.snake.First().transform.position.y < 10)
+                mySnake.snake.First().transform.position.y = 490;
+            if (mySnake.snake.First().transform.position.y > 490)
+                mySnake.snake.First().transform.position.y = 10;
         }
         public static void addSnakePiece()
         {
@@ -822,6 +853,9 @@ namespace Game
             }
 
             pickUPs.Add((Fruit)FruitFactory.CreateFruit(FruitFactory.fruit.apple, new Vector2(250, 300)));
+            pickUPs.Add((Portal)FruitFactory.CreateFruit(FruitFactory.fruit.portal, new Vector2(75, 450)));
+            pickUPs.Add((Portal)FruitFactory.CreateFruit(FruitFactory.fruit.portal, new Vector2(425, 50)));
+
             foreach (PickUP pickUP in pickUPs)
             {
                 if (pickUP is Portal portal)
@@ -858,7 +892,7 @@ namespace Game
                 update.Update();
             }
 
-            if (GameManager.Instance.points >= 20)
+            if (GameManager.Instance.points >= 10)
             {
                 LevelsManager.Instance.SetLevel("Victory");
             }
@@ -961,7 +995,23 @@ namespace Game
                         case Portal portal:
                             Random rnd = new Random();
                             portals.Remove(portal);
-                            mySnake.snake.First().transform.position = portals[rnd.Next(0, portals.Count)].transform.position;
+                            Vector2 offset = new Vector2(0, 0);
+                            switch (mySnake._direction)
+                            {
+                                case "Left":
+                                    offset = new Vector2(-10, 0);
+                                    break;
+                                case "Right":
+                                    offset = new Vector2(10, 0);
+                                    break;
+                                case "Down":
+                                    offset = new Vector2(0, 10);
+                                    break;
+                                case "Up":
+                                    offset = new Vector2(0, -10);
+                                    break;
+                            }
+                            mySnake.snake.First().transform.position = portals[rnd.Next(0, portals.Count)].transform.position + offset;
                             portals.Add(portal);
                             break;
                     }
@@ -976,14 +1026,14 @@ namespace Game
                     KillSnake(losslifes);
                 }
             }
-            if (mySnake.snake.First().transform.position.x < -10)
-                mySnake.snake.First().transform.position.x = 500;
-            if (mySnake.snake.First().transform.position.x > 510)
-                mySnake.snake.First().transform.position.x = 0;
-            if (mySnake.snake.First().transform.position.y < -10)
-                mySnake.snake.First().transform.position.y = 500;
-            if (mySnake.snake.First().transform.position.y > 510)
-                mySnake.snake.First().transform.position.y = 0;
+            if (mySnake.snake.First().transform.position.x < 10)
+                mySnake.snake.First().transform.position.x = 490;
+            if (mySnake.snake.First().transform.position.x > 490)
+                mySnake.snake.First().transform.position.x = 10;
+            if (mySnake.snake.First().transform.position.y < 10)
+                mySnake.snake.First().transform.position.y = 490;
+            if (mySnake.snake.First().transform.position.y > 490)
+                mySnake.snake.First().transform.position.y = 10;
         }
         public static void addSnakePiece()
         {
@@ -1075,6 +1125,7 @@ namespace Game
             }
 
             pickUPs.Add((Fruit)FruitFactory.CreateFruit(FruitFactory.fruit.apple, new Vector2(250, 300)));
+
             foreach (PickUP pickUP in pickUPs)
             {
                 if (pickUP is Portal portal)
@@ -1120,7 +1171,7 @@ namespace Game
                 update.Update();
             }
 
-            if (GameManager.Instance.points >= 20)
+            if (GameManager.Instance.points >= 10)
             {
                 LevelsManager.Instance.SetLevel("Victory");
             }
@@ -1223,7 +1274,23 @@ namespace Game
                         case Portal portal:
                             Random rnd = new Random();
                             portals.Remove(portal);
-                            mySnake.snake.First().transform.position = portals[rnd.Next(0, portals.Count)].transform.position;
+                            Vector2 offset = new Vector2(0, 0);
+                            switch (mySnake._direction)
+                            {
+                                case "Left":
+                                    offset = new Vector2(-10, 0);
+                                    break;
+                                case "Right":
+                                    offset = new Vector2(10, 0);
+                                    break;
+                                case "Down":
+                                    offset = new Vector2(0, 10);
+                                    break;
+                                case "Up":
+                                    offset = new Vector2(0, -10);
+                                    break;
+                            }
+                            mySnake.snake.First().transform.position = portals[rnd.Next(0, portals.Count)].transform.position + offset;
                             portals.Add(portal);
                             break;
                     }
@@ -1238,14 +1305,14 @@ namespace Game
                     KillSnake(losslifes);
                 }
             }
-            if (mySnake.snake.First().transform.position.x < -10)
-                mySnake.snake.First().transform.position.x = 500;
-            if (mySnake.snake.First().transform.position.x > 510)
-                mySnake.snake.First().transform.position.x = 0;
-            if (mySnake.snake.First().transform.position.y < -10)
-                mySnake.snake.First().transform.position.y = 500;
-            if (mySnake.snake.First().transform.position.y > 510)
-                mySnake.snake.First().transform.position.y = 0;
+            if (mySnake.snake.First().transform.position.x < 10)
+                mySnake.snake.First().transform.position.x = 490;
+            if (mySnake.snake.First().transform.position.x > 490)
+                mySnake.snake.First().transform.position.x = 10;
+            if (mySnake.snake.First().transform.position.y < 10)
+                mySnake.snake.First().transform.position.y = 490;
+            if (mySnake.snake.First().transform.position.y > 490)
+                mySnake.snake.First().transform.position.y = 10;
         }
         public static void addSnakePiece()
         {
@@ -1337,6 +1404,12 @@ namespace Game
             }
 
             pickUPs.Add((Fruit)FruitFactory.CreateFruit(FruitFactory.fruit.apple, new Vector2(250, 300)));
+            pickUPs.Add((Portal)FruitFactory.CreateFruit(FruitFactory.fruit.portal, new Vector2(450, 20)));
+            pickUPs.Add((Portal)FruitFactory.CreateFruit(FruitFactory.fruit.portal, new Vector2(50, 470)));
+            pickUPs.Add((Portal)FruitFactory.CreateFruit(FruitFactory.fruit.portal, new Vector2(450, 470)));
+            pickUPs.Add((Reverse)FruitFactory.CreateFruit(FruitFactory.fruit.revese, new Vector2(150, 150)));
+            pickUPs.Add((Reverse)FruitFactory.CreateFruit(FruitFactory.fruit.revese, new Vector2(340, 410)));
+
             foreach (PickUP pickUP in pickUPs)
             {
                 if (pickUP is Portal portal)
@@ -1345,9 +1418,9 @@ namespace Game
         for (int i = 0; i < 10; i++)
         {
 
-            walls.Add(new Wall(new Transform(0 + i * 10, 450), "Sprites/rect4.png"));
+            walls.Add(new Wall(new Transform(0 + i * 10, 430), "Sprites/rect4.png"));
             //walls.Add(new Wall(new Transform(200 + i * 10, 450), "Sprites/rect4.png"));
-            walls.Add(new Wall(new Transform(400 + i * 10, 450), "Sprites/rect4.png"));
+            walls.Add(new Wall(new Transform(400 + i * 10, 430), "Sprites/rect4.png"));
 
             walls.Add(new Wall(new Transform(100 + i * 10, 350), "Sprites/rect4.png"));
             walls.Add(new Wall(new Transform(290 + i * 10, 350), "Sprites/rect4.png"));
@@ -1361,15 +1434,15 @@ namespace Game
             walls.Add(new Wall(new Transform(100 + i * 10, 110), "Sprites/rect4.png"));
             walls.Add(new Wall(new Transform(290 + i * 10, 110), "Sprites/rect4.png"));
 
-            walls.Add(new Wall(new Transform(0 + i * 10, 30), "Sprites/rect4.png"));
+            walls.Add(new Wall(new Transform(0 + i * 10, 50), "Sprites/rect4.png"));
             //walls.Add(new Wall(new Transform(200 + i * 10, 30), "Sprites/rect4.png"));
-            walls.Add(new Wall(new Transform(400 + i * 10, 30), "Sprites/rect4.png"));
+            walls.Add(new Wall(new Transform(400 + i * 10, 50), "Sprites/rect4.png"));
         }
 
         for (int i = 0; i < 9; i++)
         {
-            walls.Add(new Wall(new Transform(200 + i * 10, 30), "Sprites/rect4.png"));
-            walls.Add(new Wall(new Transform(200 + i * 10, 450), "Sprites/rect4.png"));
+            walls.Add(new Wall(new Transform(200 + i * 10, 50), "Sprites/rect4.png"));
+            walls.Add(new Wall(new Transform(200 + i * 10, 430), "Sprites/rect4.png"));
         }
     }
         public override void Input()
@@ -1386,7 +1459,7 @@ namespace Game
                 update.Update();
             }
 
-            if (GameManager.Instance.points >= 20)
+            if (GameManager.Instance.points >= 10)
             {
                 LevelsManager.Instance.SetLevel("Victory");
             }
@@ -1489,7 +1562,23 @@ namespace Game
                         case Portal portal:
                             Random rnd = new Random();
                             portals.Remove(portal);
-                            mySnake.snake.First().transform.position = portals[rnd.Next(0, portals.Count)].transform.position;
+                            Vector2 offset = new Vector2(0, 0);
+                            switch (mySnake._direction)
+                            {
+                                case "Left":
+                                    offset = new Vector2(-10, 0);
+                                    break;
+                                case "Right":
+                                    offset = new Vector2(10, 0);
+                                    break;
+                                case "Down":
+                                    offset = new Vector2(0, 10);
+                                    break;
+                                case "Up":
+                                    offset = new Vector2(0, -10);
+                                    break;
+                            }
+                            mySnake.snake.First().transform.position = portals[rnd.Next(0, portals.Count)].transform.position + offset;
                             portals.Add(portal);
                             break;
                     }
@@ -1504,14 +1593,14 @@ namespace Game
                     KillSnake(losslifes);
                 }
             }
-            if (mySnake.snake.First().transform.position.x < -10)
-                mySnake.snake.First().transform.position.x = 500;
-            if (mySnake.snake.First().transform.position.x > 510)
-                mySnake.snake.First().transform.position.x = 0;
-            if (mySnake.snake.First().transform.position.y < -10)
-                mySnake.snake.First().transform.position.y = 500;
-            if (mySnake.snake.First().transform.position.y > 510)
-                mySnake.snake.First().transform.position.y = 0;
+            if (mySnake.snake.First().transform.position.x < 10)
+                mySnake.snake.First().transform.position.x = 490;
+            if (mySnake.snake.First().transform.position.x > 490)
+                mySnake.snake.First().transform.position.x = 10;
+            if (mySnake.snake.First().transform.position.y < 10)
+                mySnake.snake.First().transform.position.y = 490;
+            if (mySnake.snake.First().transform.position.y > 490)
+                mySnake.snake.First().transform.position.y = 10;
         }
         public static void addSnakePiece()
         {
@@ -1630,14 +1719,14 @@ namespace Game
                 }
             }
 
-            if (mySnake.snake.First().transform.position.x < -10)
-                mySnake.snake.First().transform.position.x = 500;
-            if (mySnake.snake.First().transform.position.x > 510)
-                mySnake.snake.First().transform.position.x = 0;
-            if (mySnake.snake.First().transform.position.y < -10)
-                mySnake.snake.First().transform.position.y = 500;
-            if (mySnake.snake.First().transform.position.y > 510)
-                mySnake.snake.First().transform.position.y = 0;
+            if (mySnake.snake.First().transform.position.x < 10)
+                mySnake.snake.First().transform.position.x = 490;
+            if (mySnake.snake.First().transform.position.x > 490)
+                mySnake.snake.First().transform.position.x = 10;
+            if (mySnake.snake.First().transform.position.y < 10)
+                mySnake.snake.First().transform.position.y = 490;
+            if (mySnake.snake.First().transform.position.y > 490)
+                mySnake.snake.First().transform.position.y = 10;
         }
         public override void Draw()
         {
@@ -1692,6 +1781,8 @@ namespace Game
             buttons.Add(new Button(new Transform(190, 390, 0, 8, 2.5f), "Sprites/grey.png"));
             _back = new Text(new Transform(190, 390, 0, 0.5f, 0.5f), "Menu");
 
+
+
             _uroboros = new Animation("Sprites/Animations/Uroboros/", new Transform(150, 130, 0, .25f, .25f), .2f, 27);
 
             mySnake = new Snake(GameManager.Instance.SnakeSpeed, 5);
@@ -1728,14 +1819,14 @@ namespace Game
                 }
             }
 
-            if (mySnake.snake.First().transform.position.x < -10)
-                mySnake.snake.First().transform.position.x = 500;
-            if (mySnake.snake.First().transform.position.x > 510)
-                mySnake.snake.First().transform.position.x = 0;
-            if (mySnake.snake.First().transform.position.y < -10)
-                mySnake.snake.First().transform.position.y = 500;
-            if (mySnake.snake.First().transform.position.y > 510)
-                mySnake.snake.First().transform.position.y = 0;
+            if (mySnake.snake.First().transform.position.x < 10)
+                mySnake.snake.First().transform.position.x = 490;
+            if (mySnake.snake.First().transform.position.x > 490)
+                mySnake.snake.First().transform.position.x = 10;
+            if (mySnake.snake.First().transform.position.y < 10)
+                mySnake.snake.First().transform.position.y = 490;
+            if (mySnake.snake.First().transform.position.y > 490)
+                mySnake.snake.First().transform.position.y = 10;
         }
         public override void Draw()
         {
@@ -1831,14 +1922,14 @@ namespace Game
                 }
             }
 
-            if (mySnake.snake.First().transform.position.x < -10)
-                mySnake.snake.First().transform.position.x = 500;
-            if (mySnake.snake.First().transform.position.x > 510)
-                mySnake.snake.First().transform.position.x = 0;
-            if (mySnake.snake.First().transform.position.y < -10)
-                mySnake.snake.First().transform.position.y = 500;
-            if (mySnake.snake.First().transform.position.y > 510)
-                mySnake.snake.First().transform.position.y = 0;
+            if (mySnake.snake.First().transform.position.x < 10)
+                mySnake.snake.First().transform.position.x = 490;
+            if (mySnake.snake.First().transform.position.x > 490)
+                mySnake.snake.First().transform.position.x = 10;
+            if (mySnake.snake.First().transform.position.y < 10)
+                mySnake.snake.First().transform.position.y = 490;
+            if (mySnake.snake.First().transform.position.y > 490)
+                mySnake.snake.First().transform.position.y = 10;
         }
         public override void Draw()
         {
@@ -1979,14 +2070,14 @@ namespace Game
                 }
             }
 
-            if (mySnake.snake.First().transform.position.x < -10)
-                mySnake.snake.First().transform.position.x = 500;
-            if (mySnake.snake.First().transform.position.x > 510)
-                mySnake.snake.First().transform.position.x = 0;
-            if (mySnake.snake.First().transform.position.y < -10)
-                mySnake.snake.First().transform.position.y = 500;
-            if (mySnake.snake.First().transform.position.y > 510)
-                mySnake.snake.First().transform.position.y = 0;
+            if (mySnake.snake.First().transform.position.x < 10)
+                mySnake.snake.First().transform.position.x = 490;
+            if (mySnake.snake.First().transform.position.x > 490)
+                mySnake.snake.First().transform.position.x = 10;
+            if (mySnake.snake.First().transform.position.y < 10)
+                mySnake.snake.First().transform.position.y = 490;
+            if (mySnake.snake.First().transform.position.y > 490)
+                mySnake.snake.First().transform.position.y = 10;
         }
         public override void Draw()
         {

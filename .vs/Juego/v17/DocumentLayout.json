@@ -3,16 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\Zeki\\Documents\\GitHub\\Snake-Paradigmas\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4B96137A-5E6A-434B-BBF0-8B3C9342750C}|Game\\Game.csproj|c:\\users\\zeki\\documents\\github\\snake-paradigmas\\game\\scripts\\snack.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4B96137A-5E6A-434B-BBF0-8B3C9342750C}|Game\\Game.csproj|solutionrelative:game\\scripts\\snack.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4B96137A-5E6A-434B-BBF0-8B3C9342750C}|Game\\Game.csproj|C:\\Users\\Zeki\\Documents\\GitHub\\Snake-Paradigmas\\game\\scripts\\levels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{4B96137A-5E6A-434B-BBF0-8B3C9342750C}|Game\\Game.csproj|c:\\users\\zeki\\documents\\github\\snake-paradigmas\\game\\scripts\\levels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4B96137A-5E6A-434B-BBF0-8B3C9342750C}|Game\\Game.csproj|solutionrelative:game\\scripts\\levels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4B96137A-5E6A-434B-BBF0-8B3C9342750C}|Game\\Game.csproj|C:\\Users\\Zeki\\Documents\\GitHub\\Snake-Paradigmas\\game\\scripts\\managers\\levelmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4B96137A-5E6A-434B-BBF0-8B3C9342750C}|Game\\Game.csproj|solutionrelative:game\\scripts\\managers\\levelmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B96137A-5E6A-434B-BBF0-8B3C9342750C}|Game\\Game.csproj|C:\\Users\\Zeki\\Documents\\GitHub\\Snake-Paradigmas\\game\\scripts\\snack.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B96137A-5E6A-434B-BBF0-8B3C9342750C}|Game\\Game.csproj|solutionrelative:game\\scripts\\snack.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B96137A-5E6A-434B-BBF0-8B3C9342750C}|Game\\Game.csproj|C:\\Users\\Zeki\\Documents\\GitHub\\Snake-Paradigmas\\game\\scripts\\combatui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B96137A-5E6A-434B-BBF0-8B3C9342750C}|Game\\Game.csproj|solutionrelative:game\\scripts\\combatui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4B96137A-5E6A-434B-BBF0-8B3C9342750C}|Game\\Game.csproj|C:\\Users\\Zeki\\Documents\\GitHub\\Snake-Paradigmas\\game\\scripts\\game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -30,11 +34,23 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "CombatUi.cs",
+              "DocumentMoniker": "C:\\Users\\Zeki\\Documents\\GitHub\\Snake-Paradigmas\\Game\\Scripts\\CombatUi.cs",
+              "RelativeDocumentMoniker": "Game\\Scripts\\CombatUi.cs",
+              "ToolTip": "C:\\Users\\Zeki\\Documents\\GitHub\\Snake-Paradigmas\\Game\\Scripts\\CombatUi.cs",
+              "RelativeToolTip": "Game\\Scripts\\CombatUi.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAC4AAABKAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-22T16:04:02.545Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "Game.cs",
               "DocumentMoniker": "C:\\Users\\Zeki\\Documents\\GitHub\\Snake-Paradigmas\\Game\\Scripts\\Game.cs",
               "RelativeDocumentMoniker": "Game\\Scripts\\Game.cs",
@@ -46,19 +62,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "LevelManager.cs",
               "DocumentMoniker": "C:\\Users\\Zeki\\Documents\\GitHub\\Snake-Paradigmas\\Game\\Scripts\\Managers\\LevelManager.cs",
               "RelativeDocumentMoniker": "Game\\Scripts\\Managers\\LevelManager.cs",
               "ToolTip": "C:\\Users\\Zeki\\Documents\\GitHub\\Snake-Paradigmas\\Game\\Scripts\\Managers\\LevelManager.cs",
               "RelativeToolTip": "Game\\Scripts\\Managers\\LevelManager.cs",
-              "ViewState": "AQIAABIAAAAAAAAAAAAowB0AAAA4AAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAAAmAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-15T18:06:40.757Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "GameManager.cs",
               "DocumentMoniker": "C:\\Users\\Zeki\\Documents\\GitHub\\Snake-Paradigmas\\Game\\Scripts\\Managers\\GameManager.cs",
               "RelativeDocumentMoniker": "Game\\Scripts\\Managers\\GameManager.cs",
@@ -70,28 +86,28 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "Snack.cs",
               "DocumentMoniker": "C:\\Users\\Zeki\\Documents\\GitHub\\Snake-Paradigmas\\Game\\Scripts\\Snack.cs",
               "RelativeDocumentMoniker": "Game\\Scripts\\Snack.cs",
               "ToolTip": "C:\\Users\\Zeki\\Documents\\GitHub\\Snake-Paradigmas\\Game\\Scripts\\Snack.cs",
               "RelativeToolTip": "Game\\Scripts\\Snack.cs",
-              "ViewState": "AQIAAEkAAAAAAAAAAAAcwGQAAAANAAAA",
+              "ViewState": "AQIAADkAAAAAAAAAAADwv1AAAAAeAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-11T03:08:52.515Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-11T03:08:52.515Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Levels.cs",
               "DocumentMoniker": "C:\\Users\\Zeki\\Documents\\GitHub\\Snake-Paradigmas\\Game\\Scripts\\Levels.cs",
               "RelativeDocumentMoniker": "Game\\Scripts\\Levels.cs",
               "ToolTip": "C:\\Users\\Zeki\\Documents\\GitHub\\Snake-Paradigmas\\Game\\Scripts\\Levels.cs",
               "RelativeToolTip": "Game\\Scripts\\Levels.cs",
-              "ViewState": "AQIAABMAAAAAAAAAAAA0wMACAAAYAAAA",
+              "ViewState": "AQIAAF0FAAAAAAAAAADwv3AFAABEAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-09T14:15:22.834Z"
+              "WhenOpened": "2024-07-09T14:15:22.834Z",
+              "EditorCaption": ""
             }
           ]
         }
