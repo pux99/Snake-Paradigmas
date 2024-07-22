@@ -297,6 +297,12 @@
     <Content Include="Sprites\Head_3.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Sprites\Portal.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sprites\Switch.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Sprites\trash_apple.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -309,7 +315,9 @@
     <Content Include="Sprites\rect4.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Sprites\SnakeHead.png" />
+    <Content Include="Sprites\SnakeHead.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

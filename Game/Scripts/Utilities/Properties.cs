@@ -82,6 +82,10 @@ namespace Game
         {
             Engine.Draw(textures, transform.position.x, transform.position.y, transform.scale.x, transform.scale.y);
         }
+        public void chageTexture(string NewPath)
+        {
+            textures = new Texture(NewPath);
+        }
     }
     internal class Properties
     {

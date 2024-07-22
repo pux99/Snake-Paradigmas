@@ -38,6 +38,12 @@ namespace Game
                 case "Level3":
                     _currentLevel = new Level3();
                     break;
+                case "Level4":
+                    _currentLevel = new Level4();
+                    break;
+                case "Level5":
+                    _currentLevel = new Level5();
+                    break;
                 case "Options":
                     _currentLevel = new Options();
                     break;

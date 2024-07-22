@@ -8,6 +8,9 @@ using Microsoft.VisualBasic;
 using System.IO.Ports;
 using System.Reflection;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Diagnostics;
+using Microsoft.VisualBasic.Devices;
+using Game;
 
 namespace Game
 {
@@ -146,6 +149,7 @@ namespace Game
         private Text _level1;
         private Text _level2;
         private Text _level3;
+        private Text _level4;
         private Text _menu;
         public static Snake mySnake;
         public static List<Button> buttons;
@@ -156,16 +160,25 @@ namespace Game
             _mainText = new Text(new Transform(90, 50, 0, 1, 1), "Levels");
             _uroboros = new Animation("Sprites/Animations/Uroboros/", new Transform(150, 130, 0, .25f, .25f), .2f, 27);
 
-            buttons.Add(new Button(new Transform(190, 270, 0, 8, 2.5f), "Sprites/grey.png")); //Posicion de la lista 0.
-            _level1 = new Text(new Transform(230, 270, 0, 0.5f, 0.5f), "1");
+            buttons.Add(new Button(new Transform(110, 250, 0, 8, 2.5f), "Sprites/grey.png")); //Posicion de la lista 0.
+            _level1 = new Text(new Transform(150, 250, 0, 0.5f, 0.5f), "1");
 
-            buttons.Add(new Button(new Transform(190, 330, 0, 8, 2.5f), "Sprites/grey.png")); //Posicion de la lista 1.
-            _level2 = new Text(new Transform(230, 330, 0, 0.5f, 0.5f), "2");
+            buttons.Add(new Button(new Transform(290, 285, 0, 8, 2.5f), "Sprites/grey.png")); //Posicion de la lista 1.
+            _level2 = new Text(new Transform(330, 285, 0, 0.5f, 0.5f), "2");
 
-            buttons.Add(new Button(new Transform(190, 390, 0, 8, 2.5f), "Sprites/grey.png")); //Posicion de la lista 2.
-            _level3 = new Text(new Transform(230, 390, 0, 0.5f, 0.5f), "3");
 
-            buttons.Add(new Button(new Transform(190, 450, 0, 8f, 2.5f), "Sprites/grey.png")); //Posicion de la lista 3.
+            buttons.Add(new Button(new Transform(110, 325, 0, 8, 2.5f), "Sprites/grey.png")); //Posicion de la lista 2.
+            _level3 = new Text(new Transform(150, 325, 0, 0.5f, 0.5f), "3");
+
+
+            buttons.Add(new Button(new Transform(290, 357, 0, 8, 2.5f), "Sprites/grey.png")); //Posicion de la lista 3.
+            _level4 = new Text(new Transform(330, 357, 0, 0.5f, 0.5f), "4");
+
+            buttons.Add(new Button(new Transform(110, 400, 0, 8, 2.5f), "Sprites/grey.png")); //Posicion de la lista 3.
+            _level4 = new Text(new Transform(150, 400, 0, 0.5f, 0.5f), "5");
+
+
+            buttons.Add(new Button(new Transform(190, 450, 0, 8f, 2.5f), "Sprites/grey.png")); //Posicion de la lista 4.
             _menu = new Text(new Transform(190, 450, 0, 0.5f, 0.5f), "Menu");
 
             mySnake = new Snake(GameManager.Instance.SnakeSpeed, 5);
@@ -231,6 +244,13 @@ namespace Game
                             LevelsManager.Instance.SetLevel("Level3");
                             break;
                         case 3:
+                            LevelsManager.Instance.SetLevel("Level4");
+                            break;
+                        case 4:
+                            LevelsManager.Instance.SetLevel("Level5");
+                            break;
+
+                        case 5:
                             LevelsManager.Instance.SetLevel("Menu");
                             break;
                         default:
@@ -255,6 +275,8 @@ namespace Game
     {
         public static Snake mySnake;
         public static int[,] grid;
+        public static List<PickUP> pickUPs;
+        public static List<Portal> portals;
         public static List<Fruit> fruits;
         public static List<Trash> trash;
         public static List<Wall> walls;
@@ -269,8 +291,8 @@ namespace Game
         public override void Inizialize()
         {
             grid = new int[50, 50];
-            fruits = new List<Fruit>();
-            trash = new List<Trash>();
+            pickUPs = new List<PickUP>();
+            portals = new List<Portal>();
             walls = new List<Wall>();
             combatUI = new CombatUi(this);
             GameManager.Instance.lives = 3;
@@ -290,7 +312,13 @@ namespace Game
                 }
             }
 
-            fruits.Add((Fruit)FruitFactory.CreateFruit(FruitFactory.fruit.apple, new Vector2(250, 300)));
+            pickUPs.Add((Fruit)FruitFactory.CreateFruit(FruitFactory.fruit.apple, new Vector2(100, 100)));
+            pickUPs.Add((Portal)FruitFactory.CreateFruit(FruitFactory.fruit.portal, new Vector2(250, 300)));
+            foreach (PickUP pickUP in pickUPs)
+            {
+                if (pickUP is Portal portal)
+                    portals.Add((Portal)portal);
+            }
             for (int i = 0; i < 10; i++)
             {
                 walls.Add(new Wall(new Transform(100 + i * 10, 100), "Sprites/rect4.png"));
@@ -356,49 +384,74 @@ namespace Game
             foreach (Wall wall in walls)
             {
                 if (Collision.RectRect(mySnake.snake[0].transform.position.x, mySnake.snake[0].transform.position.y, mySnake.snake[0].render.imgSize.x, mySnake.snake[0].render.imgSize.y,
-               wall.transform.position.x, wall.transform.position.y, wall.render.imgSize.x, wall.render.imgSize.y))
+                    wall.transform.position.x, wall.transform.position.y, wall.render.imgSize.x, wall.render.imgSize.y))
                 {
                     KillSnake(losslifes);
                 }
-                if (Collision.RectRect(fruits.First().transform.position.x, fruits.First().transform.position.y, fruits.First().render.imgSize.x * 2, fruits.First().render.imgSize.y * 2,
-               wall.transform.position.x, wall.transform.position.y, wall.render.imgSize.x, wall.render.imgSize.y))
+                if (Collision.RectRect(pickUPs.First().transform.position.x, pickUPs.First().transform.position.y, pickUPs.First().render.imgSize.x * 2, pickUPs.First().render.imgSize.y * 2,
+                    wall.transform.position.x, wall.transform.position.y, wall.render.imgSize.x, wall.render.imgSize.y))
                 {
-                    fruits.First().ChangeToRandomPosition();
+                    pickUPs.First().ChangeToRandomPosition();
                 }
             }
             VoidEvent eatFruit = null;
             eatFruit += addSnakePiece;
-            eatFruit += fruits.First().Reproducer;
-            if (Collision.RectRect(mySnake.snake.First().transform.position.x, mySnake.snake.First().transform.position.y, mySnake.snake.First().render.imgSize.x, mySnake.snake.First().render.imgSize.y,
-                fruits.First().transform.position.x, fruits.First().transform.position.y, fruits.First().render.imgSize.x, fruits.First().render.imgSize.y))
-            {
-                if (GameManager.Instance.leaveTrash)
-                {
-                    Trash trashs = (Trash)FruitFactory.CreateFruit(FruitFactory.fruit.rottenApple, new Vector2((int)fruits.First().transform.position.x, (int)fruits.First().transform.position.y));
-                    trashs.active = false;
-                    trash.Add(trashs);
-                }
-                fruits.First().ChangeToRandomPosition();
-                if (speedMult < 30)
-                {
-                    speedMult++;
-                    mySnake._speed = 1f / speedMult;
-                }
-                eatFruit();
-                GameManager.Instance.points++;
-                getPoints();
-            }
-            foreach (Trash trashs in trash)
+            Fruit fruit = (Fruit)pickUPs.First();
+            eatFruit += fruit.Reproducer;
+            for (int i = 0; i < pickUPs.Count; i++)
             {
                 if (Collision.RectRect(mySnake.snake.First().transform.position.x, mySnake.snake.First().transform.position.y, mySnake.snake.First().render.imgSize.x, mySnake.snake.First().render.imgSize.y,
-                trashs.transform.position.x, trashs.transform.position.y, trashs.render.imgSize.x, trashs.render.imgSize.y) && trashs.active)
+                pickUPs[i].transform.position.x, pickUPs[i].transform.position.y, pickUPs[i].render.imgSize.x, pickUPs[i].render.imgSize.y))
                 {
-                    KillSnake(losslifes);
-                }
-                if (Collision.RectRect(fruits.First().transform.position.x, fruits.First().transform.position.y, fruits.First().render.imgSize.x * 2, fruits.First().render.imgSize.y * 2,
-                        trashs.transform.position.x, trashs.transform.position.y, trashs.render.imgSize.x, trashs.render.imgSize.y))
-                {
-                    fruits.First().ChangeToRandomPosition();
+                    switch (pickUPs[i])
+                    {
+                        case Fruit fruits:
+                            if (GameManager.Instance.leaveTrash)
+                            {
+                                Trash trash = (Trash)FruitFactory.CreateFruit(FruitFactory.fruit.rottenApple, new Vector2((int)fruits.transform.position.x, (int)fruits.transform.position.y));
+                                trash.active = false;
+                                pickUPs.Add(trash);
+                            }
+                            fruits.ChangeToRandomPosition();
+                            foreach (PickUP item in pickUPs)
+                            {
+                                if (fruits != item && Collision.RectRect(fruits.transform.position.x, fruits.transform.position.y, fruits.render.imgSize.x, fruits.render.imgSize.y,
+                                                                      item.transform.position.x, item.transform.position.y, item.render.imgSize.x, item.render.imgSize.y))
+                                {
+                                    fruits.ChangeToRandomPosition();
+                                }
+                            }
+                            if (speedMult < 30)
+                            {
+                                speedMult++;
+                                mySnake._speed = 1f / speedMult;
+                            }
+                            eatFruit();
+                            GameManager.Instance.points++;
+                            getPoints();
+                            break;
+                        case Trash trash:
+                            KillSnake(losslifes);
+                            break;
+                        case Reverse reverse:
+                            Texture body = mySnake.snake.Last().render.textures;
+                            Texture head = mySnake.snake.First().render.textures;
+                            mySnake.snake.Reverse();
+                            mySnake.snake.Last().render.textures = body;
+                            mySnake.snake.First().render.textures = head;
+                            mySnake.SwapDirection();
+                            foreach (SnakePart part in mySnake.snake)
+                            {
+                                part.myPositions.Clear();
+                            }
+                            break;
+                        case Portal portal:
+                            Random rnd = new Random();
+                            portals.Remove(portal);
+                            mySnake.snake.First().transform.position = portals[rnd.Next(0, portals.Count)].transform.position;
+                            portals.Add(portal);
+                            break;
+                    }
                 }
             }
             for (int i = 1; i < mySnake.snake.Count; i++)
@@ -472,8 +525,11 @@ namespace Game
     {
         public static Snake mySnake;
         public static int[,] grid;
+        public static List<PickUP> pickUPs;
         public static List<Fruit> fruits;
         public static List<Trash> trash;
+        public static List<Reverse> reverse;
+        public static List<Portal> portals;
         public static List<Wall> walls;
         public static CombatUi combatUI;
         public static int speedMult = GameManager.Instance.SnakeSpeed;
@@ -487,8 +543,11 @@ namespace Game
         public override void Inizialize()
         {
             grid = new int[50, 50];
+            pickUPs = new List<PickUP>();
             fruits = new List<Fruit>();
             trash = new List<Trash>();
+            reverse = new List<Reverse>();
+            portals = new List<Portal>();
             walls = new List<Wall>();
             combatUI = new CombatUi(this);
             GameManager.Instance.lives = 3;
@@ -509,7 +568,17 @@ namespace Game
             }
 
 
-            fruits.Add((Fruit)FruitFactory.CreateFruit(FruitFactory.fruit.apple, new Vector2(250, 300)));
+            pickUPs.Add((Fruit)FruitFactory.CreateFruit(FruitFactory.fruit.apple, new Vector2(250, 300)));
+            pickUPs.Add((Reverse)FruitFactory.CreateFruit(FruitFactory.fruit.revese, new Vector2(150, 150)));
+            pickUPs.Add((Portal)FruitFactory.CreateFruit(FruitFactory.fruit.portal, new Vector2(450, 150)));
+            pickUPs.Add((Portal)FruitFactory.CreateFruit(FruitFactory.fruit.portal, new Vector2(200, 100)));
+            pickUPs.Add((Portal)FruitFactory.CreateFruit(FruitFactory.fruit.portal, new Vector2(100, 300)));
+            pickUPs.Add((Portal)FruitFactory.CreateFruit(FruitFactory.fruit.portal, new Vector2(300, 300)));
+            foreach(PickUP pickUP in pickUPs)
+            {
+                if (pickUP is Portal portal)
+                    portals.Add((Portal)portal);
+            }
             for (int i = 0; i < 10; i++)
             {
                 walls.Add(new Wall(new Transform(0 + i * 10, 100), "Sprites/rect4.png")); // Paredes en x
@@ -579,60 +648,70 @@ namespace Game
                 {
                     KillSnake(losslifes);
                 }
-                if (Collision.RectRect(fruits.First().transform.position.x, fruits.First().transform.position.y, fruits.First().render.imgSize.x * 2, fruits.First().render.imgSize.y * 2,
+                if (Collision.RectRect(pickUPs.First().transform.position.x, pickUPs.First().transform.position.y, pickUPs.First().render.imgSize.x * 2, pickUPs.First().render.imgSize.y * 2,
                wall.transform.position.x, wall.transform.position.y, wall.render.imgSize.x, wall.render.imgSize.y))
                 {
-                    fruits.First().ChangeToRandomPosition();
+                    pickUPs.First().ChangeToRandomPosition();
                 }
             }
             VoidEvent eatFruit = null;
             eatFruit += addSnakePiece;
-            eatFruit += fruits.First().Reproducer;
-            if (Collision.RectRect(mySnake.snake.First().transform.position.x, mySnake.snake.First().transform.position.y, mySnake.snake.First().render.imgSize.x, mySnake.snake.First().render.imgSize.y,
-                fruits.First().transform.position.x, fruits.First().transform.position.y, fruits.First().render.imgSize.x, fruits.First().render.imgSize.y))
-            {
-                if (GameManager.Instance.leaveTrash)
-                {
-                    Trash trashs = (Trash)FruitFactory.CreateFruit(FruitFactory.fruit.rottenApple, new Vector2((int)fruits.First().transform.position.x, (int)fruits.First().transform.position.y));
-                    trashs.active = false;
-                    trash.Add(trashs);
-                }
-                fruits.First().ChangeToRandomPosition();
-                if (speedMult < 30)
-                {
-                    speedMult++;
-                    mySnake._speed = 1f / speedMult;
-                }
-                //for (int i = 0;i< mySnake.snake.Count/2; i++)
-                //{
-                //    List<Vector2> buffer = new List<Vector2>();
-                //    buffer = mySnake.snake[i].myPositions;
-                //    mySnake.snake[i].myPositions = mySnake.snake[mySnake.snake.Count - 1 - i].myPositions;
-                //    mySnake.snake[mySnake.snake.Count - 1 - i].myPositions=buffer;
-                //    
-                //}
-                //foreach (SnakePart part in mySnake.snake)
-                //{
-                //   //part.myPositions.Reverse();
-                //   part.myPositions.Clear();
-                //}
-                //mySnake.snake.Reverse();
-                //mySnake.swapDirection();
-                eatFruit();
-                GameManager.Instance.points++;
-                getPoints();
-            }
-            foreach (Trash trashs in trash)
+            Fruit fruit =(Fruit)pickUPs.First();
+            eatFruit += fruit.Reproducer;
+            for (int i = 0; i < pickUPs.Count; i++)
             {
                 if (Collision.RectRect(mySnake.snake.First().transform.position.x, mySnake.snake.First().transform.position.y, mySnake.snake.First().render.imgSize.x, mySnake.snake.First().render.imgSize.y,
-                trashs.transform.position.x, trashs.transform.position.y, trashs.render.imgSize.x, trashs.render.imgSize.y) && trashs.active)
+                pickUPs[i].transform.position.x, pickUPs[i].transform.position.y, pickUPs[i].render.imgSize.x, pickUPs[i].render.imgSize.y))
                 {
-                    KillSnake(losslifes);
-                }
-                if (Collision.RectRect(fruits.First().transform.position.x, fruits.First().transform.position.y, fruits.First().render.imgSize.x * 2, fruits.First().render.imgSize.y * 2,
-                        trashs.transform.position.x, trashs.transform.position.y, trashs.render.imgSize.x, trashs.render.imgSize.y))
-                {
-                    fruits.First().ChangeToRandomPosition();
+                    switch (pickUPs[i])
+                    {
+                        case Fruit fruits:
+                            if (GameManager.Instance.leaveTrash)
+                            {
+                                Trash trash = (Trash)FruitFactory.CreateFruit(FruitFactory.fruit.rottenApple, new Vector2((int)fruits.transform.position.x, (int)fruits.transform.position.y));
+                                trash.active = false;
+                                pickUPs.Add(trash);
+                            }
+                            fruits.ChangeToRandomPosition();
+                            foreach (PickUP item in pickUPs)
+                            {
+                                if(fruits!= item&& Collision.RectRect(fruits.transform.position.x, fruits.transform.position.y, fruits.render.imgSize.x, fruits.render.imgSize.y,
+                                                                      item.transform.position.x, item.transform.position.y, item.render.imgSize.x, item.render.imgSize.y))
+                                {
+                                    fruits.ChangeToRandomPosition();
+                                }
+                            }
+                            if (speedMult < 30)
+                            {
+                                speedMult++;
+                                mySnake._speed = 1f / speedMult;
+                            }
+                            eatFruit();
+                            GameManager.Instance.points++;
+                            getPoints();
+                            break;
+                        case Trash trash:
+                            KillSnake(losslifes);
+                            break;
+                        case Reverse reverse:
+                            Texture body = mySnake.snake.Last().render.textures;
+                            Texture head = mySnake.snake.First().render.textures;
+                            mySnake.snake.Reverse();
+                            mySnake.snake.Last().render.textures = body;
+                            mySnake.snake.First().render.textures = head;
+                            mySnake.SwapDirection();
+                            foreach (SnakePart part in mySnake.snake)
+                            {
+                                part.myPositions.Clear();
+                            }
+                            break;
+                        case Portal portal:
+                            Random rnd = new Random();
+                            portals.Remove(portal);
+                            mySnake.snake.First().transform.position = portals[rnd.Next(0, portals.Count)].transform.position;
+                            portals.Add(portal);
+                            break;
+                    }
                 }
             }
             for (int i = 1; i < mySnake.snake.Count; i++)
@@ -706,8 +785,8 @@ namespace Game
     {
         public static Snake mySnake;
         public static int[,] grid;
-        public static List<Fruit> fruits;
-        public static List<Trash> trash;
+        public static List<PickUP> pickUPs;
+        public static List<Portal> portals;
         public static List<Wall> walls;
         public static CombatUi combatUI;
         public static int speedMult = GameManager.Instance.SnakeSpeed;
@@ -721,8 +800,8 @@ namespace Game
         public override void Inizialize()
         {
             grid = new int[50, 50];
-            fruits = new List<Fruit>();
-            trash = new List<Trash>();
+            pickUPs = new List<PickUP>();
+            portals = new List<Portal>();
             walls = new List<Wall>();
             combatUI = new CombatUi(this);
             GameManager.Instance.lives = 3;
@@ -742,7 +821,12 @@ namespace Game
                 }
             }
 
-            fruits.Add((Fruit)FruitFactory.CreateFruit(FruitFactory.fruit.apple, new Vector2(250, 300)));
+            pickUPs.Add((Fruit)FruitFactory.CreateFruit(FruitFactory.fruit.apple, new Vector2(250, 300)));
+            foreach (PickUP pickUP in pickUPs)
+            {
+                if (pickUP is Portal portal)
+                    portals.Add((Portal)portal);
+            }
             for (int i = 0; i < 10; i++)
             {
                 walls.Add(new Wall(new Transform(80 + i * 10, 200), "Sprites/rect4.png")); // Paredes en x
@@ -817,60 +901,598 @@ namespace Game
                 {
                     KillSnake(losslifes);
                 }
-                if (Collision.RectRect(fruits.First().transform.position.x, fruits.First().transform.position.y, fruits.First().render.imgSize.x * 2, fruits.First().render.imgSize.y * 2,
+                if (Collision.RectRect(pickUPs.First().transform.position.x, pickUPs.First().transform.position.y, pickUPs.First().render.imgSize.x * 2, pickUPs.First().render.imgSize.y * 2,
                wall.transform.position.x, wall.transform.position.y, wall.render.imgSize.x, wall.render.imgSize.y))
                 {
-                    fruits.First().ChangeToRandomPosition();
+                    pickUPs.First().ChangeToRandomPosition();
                 }
             }
             VoidEvent eatFruit = null;
             eatFruit += addSnakePiece;
-            eatFruit += fruits.First().Reproducer;
-            if (Collision.RectRect(mySnake.snake.First().transform.position.x, mySnake.snake.First().transform.position.y, mySnake.snake.First().render.imgSize.x, mySnake.snake.First().render.imgSize.y,
-                fruits.First().transform.position.x, fruits.First().transform.position.y, fruits.First().render.imgSize.x, fruits.First().render.imgSize.y))
-            {
-                if (GameManager.Instance.leaveTrash)
-                {
-                    Trash trashs = (Trash)FruitFactory.CreateFruit(FruitFactory.fruit.rottenApple, new Vector2((int)fruits.First().transform.position.x, (int)fruits.First().transform.position.y));
-                    trashs.active = false;
-                    trash.Add(trashs);
-                }
-                fruits.First().ChangeToRandomPosition();
-                if (speedMult < 30)
-                {
-                    speedMult++;
-                    mySnake._speed = 1f / speedMult;
-                }
-                //for (int i = 0;i< mySnake.snake.Count/2; i++)
-                //{
-                //    List<Vector2> buffer = new List<Vector2>();
-                //    buffer = mySnake.snake[i].myPositions;
-                //    mySnake.snake[i].myPositions = mySnake.snake[mySnake.snake.Count - 1 - i].myPositions;
-                //    mySnake.snake[mySnake.snake.Count - 1 - i].myPositions=buffer;
-                //    
-                //}
-                //foreach (SnakePart part in mySnake.snake)
-                //{
-                //   //part.myPositions.Reverse();
-                //   part.myPositions.Clear();
-                //}
-                //mySnake.snake.Reverse();
-                //mySnake.swapDirection();
-                eatFruit();
-                GameManager.Instance.points++;
-                getPoints();
-            }
-            foreach (Trash trashs in trash)
+            Fruit fruit = (Fruit)pickUPs.First();
+            eatFruit += fruit.Reproducer;
+            for (int i = 0; i < pickUPs.Count; i++)
             {
                 if (Collision.RectRect(mySnake.snake.First().transform.position.x, mySnake.snake.First().transform.position.y, mySnake.snake.First().render.imgSize.x, mySnake.snake.First().render.imgSize.y,
-                trashs.transform.position.x, trashs.transform.position.y, trashs.render.imgSize.x, trashs.render.imgSize.y) && trashs.active)
+                pickUPs[i].transform.position.x, pickUPs[i].transform.position.y, pickUPs[i].render.imgSize.x, pickUPs[i].render.imgSize.y))
+                {
+                    switch (pickUPs[i])
+                    {
+                        case Fruit fruits:
+                            if (GameManager.Instance.leaveTrash)
+                            {
+                                Trash trash = (Trash)FruitFactory.CreateFruit(FruitFactory.fruit.rottenApple, new Vector2((int)fruits.transform.position.x, (int)fruits.transform.position.y));
+                                trash.active = false;
+                                pickUPs.Add(trash);
+                            }
+                            fruits.ChangeToRandomPosition();
+                            foreach (PickUP item in pickUPs)
+                            {
+                                if (fruits != item && Collision.RectRect(fruits.transform.position.x, fruits.transform.position.y, fruits.render.imgSize.x, fruits.render.imgSize.y,
+                                                                      item.transform.position.x, item.transform.position.y, item.render.imgSize.x, item.render.imgSize.y))
+                                {
+                                    fruits.ChangeToRandomPosition();
+                                }
+                            }
+                            if (speedMult < 30)
+                            {
+                                speedMult++;
+                                mySnake._speed = 1f / speedMult;
+                            }
+                            eatFruit();
+                            GameManager.Instance.points++;
+                            getPoints();
+                            break;
+                        case Trash trash:
+                            KillSnake(losslifes);
+                            break;
+                        case Reverse reverse:
+                            Texture body = mySnake.snake.Last().render.textures;
+                            Texture head = mySnake.snake.First().render.textures;
+                            mySnake.snake.Reverse();
+                            mySnake.snake.Last().render.textures = body;
+                            mySnake.snake.First().render.textures = head;
+                            mySnake.SwapDirection();
+                            foreach (SnakePart part in mySnake.snake)
+                            {
+                                part.myPositions.Clear();
+                            }
+                            break;
+                        case Portal portal:
+                            Random rnd = new Random();
+                            portals.Remove(portal);
+                            mySnake.snake.First().transform.position = portals[rnd.Next(0, portals.Count)].transform.position;
+                            portals.Add(portal);
+                            break;
+                    }
+                }
+            }
+            for (int i = 1; i < mySnake.snake.Count; i++)
+            {
+
+                if (Collision.RectRect(mySnake.snake[0].transform.position.x, mySnake.snake[0].transform.position.y, mySnake.snake[0].render.imgSize.x, mySnake.snake[0].render.imgSize.y,
+                mySnake.snake[i].transform.position.x, mySnake.snake[i].transform.position.y, mySnake.snake[i].render.imgSize.x, mySnake.snake[i].render.imgSize.y))
                 {
                     KillSnake(losslifes);
                 }
-                if (Collision.RectRect(fruits.First().transform.position.x, fruits.First().transform.position.y, fruits.First().render.imgSize.x * 2, fruits.First().render.imgSize.y * 2,
-                        trashs.transform.position.x, trashs.transform.position.y, trashs.render.imgSize.x, trashs.render.imgSize.y))
+            }
+            if (mySnake.snake.First().transform.position.x < -10)
+                mySnake.snake.First().transform.position.x = 500;
+            if (mySnake.snake.First().transform.position.x > 510)
+                mySnake.snake.First().transform.position.x = 0;
+            if (mySnake.snake.First().transform.position.y < -10)
+                mySnake.snake.First().transform.position.y = 500;
+            if (mySnake.snake.First().transform.position.y > 510)
+                mySnake.snake.First().transform.position.y = 0;
+        }
+        public static void addSnakePiece()
+        {
+            mySnake.addSnakePiece("body");
+            int lastPosition = mySnake.snake.Count - 1;
+            LevelsManager.Instance.CurrentLevel.draws.Add(mySnake.snake[lastPosition]);
+        }
+        public static void NewSnake()
+        {
+            mySnake.snakePartDelay = GameManager.Instance.SnakeDelay;
+            mySnake.snake.First().transform.position.x = 240;
+            mySnake.snake.First().transform.position.y = 240;
+
+            for (int i = 1; i < 5; i++)
+            {
+                mySnake.addSnakePiece("body");
+                //mySnake.snake[i].transform.position = new Vector2 { x = -10, y = -10 };
+                LevelsManager.Instance.CurrentLevel.draws.Add(mySnake.snake[i]);
+            }
+        }
+        public static void KillSnake(VoidEvent lossLife)
+        {
+            GameManager.Instance.lives--;
+            foreach (SnakePart snakePart in mySnake.snake)
+            {
+                if (snakePart != mySnake.snake[0])
                 {
-                    fruits.First().ChangeToRandomPosition();
+                    LevelsManager.Instance.CurrentLevel.draws.Remove(snakePart);
+                    snakePart.myPositions.Clear();
+                    mySnake.pool.ReleaseObject(snakePart);
+                }
+            }
+            for (int i = mySnake.snake.Count; i > 1; i--)
+            {
+                mySnake.snake[i - 1].myPositions.Clear();
+                mySnake.snake[i - 1].transform.position = new Vector2 { x = -10, y = -10 };
+                mySnake.snake.Remove(mySnake.snake[i - 1]);
+            }
+            mySnake.snake.First().myPositions.Clear();
+            mySnake._speed = 1f / GameManager.Instance.SnakeSpeed;
+            speedMult = GameManager.Instance.SnakeSpeed;
+            lossLife.Invoke();
+            NewSnake();
+        }
+        public override void Reset()
+        {
+            LevelsManager.Instance.CurrentLevel.updates.Clear();
+            LevelsManager.Instance.CurrentLevel.updates.Clear();
+        }
+    }
+    public class Level4 : Levels, PlayableLevel
+    {
+        public static Snake mySnake;
+        public static int[,] grid;
+        public static List<PickUP> pickUPs;
+        public static List<Portal> portals;
+        public static List<Wall> walls;
+        public static CombatUi combatUI;
+        public static int speedMult = GameManager.Instance.SnakeSpeed;
+
+        public VoidEvent getPoint { get; set; }
+        public VoidEvent lossLife { get; set; }
+        public Level4()
+        {
+
+        }
+        public override void Inizialize()
+        {
+            grid = new int[50, 50];
+            pickUPs = new List<PickUP>();
+            portals = new List<Portal>();
+            walls = new List<Wall>();
+            combatUI = new CombatUi(this);
+            GameManager.Instance.lives = 3;
+            GameManager.Instance.points = 0;
+
+
+            mySnake = new Snake(GameManager.Instance.SnakeSpeed, 5);
+            for (int i = 0; i < 5; i++)
+            {
+                if (i == 0)
+                {
+                    mySnake.addSnakePiece("head");
+                }
+                else
+                {
+                    mySnake.addSnakePiece("body");
+                }
+            }
+
+            pickUPs.Add((Fruit)FruitFactory.CreateFruit(FruitFactory.fruit.apple, new Vector2(250, 300)));
+            foreach (PickUP pickUP in pickUPs)
+            {
+                if (pickUP is Portal portal)
+                    portals.Add((Portal)portal);
+            }
+            for (int i = 0; i < 10; i++)
+            {
+                walls.Add(new Wall(new Transform(1 + i * 10, 100), "Sprites/rect4.png"));//palo arriba izquierda
+                walls.Add(new Wall(new Transform(100 + i * 10, 100), "Sprites/rect4.png"));//palo arriba izquierda
+
+                walls.Add(new Wall(new Transform(320 + i * 10, 100), "Sprites/rect4.png"));//palo arriba derecha
+                walls.Add(new Wall(new Transform(400 + i * 10, 100), "Sprites/rect4.png"));//palo arriba derecha
+
+                walls.Add(new Wall(new Transform(0 + i * 10, 400), "Sprites/rect4.png"));//palo abajo izquierda
+                walls.Add(new Wall(new Transform(100 + i * 10, 400), "Sprites/rect4.png"));//palo abajo izquierda2
+
+                walls.Add(new Wall(new Transform(320 + i * 10, 400), "Sprites/rect4.png"));//palo abajo derecha
+                walls.Add(new Wall(new Transform(400 + i * 10, 400), "Sprites/rect4.png"));//palo abajo derecha2
+
+                walls.Add(new Wall(new Transform(260, 150 + i * 10), "Sprites/rect4.png"));//palo vertical derecha arriba
+
+
+                walls.Add(new Wall(new Transform(260, +i * 10), "Sprites/rect4.png"));//palo vertical izquierda arriba
+
+                walls.Add(new Wall(new Transform(260, 210 + i * 10), "Sprites/rect4.png"));//palo vertical izquieda abajo
+
+
+                walls.Add(new Wall(new Transform(260, 410 + i * 10), "Sprites/rect4.png"));//palo vertical derecha abajo
+                walls.Add(new Wall(new Transform(260, 280 + i * 10), "Sprites/rect4.png"));//palo vertical derecha abajo
+            }
+        }
+        public override void Input()
+        {
+            foreach (Inputs input in LevelsManager.Instance.CurrentLevel.inputs)
+            {
+                input.Input();
+            }
+        }
+        public override void Update()
+        {
+            foreach (Update update in LevelsManager.Instance.CurrentLevel.updates)
+            {
+                update.Update();
+            }
+
+            if (GameManager.Instance.points >= 20)
+            {
+                LevelsManager.Instance.SetLevel("Victory");
+            }
+            if (GameManager.Instance.lives == 0)
+            {
+                LevelsManager.Instance.SetLevel("Defeat");
+            }
+            Collisions(lossLife, getPoint);
+
+
+        }
+        public override void Draw()
+        {
+            for (int i = 0; i < 50; i++)
+            {
+                for (int j = 0; j < 50; j++)
+                {
+                    if ((i + j) % 2 == 0)
+                    {
+                        Engine.Draw("Sprites/green.png", i * 10, j * 10, .625f, .625f);
+                    }
+                    else
+                    {
+                        Engine.Draw("Sprites/grey.png", i * 10, j * 10, .625f, .625f);
+                    }
+                }
+            }
+            foreach (Draw draw in LevelsManager.Instance.CurrentLevel.draws)
+            {
+                if (draw.active)
+                    draw.Draw();
+            }
+        }
+        static void Collisions(VoidEvent losslifes, VoidEvent getPoints)
+        {
+            foreach (Wall wall in walls)
+            {
+                if (Collision.RectRect(mySnake.snake[0].transform.position.x, mySnake.snake[0].transform.position.y, mySnake.snake[0].render.imgSize.x, mySnake.snake[0].render.imgSize.y,
+               wall.transform.position.x, wall.transform.position.y, wall.render.imgSize.x, wall.render.imgSize.y))
+                {
+                    KillSnake(losslifes);
+                }
+                if (Collision.RectRect(pickUPs.First().transform.position.x, pickUPs.First().transform.position.y, pickUPs.First().render.imgSize.x * 2, pickUPs.First().render.imgSize.y * 2,
+               wall.transform.position.x, wall.transform.position.y, wall.render.imgSize.x, wall.render.imgSize.y))
+                {
+                    pickUPs.First().ChangeToRandomPosition();
+                }
+            }
+            VoidEvent eatFruit = null;
+            eatFruit += addSnakePiece;
+            Fruit fruit = (Fruit)pickUPs.First();
+            eatFruit += fruit.Reproducer;
+            for (int i = 0; i < pickUPs.Count; i++)
+            {
+                if (Collision.RectRect(mySnake.snake.First().transform.position.x, mySnake.snake.First().transform.position.y, mySnake.snake.First().render.imgSize.x, mySnake.snake.First().render.imgSize.y,
+                pickUPs[i].transform.position.x, pickUPs[i].transform.position.y, pickUPs[i].render.imgSize.x, pickUPs[i].render.imgSize.y))
+                {
+                    switch (pickUPs[i])
+                    {
+                        case Fruit fruits:
+                            if (GameManager.Instance.leaveTrash)
+                            {
+                                Trash trash = (Trash)FruitFactory.CreateFruit(FruitFactory.fruit.rottenApple, new Vector2((int)fruits.transform.position.x, (int)fruits.transform.position.y));
+                                trash.active = false;
+                                pickUPs.Add(trash);
+                            }
+                            fruits.ChangeToRandomPosition();
+                            foreach (PickUP item in pickUPs)
+                            {
+                                if (fruits != item && Collision.RectRect(fruits.transform.position.x, fruits.transform.position.y, fruits.render.imgSize.x, fruits.render.imgSize.y,
+                                                                      item.transform.position.x, item.transform.position.y, item.render.imgSize.x, item.render.imgSize.y))
+                                {
+                                    fruits.ChangeToRandomPosition();
+                                }
+                            }
+                            if (speedMult < 30)
+                            {
+                                speedMult++;
+                                mySnake._speed = 1f / speedMult;
+                            }
+                            eatFruit();
+                            GameManager.Instance.points++;
+                            getPoints();
+                            break;
+                        case Trash trash:
+                            KillSnake(losslifes);
+                            break;
+                        case Reverse reverse:
+                            Texture body = mySnake.snake.Last().render.textures;
+                            Texture head = mySnake.snake.First().render.textures;
+                            mySnake.snake.Reverse();
+                            mySnake.snake.Last().render.textures = body;
+                            mySnake.snake.First().render.textures = head;
+                            mySnake.SwapDirection();
+                            foreach (SnakePart part in mySnake.snake)
+                            {
+                                part.myPositions.Clear();
+                            }
+                            break;
+                        case Portal portal:
+                            Random rnd = new Random();
+                            portals.Remove(portal);
+                            mySnake.snake.First().transform.position = portals[rnd.Next(0, portals.Count)].transform.position;
+                            portals.Add(portal);
+                            break;
+                    }
+                }
+            }
+            for (int i = 1; i < mySnake.snake.Count; i++)
+            {
+
+                if (Collision.RectRect(mySnake.snake[0].transform.position.x, mySnake.snake[0].transform.position.y, mySnake.snake[0].render.imgSize.x, mySnake.snake[0].render.imgSize.y,
+                mySnake.snake[i].transform.position.x, mySnake.snake[i].transform.position.y, mySnake.snake[i].render.imgSize.x, mySnake.snake[i].render.imgSize.y))
+                {
+                    KillSnake(losslifes);
+                }
+            }
+            if (mySnake.snake.First().transform.position.x < -10)
+                mySnake.snake.First().transform.position.x = 500;
+            if (mySnake.snake.First().transform.position.x > 510)
+                mySnake.snake.First().transform.position.x = 0;
+            if (mySnake.snake.First().transform.position.y < -10)
+                mySnake.snake.First().transform.position.y = 500;
+            if (mySnake.snake.First().transform.position.y > 510)
+                mySnake.snake.First().transform.position.y = 0;
+        }
+        public static void addSnakePiece()
+        {
+            mySnake.addSnakePiece("body");
+            int lastPosition = mySnake.snake.Count - 1;
+            LevelsManager.Instance.CurrentLevel.draws.Add(mySnake.snake[lastPosition]);
+        }
+        public static void NewSnake()
+        {
+            mySnake.snakePartDelay = GameManager.Instance.SnakeDelay;
+            mySnake.snake.First().transform.position.x = 240;
+            mySnake.snake.First().transform.position.y = 240;
+
+            for (int i = 1; i < 5; i++)
+            {
+                mySnake.addSnakePiece("body");
+                //mySnake.snake[i].transform.position = new Vector2 { x = -10, y = -10 };
+                LevelsManager.Instance.CurrentLevel.draws.Add(mySnake.snake[i]);
+            }
+        }
+        public static void KillSnake(VoidEvent lossLife)
+        {
+            GameManager.Instance.lives--;
+            foreach (SnakePart snakePart in mySnake.snake)
+            {
+                if (snakePart != mySnake.snake[0])
+                {
+                    LevelsManager.Instance.CurrentLevel.draws.Remove(snakePart);
+                    snakePart.myPositions.Clear();
+                    mySnake.pool.ReleaseObject(snakePart);
+                }
+            }
+            for (int i = mySnake.snake.Count; i > 1; i--)
+            {
+                mySnake.snake[i - 1].myPositions.Clear();
+                mySnake.snake[i - 1].transform.position = new Vector2 { x = -10, y = -10 };
+                mySnake.snake.Remove(mySnake.snake[i - 1]);
+            }
+            mySnake.snake.First().myPositions.Clear();
+            mySnake._speed = 1f / GameManager.Instance.SnakeSpeed;
+            speedMult = GameManager.Instance.SnakeSpeed;
+            lossLife.Invoke();
+            NewSnake();
+        }
+        public override void Reset()
+        {
+            LevelsManager.Instance.CurrentLevel.updates.Clear();
+            LevelsManager.Instance.CurrentLevel.updates.Clear();
+        }
+    }
+    public class Level5 : Levels, PlayableLevel
+    {
+        public static Snake mySnake;
+        public static int[,] grid;
+        public static List<PickUP> pickUPs;
+        public static List<Portal> portals;
+        public static List<Wall> walls;
+        public static CombatUi combatUI;
+        public static int speedMult = GameManager.Instance.SnakeSpeed;
+
+        public VoidEvent getPoint { get; set; }
+        public VoidEvent lossLife { get; set; }
+        public Level5()
+        {
+
+        }
+        public override void Inizialize()
+        {
+            grid = new int[50, 50];
+            pickUPs = new List<PickUP>();
+            portals = new List<Portal>();
+            walls = new List<Wall>();
+            combatUI = new CombatUi(this);
+            GameManager.Instance.lives = 3;
+            GameManager.Instance.points = 0;
+
+
+            mySnake = new Snake(GameManager.Instance.SnakeSpeed, 5);
+            for (int i = 0; i < 5; i++)
+            {
+                if (i == 0)
+                {
+                    mySnake.addSnakePiece("head");
+                }
+                else
+                {
+                    mySnake.addSnakePiece("body");
+                }
+            }
+
+            pickUPs.Add((Fruit)FruitFactory.CreateFruit(FruitFactory.fruit.apple, new Vector2(250, 300)));
+            foreach (PickUP pickUP in pickUPs)
+            {
+                if (pickUP is Portal portal)
+                    portals.Add((Portal)portal);
+            }
+        for (int i = 0; i < 10; i++)
+        {
+
+            walls.Add(new Wall(new Transform(0 + i * 10, 450), "Sprites/rect4.png"));
+            //walls.Add(new Wall(new Transform(200 + i * 10, 450), "Sprites/rect4.png"));
+            walls.Add(new Wall(new Transform(400 + i * 10, 450), "Sprites/rect4.png"));
+
+            walls.Add(new Wall(new Transform(100 + i * 10, 350), "Sprites/rect4.png"));
+            walls.Add(new Wall(new Transform(290 + i * 10, 350), "Sprites/rect4.png"));
+
+            walls.Add(new Wall(new Transform(100 + i * 10, 270), "Sprites/rect4.png"));
+            walls.Add(new Wall(new Transform(290 + i * 10, 270), "Sprites/rect4.png"));
+
+            walls.Add(new Wall(new Transform(100 + i * 10, 190), "Sprites/rect4.png"));
+            walls.Add(new Wall(new Transform(290 + i * 10, 190), "Sprites/rect4.png"));
+
+            walls.Add(new Wall(new Transform(100 + i * 10, 110), "Sprites/rect4.png"));
+            walls.Add(new Wall(new Transform(290 + i * 10, 110), "Sprites/rect4.png"));
+
+            walls.Add(new Wall(new Transform(0 + i * 10, 30), "Sprites/rect4.png"));
+            //walls.Add(new Wall(new Transform(200 + i * 10, 30), "Sprites/rect4.png"));
+            walls.Add(new Wall(new Transform(400 + i * 10, 30), "Sprites/rect4.png"));
+        }
+
+        for (int i = 0; i < 9; i++)
+        {
+            walls.Add(new Wall(new Transform(200 + i * 10, 30), "Sprites/rect4.png"));
+            walls.Add(new Wall(new Transform(200 + i * 10, 450), "Sprites/rect4.png"));
+        }
+    }
+        public override void Input()
+        {
+            foreach (Inputs input in LevelsManager.Instance.CurrentLevel.inputs)
+            {
+                input.Input();
+            }
+        }
+        public override void Update()
+        {
+            foreach (Update update in LevelsManager.Instance.CurrentLevel.updates)
+            {
+                update.Update();
+            }
+
+            if (GameManager.Instance.points >= 20)
+            {
+                LevelsManager.Instance.SetLevel("Victory");
+            }
+            if (GameManager.Instance.lives == 0)
+            {
+                LevelsManager.Instance.SetLevel("Defeat");
+            }
+            Collisions(lossLife, getPoint);
+
+
+        }
+        public override void Draw()
+        {
+            for (int i = 0; i < 50; i++)
+            {
+                for (int j = 0; j < 50; j++)
+                {
+                    if ((i + j) % 2 == 0)
+                    {
+                        Engine.Draw("Sprites/green.png", i * 10, j * 10, .625f, .625f);
+                    }
+                    else
+                    {
+                        Engine.Draw("Sprites/grey.png", i * 10, j * 10, .625f, .625f);
+                    }
+                }
+            }
+            foreach (Draw draw in LevelsManager.Instance.CurrentLevel.draws)
+            {
+                if (draw.active)
+                    draw.Draw();
+            }
+        }
+        static void Collisions(VoidEvent losslifes, VoidEvent getPoints)
+        {
+            foreach (Wall wall in walls)
+            {
+                if (Collision.RectRect(mySnake.snake[0].transform.position.x, mySnake.snake[0].transform.position.y, mySnake.snake[0].render.imgSize.x, mySnake.snake[0].render.imgSize.y,
+               wall.transform.position.x, wall.transform.position.y, wall.render.imgSize.x, wall.render.imgSize.y))
+                {
+                    KillSnake(losslifes);
+                }
+                if (Collision.RectRect(pickUPs.First().transform.position.x, pickUPs.First().transform.position.y, pickUPs.First().render.imgSize.x * 2, pickUPs.First().render.imgSize.y * 2,
+               wall.transform.position.x, wall.transform.position.y, wall.render.imgSize.x, wall.render.imgSize.y))
+                {
+                    pickUPs.First().ChangeToRandomPosition();
+                }
+            }
+            VoidEvent eatFruit = null;
+            eatFruit += addSnakePiece;
+            Fruit fruit = (Fruit)pickUPs.First();
+            eatFruit += fruit.Reproducer;
+            for (int i = 0; i < pickUPs.Count; i++)
+            {
+                if (Collision.RectRect(mySnake.snake.First().transform.position.x, mySnake.snake.First().transform.position.y, mySnake.snake.First().render.imgSize.x, mySnake.snake.First().render.imgSize.y,
+                pickUPs[i].transform.position.x, pickUPs[i].transform.position.y, pickUPs[i].render.imgSize.x, pickUPs[i].render.imgSize.y))
+                {
+                    switch (pickUPs[i])
+                    {
+                        case Fruit fruits:
+                            if (GameManager.Instance.leaveTrash)
+                            {
+                                Trash trash = (Trash)FruitFactory.CreateFruit(FruitFactory.fruit.rottenApple, new Vector2((int)fruits.transform.position.x, (int)fruits.transform.position.y));
+                                trash.active = false;
+                                pickUPs.Add(trash);
+                            }
+                            fruits.ChangeToRandomPosition();
+                            foreach (PickUP item in pickUPs)
+                            {
+                                if (fruits != item && Collision.RectRect(fruits.transform.position.x, fruits.transform.position.y, fruits.render.imgSize.x, fruits.render.imgSize.y,
+                                                                      item.transform.position.x, item.transform.position.y, item.render.imgSize.x, item.render.imgSize.y))
+                                {
+                                    fruits.ChangeToRandomPosition();
+                                }
+                            }
+                            if (speedMult < 30)
+                            {
+                                speedMult++;
+                                mySnake._speed = 1f / speedMult;
+                            }
+                            eatFruit();
+                            GameManager.Instance.points++;
+                            getPoints();
+                            break;
+                        case Trash trash:
+                            KillSnake(losslifes);
+                            break;
+                        case Reverse reverse:
+                            Texture body = mySnake.snake.Last().render.textures;
+                            Texture head = mySnake.snake.First().render.textures;
+                            mySnake.snake.Reverse();
+                            mySnake.snake.Last().render.textures = body;
+                            mySnake.snake.First().render.textures = head;
+                            mySnake.SwapDirection();
+                            foreach (SnakePart part in mySnake.snake)
+                            {
+                                part.myPositions.Clear();
+                            }
+                            break;
+                        case Portal portal:
+                            Random rnd = new Random();
+                            portals.Remove(portal);
+                            mySnake.snake.First().transform.position = portals[rnd.Next(0, portals.Count)].transform.position;
+                            portals.Add(portal);
+                            break;
+                    }
                 }
             }
             for (int i = 1; i < mySnake.snake.Count; i++)

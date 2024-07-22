@@ -76,6 +76,46 @@ namespace Game
         public void PickAp() { }
 
     }
+    public class Portal : PickUP, Update, IPickable
+    {
+        public float toActivaTimer = 1;
+        public Portal(int x, int y, float SizeX, float SizeY) : base(x, y, SizeX, SizeY, "Sprites/Portal.png")
+        {
+            LevelsManager.Instance.CurrentLevel.updates.Add(this);
+        }
+        public void Update()
+        {
+            if (!active)
+            {
+                toActivaTimer -= MyDeltaTimer.deltaTime;
+                if (toActivaTimer < 0)
+                {
+                    active = true;
+                }
+            }
+        }
+        public void PickAp() { }
+    }
+    public class Reverse : PickUP, Update, IPickable
+    {
+        public float toActivaTimer = 1;
+        public Reverse(int x, int y, float SizeX, float SizeY) : base(x, y, SizeX, SizeY, "Sprites/Switch.png")
+        {
+            LevelsManager.Instance.CurrentLevel.updates.Add(this);
+        }
+        public void Update()
+        {
+            if (!active)
+            {
+                toActivaTimer -= MyDeltaTimer.deltaTime;
+                if (toActivaTimer < 0)
+                {
+                    active = true;
+                }
+            }
+        }
+        public void PickAp() { }
+    }
     public class Sound
     {
         private string _direction;

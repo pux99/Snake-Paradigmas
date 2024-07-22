@@ -9,7 +9,7 @@ namespace Game.Scripts
 {
    public static class FruitFactory
     {
-        public enum fruit {apple, rottenApple}
+        public enum fruit {apple, rottenApple, portal, revese}
         public static IPickable CreateFruit (fruit fruit, Vector2 position)
         {
             switch (fruit)
@@ -18,6 +18,10 @@ namespace Game.Scripts
                     return new Fruit((int)position.x, (int)position.y, .3125f, .3125f, "Sounds/Munching.wav", 1);
                 case fruit.rottenApple:
                     return new Trash((int)position.x, (int)position.y, .03125f, .03125f);
+                case fruit.portal:
+                    return new Portal((int)position.x, (int)position.y, 1, 1);
+                case fruit.revese:
+                    return new Reverse((int)position.x, (int)position.y, 1, 1);
                 default:
                     break;
             }
