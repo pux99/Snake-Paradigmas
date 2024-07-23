@@ -22,7 +22,6 @@ namespace Game
 
 
         private int _snakePartDelay;
-        private float _SnakeSpeed = 0;
         private float _timer=0;
         public float _speed = 0.5f;
         public string _direction = "Down";

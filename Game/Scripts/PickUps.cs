@@ -24,14 +24,13 @@ namespace Game
             transform.scale.y = SizeY;
             _render=new Render(path, transform);
             LevelsManager.Instance.CurrentLevel.draws.Add(this);
-            Console.WriteLine(_render.imgSize.x.ToString()+" " +_render.imgSize.y.ToString());
         }
         public void ChangeToRandomPosition()
         {
             Random rndY = new Random();
             Random rndX = new Random();
             transform.position.x = rndX.Next(10, 490);
-            transform.position.y = rndY.Next(10, 490);
+            transform.position.y = rndX.Next(10, 490);
         }
 
         public void Draw()

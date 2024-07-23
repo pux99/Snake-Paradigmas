@@ -426,7 +426,7 @@ namespace Game
                                 }
                                 if (speedMult < 30)
                                 {
-                                    speedMult++;
+                                    speedMult += 2;
                                     mySnake._speed = 1f / speedMult;
                                 }
                                 eatFruit();
@@ -704,7 +704,7 @@ namespace Game
                                 }
                                 if (speedMult < 30)
                                 {
-                                    speedMult++;
+                                    speedMult += 2;
                                     mySnake._speed = 1f / speedMult;
                                 }
                                 eatFruit();
@@ -980,7 +980,7 @@ namespace Game
                                 }
                                 if (speedMult < 30)
                                 {
-                                    speedMult++;
+                                    speedMult += 2;
                                     mySnake._speed = 1f / speedMult;
                                 }
                                 eatFruit();
@@ -1138,7 +1138,7 @@ namespace Game
 
             pickUPs.Add((Fruit)FruitFactory.CreateFruit(FruitFactory.fruit.apple, new Vector2(250, 300)));
             pickUPs.Add((Portal)FruitFactory.CreateFruit(FruitFactory.fruit.portal, new Vector2(260, 110)));
-            pickUPs.Add((Portal)FruitFactory.CreateFruit(FruitFactory.fruit.portal, new Vector2(270, 390)));
+            pickUPs.Add((Portal)FruitFactory.CreateFruit(FruitFactory.fruit.portal, new Vector2(260, 390)));
 
             foreach (PickUP pickUP in pickUPs)
             {
@@ -1265,7 +1265,7 @@ namespace Game
                                 }
                                 if (speedMult < 30)
                                 {
-                                    speedMult++;
+                                    speedMult += 2;
                                     mySnake._speed = 1f / speedMult;
                                 }
                                 eatFruit();
@@ -1557,7 +1557,7 @@ namespace Game
                                 }
                                 if (speedMult < 30)
                                 {
-                                    speedMult++;
+                                    speedMult += 2;
                                     mySnake._speed = 1f / speedMult;
                                 }
                                 eatFruit();

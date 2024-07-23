@@ -14,7 +14,7 @@ namespace Game
         public int points = 0;
         public int lives = 3;
         public int SnakeDelay = 5;
-        public int SnakeSpeed = 25;
+        public int SnakeSpeed = 20;
         public bool leaveTrash=false;
 
         public int snackHead = 0;
