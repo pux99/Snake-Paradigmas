@@ -260,14 +260,14 @@ namespace Game
                 }
             }
 
-            if (mySnake.snake.First().transform.position.x < -10)
-                mySnake.snake.First().transform.position.x = 500;
-            if (mySnake.snake.First().transform.position.x > 510)
-                mySnake.snake.First().transform.position.x = 0;
-            if (mySnake.snake.First().transform.position.y < -10)
-                mySnake.snake.First().transform.position.y = 500;
-            if (mySnake.snake.First().transform.position.y > 510)
-                mySnake.snake.First().transform.position.y = 0;
+            if (mySnake.snake.First().transform.position.x < 10)
+                mySnake.snake.First().transform.position.x = 490;
+            if (mySnake.snake.First().transform.position.x > 490)
+                mySnake.snake.First().transform.position.x = 10;
+            if (mySnake.snake.First().transform.position.y < 10)
+                mySnake.snake.First().transform.position.y = 490;
+            if (mySnake.snake.First().transform.position.y > 490)
+                mySnake.snake.First().transform.position.y = 10;
         }
 
     }
@@ -401,74 +401,78 @@ namespace Game
             eatFruit += fruit.Reproducer;
             for (int i = 0; i < pickUPs.Count; i++)
             {
-                if (Collision.RectRect(mySnake.snake.First().transform.position.x, mySnake.snake.First().transform.position.y, mySnake.snake.First().render.imgSize.x, mySnake.snake.First().render.imgSize.y,
-                pickUPs[i].transform.position.x, pickUPs[i].transform.position.y, pickUPs[i].render.imgSize.x, pickUPs[i].render.imgSize.y))
+                if (pickUPs[i].active== true)
                 {
-                    switch (pickUPs[i])
+                    if (Collision.RectRect(mySnake.snake.First().transform.position.x, mySnake.snake.First().transform.position.y, mySnake.snake.First().render.imgSize.x, mySnake.snake.First().render.imgSize.y,
+                pickUPs[i].transform.position.x, pickUPs[i].transform.position.y, pickUPs[i].render.imgSize.x, pickUPs[i].render.imgSize.y))
                     {
-                        case Fruit fruits:
-                            if (GameManager.Instance.leaveTrash)
-                            {
-                                Trash trash = (Trash)FruitFactory.CreateFruit(FruitFactory.fruit.rottenApple, new Vector2((int)fruits.transform.position.x, (int)fruits.transform.position.y));
-                                trash.active = false;
-                                pickUPs.Add(trash);
-                            }
-                            fruits.ChangeToRandomPosition();
-                            foreach (PickUP item in pickUPs)
-                            {
-                                if (fruits != item && Collision.RectRect(fruits.transform.position.x, fruits.transform.position.y, fruits.render.imgSize.x, fruits.render.imgSize.y,
-                                                                      item.transform.position.x, item.transform.position.y, item.render.imgSize.x, item.render.imgSize.y))
+                        switch (pickUPs[i])
+                        {
+                            case Fruit fruits:
+                                if (GameManager.Instance.leaveTrash)
                                 {
-                                    fruits.ChangeToRandomPosition();
+                                    Trash trash = (Trash)FruitFactory.CreateFruit(FruitFactory.fruit.rottenApple, new Vector2((int)fruits.transform.position.x, (int)fruits.transform.position.y));
+                                    trash.active = false;
+                                    pickUPs.Add(trash);
                                 }
-                            }
-                            if (speedMult < 30)
-                            {
-                                speedMult++;
-                                mySnake._speed = 1f / speedMult;
-                            }
-                            eatFruit();
-                            GameManager.Instance.points++;
-                            getPoints();
-                            break;
-                        case Trash trash:
-                            KillSnake(losslifes);
-                            break;
-                        case Reverse reverse:
-                            Texture body = mySnake.snake.Last().render.textures;
-                            Texture head = mySnake.snake.First().render.textures;
-                            mySnake.snake.Reverse();
-                            mySnake.snake.Last().render.textures = body;
-                            mySnake.snake.First().render.textures = head;
-                            mySnake.SwapDirection();
-                            foreach (SnakePart part in mySnake.snake)
-                            {
-                                part.myPositions.Clear();
-                            }
-                            break;
-                        case Portal portal:
-                            Random rnd = new Random();
-                            portals.Remove(portal);
-                            Vector2 offset = new Vector2(0,0);
-                            switch (mySnake._direction)
-                            {
-                                case "Left":
-                                    offset = new Vector2(-10 ,0);
-                                    break;
-                                case "Right":
-                                    offset = new Vector2(10, 0);
-                                    break;
-                                case "Down":
-                                    offset = new Vector2(0, 10);
-                                    break;
-                                case "Up":
-                                    offset = new Vector2(0, -10);
-                                    break;
-                            }
-                            mySnake.snake.First().transform.position = portals[rnd.Next(0, portals.Count)].transform.position + offset;
-                            portals.Add(portal);
-                            break;
+                                fruits.ChangeToRandomPosition();
+                                foreach (PickUP item in pickUPs)
+                                {
+                                    if (fruits != item && Collision.RectRect(fruits.transform.position.x, fruits.transform.position.y, fruits.render.imgSize.x, fruits.render.imgSize.y,
+                                                                          item.transform.position.x, item.transform.position.y, item.render.imgSize.x, item.render.imgSize.y))
+                                    {
+                                        fruits.ChangeToRandomPosition();
+                                    }
+                                }
+                                if (speedMult < 30)
+                                {
+                                    speedMult++;
+                                    mySnake._speed = 1f / speedMult;
+                                }
+                                eatFruit();
+                                GameManager.Instance.points++;
+                                getPoints();
+                                break;
+                            case Trash trash:
+                                KillSnake(losslifes);
+                                break;
+                            case Reverse reverse:
+                                Texture body = mySnake.snake.Last().render.textures;
+                                Texture head = mySnake.snake.First().render.textures;
+                                mySnake.snake.Reverse();
+                                mySnake.snake.Last().render.textures = body;
+                                mySnake.snake.First().render.textures = head;
+                                mySnake.SwapDirection();
+                                foreach (SnakePart part in mySnake.snake)
+                                {
+                                    part.myPositions.Clear();
+                                }
+                                break;
+                            case Portal portal:
+                                Random rnd = new Random();
+                                portals.Remove(portal);
+                                Vector2 offset = new Vector2(0, 0);
+                                switch (mySnake._direction)
+                                {
+                                    case "Left":
+                                        offset = new Vector2(-10, 0);
+                                        break;
+                                    case "Right":
+                                        offset = new Vector2(10, 0);
+                                        break;
+                                    case "Down":
+                                        offset = new Vector2(0, 10);
+                                        break;
+                                    case "Up":
+                                        offset = new Vector2(0, -10);
+                                        break;
+                                }
+                                mySnake.snake.First().transform.position = portals[rnd.Next(0, portals.Count)].transform.position + offset;
+                                portals.Add(portal);
+                                break;
+                        }
                     }
+
                 }
             }
             for (int i = 1; i < mySnake.snake.Count; i++)
@@ -675,74 +679,78 @@ namespace Game
             eatFruit += fruit.Reproducer;
             for (int i = 0; i < pickUPs.Count; i++)
             {
-                if (Collision.RectRect(mySnake.snake.First().transform.position.x, mySnake.snake.First().transform.position.y, mySnake.snake.First().render.imgSize.x, mySnake.snake.First().render.imgSize.y,
-                pickUPs[i].transform.position.x, pickUPs[i].transform.position.y, pickUPs[i].render.imgSize.x, pickUPs[i].render.imgSize.y))
+                if (pickUPs[i].active == true)
                 {
-                    switch (pickUPs[i])
+                    if (Collision.RectRect(mySnake.snake.First().transform.position.x, mySnake.snake.First().transform.position.y, mySnake.snake.First().render.imgSize.x, mySnake.snake.First().render.imgSize.y,
+                pickUPs[i].transform.position.x, pickUPs[i].transform.position.y, pickUPs[i].render.imgSize.x, pickUPs[i].render.imgSize.y))
                     {
-                        case Fruit fruits:
-                            if (GameManager.Instance.leaveTrash)
-                            {
-                                Trash trash = (Trash)FruitFactory.CreateFruit(FruitFactory.fruit.rottenApple, new Vector2((int)fruits.transform.position.x, (int)fruits.transform.position.y));
-                                trash.active = false;
-                                pickUPs.Add(trash);
-                            }
-                            fruits.ChangeToRandomPosition();
-                            foreach (PickUP item in pickUPs)
-                            {
-                                if(fruits!= item&& Collision.RectRect(fruits.transform.position.x, fruits.transform.position.y, fruits.render.imgSize.x, fruits.render.imgSize.y,
-                                                                      item.transform.position.x, item.transform.position.y, item.render.imgSize.x, item.render.imgSize.y))
+                        switch (pickUPs[i])
+                        {
+                            case Fruit fruits:
+                                if (GameManager.Instance.leaveTrash)
                                 {
-                                    fruits.ChangeToRandomPosition();
+                                    Trash trash = (Trash)FruitFactory.CreateFruit(FruitFactory.fruit.rottenApple, new Vector2((int)fruits.transform.position.x, (int)fruits.transform.position.y));
+                                    trash.active = false;
+                                    pickUPs.Add(trash);
                                 }
-                            }
-                            if (speedMult < 30)
-                            {
-                                speedMult++;
-                                mySnake._speed = 1f / speedMult;
-                            }
-                            eatFruit();
-                            GameManager.Instance.points++;
-                            getPoints();
-                            break;
-                        case Trash trash:
-                            KillSnake(losslifes);
-                            break;
-                        case Reverse reverse:
-                            Texture body = mySnake.snake.Last().render.textures;
-                            Texture head = mySnake.snake.First().render.textures;
-                            mySnake.snake.Reverse();
-                            mySnake.snake.Last().render.textures = body;
-                            mySnake.snake.First().render.textures = head;
-                            mySnake.SwapDirection();
-                            foreach (SnakePart part in mySnake.snake)
-                            {
-                                part.myPositions.Clear();
-                            }
-                            break;
-                        case Portal portal:
-                            Random rnd = new Random();
-                            portals.Remove(portal);
-                            Vector2 offset = new Vector2(0, 0);
-                            switch (mySnake._direction)
-                            {
-                                case "Left":
-                                    offset = new Vector2(-10, 0);
-                                    break;
-                                case "Right":
-                                    offset = new Vector2(10, 0);
-                                    break;
-                                case "Down":
-                                    offset = new Vector2(0, 10);
-                                    break;
-                                case "Up":
-                                    offset = new Vector2(0, -10);
-                                    break;
-                            }
-                            mySnake.snake.First().transform.position = portals[rnd.Next(0, portals.Count)].transform.position + offset;
-                            portals.Add(portal);
-                            break;
+                                fruits.ChangeToRandomPosition();
+                                foreach (PickUP item in pickUPs)
+                                {
+                                    if (fruits != item && Collision.RectRect(fruits.transform.position.x, fruits.transform.position.y, fruits.render.imgSize.x, fruits.render.imgSize.y,
+                                                                          item.transform.position.x, item.transform.position.y, item.render.imgSize.x, item.render.imgSize.y))
+                                    {
+                                        fruits.ChangeToRandomPosition();
+                                    }
+                                }
+                                if (speedMult < 30)
+                                {
+                                    speedMult++;
+                                    mySnake._speed = 1f / speedMult;
+                                }
+                                eatFruit();
+                                GameManager.Instance.points++;
+                                getPoints();
+                                break;
+                            case Trash trash:
+                                KillSnake(losslifes);
+                                break;
+                            case Reverse reverse:
+                                Texture body = mySnake.snake.Last().render.textures;
+                                Texture head = mySnake.snake.First().render.textures;
+                                mySnake.snake.Reverse();
+                                mySnake.snake.Last().render.textures = body;
+                                mySnake.snake.First().render.textures = head;
+                                mySnake.SwapDirection();
+                                foreach (SnakePart part in mySnake.snake)
+                                {
+                                    part.myPositions.Clear();
+                                }
+                                break;
+                            case Portal portal:
+                                Random rnd = new Random();
+                                portals.Remove(portal);
+                                Vector2 offset = new Vector2(0, 0);
+                                switch (mySnake._direction)
+                                {
+                                    case "Left":
+                                        offset = new Vector2(-10, 0);
+                                        break;
+                                    case "Right":
+                                        offset = new Vector2(10, 0);
+                                        break;
+                                    case "Down":
+                                        offset = new Vector2(0, 10);
+                                        break;
+                                    case "Up":
+                                        offset = new Vector2(0, -10);
+                                        break;
+                                }
+                                mySnake.snake.First().transform.position = portals[rnd.Next(0, portals.Count)].transform.position + offset;
+                                portals.Add(portal);
+                                break;
+                        }
                     }
+
                 }
             }
             for (int i = 1; i < mySnake.snake.Count; i++)
@@ -947,74 +955,78 @@ namespace Game
             eatFruit += fruit.Reproducer;
             for (int i = 0; i < pickUPs.Count; i++)
             {
-                if (Collision.RectRect(mySnake.snake.First().transform.position.x, mySnake.snake.First().transform.position.y, mySnake.snake.First().render.imgSize.x, mySnake.snake.First().render.imgSize.y,
-                pickUPs[i].transform.position.x, pickUPs[i].transform.position.y, pickUPs[i].render.imgSize.x, pickUPs[i].render.imgSize.y))
+                if (pickUPs[i].active == true)
                 {
-                    switch (pickUPs[i])
+                    if (Collision.RectRect(mySnake.snake.First().transform.position.x, mySnake.snake.First().transform.position.y, mySnake.snake.First().render.imgSize.x, mySnake.snake.First().render.imgSize.y,
+                pickUPs[i].transform.position.x, pickUPs[i].transform.position.y, pickUPs[i].render.imgSize.x, pickUPs[i].render.imgSize.y))
                     {
-                        case Fruit fruits:
-                            if (GameManager.Instance.leaveTrash)
-                            {
-                                Trash trash = (Trash)FruitFactory.CreateFruit(FruitFactory.fruit.rottenApple, new Vector2((int)fruits.transform.position.x, (int)fruits.transform.position.y));
-                                trash.active = false;
-                                pickUPs.Add(trash);
-                            }
-                            fruits.ChangeToRandomPosition();
-                            foreach (PickUP item in pickUPs)
-                            {
-                                if (fruits != item && Collision.RectRect(fruits.transform.position.x, fruits.transform.position.y, fruits.render.imgSize.x, fruits.render.imgSize.y,
-                                                                      item.transform.position.x, item.transform.position.y, item.render.imgSize.x, item.render.imgSize.y))
+                        switch (pickUPs[i])
+                        {
+                            case Fruit fruits:
+                                if (GameManager.Instance.leaveTrash)
                                 {
-                                    fruits.ChangeToRandomPosition();
+                                    Trash trash = (Trash)FruitFactory.CreateFruit(FruitFactory.fruit.rottenApple, new Vector2((int)fruits.transform.position.x, (int)fruits.transform.position.y));
+                                    trash.active = false;
+                                    pickUPs.Add(trash);
                                 }
-                            }
-                            if (speedMult < 30)
-                            {
-                                speedMult++;
-                                mySnake._speed = 1f / speedMult;
-                            }
-                            eatFruit();
-                            GameManager.Instance.points++;
-                            getPoints();
-                            break;
-                        case Trash trash:
-                            KillSnake(losslifes);
-                            break;
-                        case Reverse reverse:
-                            Texture body = mySnake.snake.Last().render.textures;
-                            Texture head = mySnake.snake.First().render.textures;
-                            mySnake.snake.Reverse();
-                            mySnake.snake.Last().render.textures = body;
-                            mySnake.snake.First().render.textures = head;
-                            mySnake.SwapDirection();
-                            foreach (SnakePart part in mySnake.snake)
-                            {
-                                part.myPositions.Clear();
-                            }
-                            break;
-                        case Portal portal:
-                            Random rnd = new Random();
-                            portals.Remove(portal);
-                            Vector2 offset = new Vector2(0, 0);
-                            switch (mySnake._direction)
-                            {
-                                case "Left":
-                                    offset = new Vector2(-10, 0);
-                                    break;
-                                case "Right":
-                                    offset = new Vector2(10, 0);
-                                    break;
-                                case "Down":
-                                    offset = new Vector2(0, 10);
-                                    break;
-                                case "Up":
-                                    offset = new Vector2(0, -10);
-                                    break;
-                            }
-                            mySnake.snake.First().transform.position = portals[rnd.Next(0, portals.Count)].transform.position + offset;
-                            portals.Add(portal);
-                            break;
+                                fruits.ChangeToRandomPosition();
+                                foreach (PickUP item in pickUPs)
+                                {
+                                    if (fruits != item && Collision.RectRect(fruits.transform.position.x, fruits.transform.position.y, fruits.render.imgSize.x, fruits.render.imgSize.y,
+                                                                          item.transform.position.x, item.transform.position.y, item.render.imgSize.x, item.render.imgSize.y))
+                                    {
+                                        fruits.ChangeToRandomPosition();
+                                    }
+                                }
+                                if (speedMult < 30)
+                                {
+                                    speedMult++;
+                                    mySnake._speed = 1f / speedMult;
+                                }
+                                eatFruit();
+                                GameManager.Instance.points++;
+                                getPoints();
+                                break;
+                            case Trash trash:
+                                KillSnake(losslifes);
+                                break;
+                            case Reverse reverse:
+                                Texture body = mySnake.snake.Last().render.textures;
+                                Texture head = mySnake.snake.First().render.textures;
+                                mySnake.snake.Reverse();
+                                mySnake.snake.Last().render.textures = body;
+                                mySnake.snake.First().render.textures = head;
+                                mySnake.SwapDirection();
+                                foreach (SnakePart part in mySnake.snake)
+                                {
+                                    part.myPositions.Clear();
+                                }
+                                break;
+                            case Portal portal:
+                                Random rnd = new Random();
+                                portals.Remove(portal);
+                                Vector2 offset = new Vector2(0, 0);
+                                switch (mySnake._direction)
+                                {
+                                    case "Left":
+                                        offset = new Vector2(-10, 0);
+                                        break;
+                                    case "Right":
+                                        offset = new Vector2(10, 0);
+                                        break;
+                                    case "Down":
+                                        offset = new Vector2(0, 10);
+                                        break;
+                                    case "Up":
+                                        offset = new Vector2(0, -10);
+                                        break;
+                                }
+                                mySnake.snake.First().transform.position = portals[rnd.Next(0, portals.Count)].transform.position + offset;
+                                portals.Add(portal);
+                                break;
+                        }
                     }
+
                 }
             }
             for (int i = 1; i < mySnake.snake.Count; i++)
@@ -1228,74 +1240,78 @@ namespace Game
             eatFruit += fruit.Reproducer;
             for (int i = 0; i < pickUPs.Count; i++)
             {
-                if (Collision.RectRect(mySnake.snake.First().transform.position.x, mySnake.snake.First().transform.position.y, mySnake.snake.First().render.imgSize.x, mySnake.snake.First().render.imgSize.y,
-                pickUPs[i].transform.position.x, pickUPs[i].transform.position.y, pickUPs[i].render.imgSize.x, pickUPs[i].render.imgSize.y))
+                if (pickUPs[i].active == true)
                 {
-                    switch (pickUPs[i])
+                    if (Collision.RectRect(mySnake.snake.First().transform.position.x, mySnake.snake.First().transform.position.y, mySnake.snake.First().render.imgSize.x, mySnake.snake.First().render.imgSize.y,
+                pickUPs[i].transform.position.x, pickUPs[i].transform.position.y, pickUPs[i].render.imgSize.x, pickUPs[i].render.imgSize.y))
                     {
-                        case Fruit fruits:
-                            if (GameManager.Instance.leaveTrash)
-                            {
-                                Trash trash = (Trash)FruitFactory.CreateFruit(FruitFactory.fruit.rottenApple, new Vector2((int)fruits.transform.position.x, (int)fruits.transform.position.y));
-                                trash.active = false;
-                                pickUPs.Add(trash);
-                            }
-                            fruits.ChangeToRandomPosition();
-                            foreach (PickUP item in pickUPs)
-                            {
-                                if (fruits != item && Collision.RectRect(fruits.transform.position.x, fruits.transform.position.y, fruits.render.imgSize.x, fruits.render.imgSize.y,
-                                                                      item.transform.position.x, item.transform.position.y, item.render.imgSize.x, item.render.imgSize.y))
+                        switch (pickUPs[i])
+                        {
+                            case Fruit fruits:
+                                if (GameManager.Instance.leaveTrash)
                                 {
-                                    fruits.ChangeToRandomPosition();
+                                    Trash trash = (Trash)FruitFactory.CreateFruit(FruitFactory.fruit.rottenApple, new Vector2((int)fruits.transform.position.x, (int)fruits.transform.position.y));
+                                    trash.active = false;
+                                    pickUPs.Add(trash);
                                 }
-                            }
-                            if (speedMult < 30)
-                            {
-                                speedMult++;
-                                mySnake._speed = 1f / speedMult;
-                            }
-                            eatFruit();
-                            GameManager.Instance.points++;
-                            getPoints();
-                            break;
-                        case Trash trash:
-                            KillSnake(losslifes);
-                            break;
-                        case Reverse reverse:
-                            Texture body = mySnake.snake.Last().render.textures;
-                            Texture head = mySnake.snake.First().render.textures;
-                            mySnake.snake.Reverse();
-                            mySnake.snake.Last().render.textures = body;
-                            mySnake.snake.First().render.textures = head;
-                            mySnake.SwapDirection();
-                            foreach (SnakePart part in mySnake.snake)
-                            {
-                                part.myPositions.Clear();
-                            }
-                            break;
-                        case Portal portal:
-                            Random rnd = new Random();
-                            portals.Remove(portal);
-                            Vector2 offset = new Vector2(0, 0);
-                            switch (mySnake._direction)
-                            {
-                                case "Left":
-                                    offset = new Vector2(-10, 0);
-                                    break;
-                                case "Right":
-                                    offset = new Vector2(10, 0);
-                                    break;
-                                case "Down":
-                                    offset = new Vector2(0, 10);
-                                    break;
-                                case "Up":
-                                    offset = new Vector2(0, -10);
-                                    break;
-                            }
-                            mySnake.snake.First().transform.position = portals[rnd.Next(0, portals.Count)].transform.position + offset;
-                            portals.Add(portal);
-                            break;
+                                fruits.ChangeToRandomPosition();
+                                foreach (PickUP item in pickUPs)
+                                {
+                                    if (fruits != item && Collision.RectRect(fruits.transform.position.x, fruits.transform.position.y, fruits.render.imgSize.x, fruits.render.imgSize.y,
+                                                                          item.transform.position.x, item.transform.position.y, item.render.imgSize.x, item.render.imgSize.y))
+                                    {
+                                        fruits.ChangeToRandomPosition();
+                                    }
+                                }
+                                if (speedMult < 30)
+                                {
+                                    speedMult++;
+                                    mySnake._speed = 1f / speedMult;
+                                }
+                                eatFruit();
+                                GameManager.Instance.points++;
+                                getPoints();
+                                break;
+                            case Trash trash:
+                                KillSnake(losslifes);
+                                break;
+                            case Reverse reverse:
+                                Texture body = mySnake.snake.Last().render.textures;
+                                Texture head = mySnake.snake.First().render.textures;
+                                mySnake.snake.Reverse();
+                                mySnake.snake.Last().render.textures = body;
+                                mySnake.snake.First().render.textures = head;
+                                mySnake.SwapDirection();
+                                foreach (SnakePart part in mySnake.snake)
+                                {
+                                    part.myPositions.Clear();
+                                }
+                                break;
+                            case Portal portal:
+                                Random rnd = new Random();
+                                portals.Remove(portal);
+                                Vector2 offset = new Vector2(0, 0);
+                                switch (mySnake._direction)
+                                {
+                                    case "Left":
+                                        offset = new Vector2(-10, 0);
+                                        break;
+                                    case "Right":
+                                        offset = new Vector2(10, 0);
+                                        break;
+                                    case "Down":
+                                        offset = new Vector2(0, 10);
+                                        break;
+                                    case "Up":
+                                        offset = new Vector2(0, -10);
+                                        break;
+                                }
+                                mySnake.snake.First().transform.position = portals[rnd.Next(0, portals.Count)].transform.position + offset;
+                                portals.Add(portal);
+                                break;
+                        }
                     }
+
                 }
             }
             for (int i = 1; i < mySnake.snake.Count; i++)
@@ -1516,74 +1532,78 @@ namespace Game
             eatFruit += fruit.Reproducer;
             for (int i = 0; i < pickUPs.Count; i++)
             {
-                if (Collision.RectRect(mySnake.snake.First().transform.position.x, mySnake.snake.First().transform.position.y, mySnake.snake.First().render.imgSize.x, mySnake.snake.First().render.imgSize.y,
-                pickUPs[i].transform.position.x, pickUPs[i].transform.position.y, pickUPs[i].render.imgSize.x, pickUPs[i].render.imgSize.y))
+                if (pickUPs[i].active == true)
                 {
-                    switch (pickUPs[i])
+                    if (Collision.RectRect(mySnake.snake.First().transform.position.x, mySnake.snake.First().transform.position.y, mySnake.snake.First().render.imgSize.x, mySnake.snake.First().render.imgSize.y,
+                pickUPs[i].transform.position.x, pickUPs[i].transform.position.y, pickUPs[i].render.imgSize.x, pickUPs[i].render.imgSize.y))
                     {
-                        case Fruit fruits:
-                            if (GameManager.Instance.leaveTrash)
-                            {
-                                Trash trash = (Trash)FruitFactory.CreateFruit(FruitFactory.fruit.rottenApple, new Vector2((int)fruits.transform.position.x, (int)fruits.transform.position.y));
-                                trash.active = false;
-                                pickUPs.Add(trash);
-                            }
-                            fruits.ChangeToRandomPosition();
-                            foreach (PickUP item in pickUPs)
-                            {
-                                if (fruits != item && Collision.RectRect(fruits.transform.position.x, fruits.transform.position.y, fruits.render.imgSize.x, fruits.render.imgSize.y,
-                                                                      item.transform.position.x, item.transform.position.y, item.render.imgSize.x, item.render.imgSize.y))
+                        switch (pickUPs[i])
+                        {
+                            case Fruit fruits:
+                                if (GameManager.Instance.leaveTrash)
                                 {
-                                    fruits.ChangeToRandomPosition();
+                                    Trash trash = (Trash)FruitFactory.CreateFruit(FruitFactory.fruit.rottenApple, new Vector2((int)fruits.transform.position.x, (int)fruits.transform.position.y));
+                                    trash.active = false;
+                                    pickUPs.Add(trash);
                                 }
-                            }
-                            if (speedMult < 30)
-                            {
-                                speedMult++;
-                                mySnake._speed = 1f / speedMult;
-                            }
-                            eatFruit();
-                            GameManager.Instance.points++;
-                            getPoints();
-                            break;
-                        case Trash trash:
-                            KillSnake(losslifes);
-                            break;
-                        case Reverse reverse:
-                            Texture body = mySnake.snake.Last().render.textures;
-                            Texture head = mySnake.snake.First().render.textures;
-                            mySnake.snake.Reverse();
-                            mySnake.snake.Last().render.textures = body;
-                            mySnake.snake.First().render.textures = head;
-                            mySnake.SwapDirection();
-                            foreach (SnakePart part in mySnake.snake)
-                            {
-                                part.myPositions.Clear();
-                            }
-                            break;
-                        case Portal portal:
-                            Random rnd = new Random();
-                            portals.Remove(portal);
-                            Vector2 offset = new Vector2(0, 0);
-                            switch (mySnake._direction)
-                            {
-                                case "Left":
-                                    offset = new Vector2(-10, 0);
-                                    break;
-                                case "Right":
-                                    offset = new Vector2(10, 0);
-                                    break;
-                                case "Down":
-                                    offset = new Vector2(0, 10);
-                                    break;
-                                case "Up":
-                                    offset = new Vector2(0, -10);
-                                    break;
-                            }
-                            mySnake.snake.First().transform.position = portals[rnd.Next(0, portals.Count)].transform.position + offset;
-                            portals.Add(portal);
-                            break;
+                                fruits.ChangeToRandomPosition();
+                                foreach (PickUP item in pickUPs)
+                                {
+                                    if (fruits != item && Collision.RectRect(fruits.transform.position.x, fruits.transform.position.y, fruits.render.imgSize.x, fruits.render.imgSize.y,
+                                                                          item.transform.position.x, item.transform.position.y, item.render.imgSize.x, item.render.imgSize.y))
+                                    {
+                                        fruits.ChangeToRandomPosition();
+                                    }
+                                }
+                                if (speedMult < 30)
+                                {
+                                    speedMult++;
+                                    mySnake._speed = 1f / speedMult;
+                                }
+                                eatFruit();
+                                GameManager.Instance.points++;
+                                getPoints();
+                                break;
+                            case Trash trash:
+                                KillSnake(losslifes);
+                                break;
+                            case Reverse reverse:
+                                Texture body = mySnake.snake.Last().render.textures;
+                                Texture head = mySnake.snake.First().render.textures;
+                                mySnake.snake.Reverse();
+                                mySnake.snake.Last().render.textures = body;
+                                mySnake.snake.First().render.textures = head;
+                                mySnake.SwapDirection();
+                                foreach (SnakePart part in mySnake.snake)
+                                {
+                                    part.myPositions.Clear();
+                                }
+                                break;
+                            case Portal portal:
+                                Random rnd = new Random();
+                                portals.Remove(portal);
+                                Vector2 offset = new Vector2(0, 0);
+                                switch (mySnake._direction)
+                                {
+                                    case "Left":
+                                        offset = new Vector2(-10, 0);
+                                        break;
+                                    case "Right":
+                                        offset = new Vector2(10, 0);
+                                        break;
+                                    case "Down":
+                                        offset = new Vector2(0, 10);
+                                        break;
+                                    case "Up":
+                                        offset = new Vector2(0, -10);
+                                        break;
+                                }
+                                mySnake.snake.First().transform.position = portals[rnd.Next(0, portals.Count)].transform.position + offset;
+                                portals.Add(portal);
+                                break;
+                        }
                     }
+
                 }
             }
             for (int i = 1; i < mySnake.snake.Count; i++)
